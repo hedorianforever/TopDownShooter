@@ -6,6 +6,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 10f;
+    [SerializeField] float health = 50f;
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -31,6 +32,11 @@ public class Player : MonoBehaviour
 
         ChangeDirectionFaced();
         SetPlayerAnimation();
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        }
     }
 
     private void FixedUpdate()
@@ -75,4 +81,20 @@ public class Player : MonoBehaviour
 
         rb.velocity = new Vector2(horizontal * moveSpeed, vertical * moveSpeed);
     }
+
+    public void TakeDamage(int damageAmount)
+    {
+        health -= damageAmount;
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        Debug.Log("OUCH OOF IM DED");
+        Destroy(gameObject);
+    }
+    
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D))]
 public class Projectile : MonoBehaviour
 {
     [SerializeField] GameObject destroyFX = default;
@@ -28,7 +29,8 @@ public class Projectile : MonoBehaviour
         if (destroyFX != null)
         {
             Instantiate(destroyFX, transform.position, Quaternion.identity);
-        } else
+        }
+        else
         {
             Debug.Log("destroyFX missing at projectile " + name);
         }
@@ -38,6 +40,19 @@ public class Projectile : MonoBehaviour
     public void Init(Weapon projectileWeapon)
     {
         weapon = projectileWeapon;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Enemy")
+        {
+            collision.GetComponent<Enemy>().TakeDamage(weapon.GetDamage());
+            DestroyProjectile();
+        }
+        else if (collision.tag == "Obstacle")
+        {
+            DestroyProjectile();
+        }
     }
 
 }

@@ -7,6 +7,9 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] Transform transformToFollow = default;
     [SerializeField] float speed = 0.125f;
 
+    //in case I want to clamp the map
+    //[SerializeField] float minX, maxX, minY, maxY;
+
     private void Start()
     {
         transform.position = transformToFollow.position;
@@ -16,7 +19,12 @@ public class CameraFollow : MonoBehaviour
     {
         if (transformToFollow != null)
         {
+            //float clampedX = Mathf.Clamp(transformToFollow.position.x, minX, maxX);
+            //float clampedY = Mathf.Clamp(transformToFollow.position.y, minY, maxY);
+
             transform.position = Vector2.Lerp(transform.position, transformToFollow.position, speed);
+
+
         }
     }
 

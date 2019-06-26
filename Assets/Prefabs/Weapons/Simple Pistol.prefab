@@ -127,4 +127,6 @@ MonoBehaviour:
     type: 3}
   shotPoint: {fileID: 1068845873551912941}
   timeBetweenShots: 0.6
+  accuracyOffset: 5
   projectileSpeed: 10
+  projectileLifetime: 5
