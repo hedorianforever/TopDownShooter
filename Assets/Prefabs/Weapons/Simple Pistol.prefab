@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1068845873551912941}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ShotPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 2661190109132179932}
   - component: {fileID: 2661190109132179933}
   - component: {fileID: 2477468188847408419}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Simple Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -123,10 +123,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae9e9facdb886394aa218c1a48c6f9d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 1036761783502030475, guid: ac8c949dc4d04e244904ba018b174355,
+  projectilePrefab: {fileID: 692041066808304314, guid: afbe3e66eafbf6042bb026988a3ff1d7,
     type: 3}
   shotPoint: {fileID: 1068845873551912941}
-  timeBetweenShots: 0.6
+  timeBetweenShots: 1.5
   accuracyOffset: 5
-  projectileSpeed: 10
-  projectileLifetime: 5
+  damage: 10
+  projectileSpeed: 18
+  projectileLifetime: 0.4

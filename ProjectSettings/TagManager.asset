@@ -17,10 +17,10 @@ TagManager:
   - 
   - 
   - Obstacle
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Enemy
+  - Player Projectile
+  - Enemy Projectile
   - 
   - 
   - 

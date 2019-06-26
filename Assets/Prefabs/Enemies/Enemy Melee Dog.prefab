@@ -16,8 +16,8 @@ GameObject:
   - component: {fileID: 2266717365324582841}
   - component: {fileID: 76174417}
   - component: {fileID: 76174418}
-  m_Layer: 0
-  m_Name: Enemy Dog 1
+  m_Layer: 10
+  m_Name: Enemy Melee Dog
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -133,12 +133,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 30
-  moveSpeed: 5
-  timeBetweenAttacks: 3
+  moveSpeed: 10
+  timeBetweenAttacks: 1.5
   attackDamage: 10
+  noticePlayerRadius: 8
   playerTransform: {fileID: 0}
   stopDistance: 3
-  leapAttackSpeed: 2.5
+  leapAttackSpeed: 4.5
 --- !u!114 &2266717365324582841
 MonoBehaviour:
   m_ObjectHideFlags: 0

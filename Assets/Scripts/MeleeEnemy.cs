@@ -19,39 +19,54 @@ public class MeleeEnemy : Enemy
 
         aiPath.maxSpeed = moveSpeed;
         aiPath.endReachedDistance = stopDistance;
+        aiPath.canMove = false;
+
+        if (playerTransform != null && GetComponent<AIDestinationSetter>().target == null)
+        {
+            GetComponent<AIDestinationSetter>().target = playerTransform;
+        }
     }
 
     private void Update()
-    {   
+    {
         if (playerTransform == null) { return; }
+        
+        if ((aiPath.velocity.y >= .5f || aiPath.velocity.x >= .5f) && !isAttacking)
+        {
+            anim.SetBool("isMoving", true);
 
-        if (playerTransform.position.x - transform.position.x > 0)
+        }
+        else
         {
-            transform.localScale = new Vector3(1f, 1f, 1f);
-        } else if (playerTransform.position.x - transform.position.x < 0)
-        {
-            transform.localScale = new Vector3(-1f, 1f, 1f);
+            anim.SetBool("isMoving", false);
         }
 
-        if (aiPath.reachedDestination && !isAttacking)
+        if (!playerIsNearby)
+        {
+            CheckForPlayer();
+            if (playerIsNearby)
+            {
+                aiPath.canMove = true;
+            }
+            return;
+        }
+
+        FacePlayer();
+
+        if (Vector2.Distance(transform.position, playerTransform.position) <= stopDistance && !isAttacking)
         {
             Attack();
         }
 
-        if ((aiPath.velocity.y >= .5f || aiPath.velocity.x >= .5f) && !isAttacking)
-        {
-            anim.SetBool("isMoving", true);
-        } else
-        {
-            anim.SetBool("isMoving", false);
-        }
     }
 
     private void Attack()
     {
         aiPath.canMove = false;
         isAttacking = true;
+
         anim.SetBool("isMoving", false);
+
         StartCoroutine(AttackRoutine());
     }
 
@@ -75,7 +90,7 @@ public class MeleeEnemy : Enemy
             //damage when touching the player, probably should update to use physics (so the player can dodge)
             if (!hasDamaged && Vector2.Distance(transform.position, playerTransform.position) < 1f)
             {
-                Debug.Log("OH OUCH");
+                // TODO : slashfx
                 playerTransform.GetComponent<Player>().TakeDamage(attackDamage);
                 hasDamaged = true;
             }
@@ -86,6 +101,15 @@ public class MeleeEnemy : Enemy
         yield return new WaitForSeconds(timeBetweenAttacks);
         aiPath.canMove = true;
         isAttacking = false;
+    }
+
+    public override void TakeDamage(int damageAmount)
+    {
+        base.TakeDamage(damageAmount);
+        if (!playerIsNearby)
+        {
+            playerIsNearby = aiPath.canMove = true;
+        }
     }
 }
 

@@ -93,7 +93,7 @@ public class Player : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log("OUCH OOF IM DED");
+        // TODO : death fx
         Destroy(gameObject);
     }
     
