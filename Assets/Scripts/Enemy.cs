@@ -48,11 +48,11 @@ public class Enemy : MonoBehaviour
     {
         if (playerTransform.position.x - transform.position.x > 0)
         {
-            transform.localScale = new Vector3(1f, 1f, 1f);
+            GetComponent<SpriteRenderer>().flipX = false;
         }
         else if (playerTransform.position.x - transform.position.x < 0)
         {
-            transform.localScale = new Vector3(-1f, 1f, 1f);
+            GetComponent<SpriteRenderer>().flipX = true;
         }
     }
 

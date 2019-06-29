@@ -28,7 +28,7 @@ public class WandererEnemy : Enemy
         aiPath.maxSpeed = moveSpeed;
     }
 
-    private void Update()
+    public virtual void Update()
     {
         if (!ai.pathPending && (ai.reachedEndOfPath || !ai.hasPath) && !isOnWanderingCooldown)
         {
@@ -46,6 +46,14 @@ public class WandererEnemy : Enemy
         {
             anim.SetBool("isMoving", false);
         }
+
+        if (ai.velocity.x < 0)
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+        } else if (ai.velocity.y > 0)
+        {
+            GetComponent<SpriteRenderer>().flipX = false;
+        }
     }
 
     private void FindDestination()
@@ -60,8 +68,6 @@ public class WandererEnemy : Enemy
         while (Vector2.Distance(transform.position, ai.destination) > 2f)
         {
             timeWalking += Time.deltaTime;
-
-            Debug.Log(timeWalking);
 
             if (timeWalking >= maxTimeWalking)
             {

@@ -36,7 +36,7 @@ public class Weapon : MonoBehaviour
 
     private void Shoot()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButtonDown(0))
         {
             if (!isOnCooldown)
             {

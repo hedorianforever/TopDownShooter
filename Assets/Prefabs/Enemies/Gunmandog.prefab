@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2299619062893080375}
   - component: {fileID: 4472055893848240944}
   - component: {fileID: 2412539940139165912}
-  - component: {fileID: 2697565397965260721}
+  - component: {fileID: 6214928325664000780}
   m_Layer: 10
   m_Name: Gunmandog
   m_TagString: Enemy
@@ -184,7 +184,7 @@ MonoBehaviour:
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask:
     value: -1
---- !u!114 &2697565397965260721
+--- !u!114 &6214928325664000780
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -193,20 +193,58 @@ MonoBehaviour:
   m_GameObject: {fileID: 2697565397965260726}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bc86ef010b23954ebcfd599de8d19ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b63ec3744af4e845bd867323c8f64bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   health: 30
   moveSpeed: 4
   timeBetweenAttacks: 3
   attackDamage: 10
-  noticePlayerRadius: 10
+  noticePlayerRadius: 15
   playerTransform: {fileID: 0}
   wanderRadius: 10
-  timeBetweenWanderingMax: 7
-  timeBetweenWanderingMin: 1.5
+  timeBetweenWanderingMax: 6
+  timeBetweenWanderingMin: 2
   minWanderDistance: 5
   maxTimeWalking: 3
+  shootingRange: 20
+  accuracyOffset: 5
+  projectileLifetime: 2
+  projectileSpeed: 14
+  gunTransform: {fileID: 8309265616970713809}
+  shotPoint: {fileID: 4509556523143213931}
+  projectilePrefab: {fileID: 7981850473498567483, guid: fbad130f6f3e6d54393584fb3da1c8f1,
+    type: 3}
+--- !u!1 &5019963218853697279
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4509556523143213931}
+  m_Layer: 10
+  m_Name: ShotPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4509556523143213931
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5019963218853697279}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.62, y: 0.15, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8309265616970713809}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8309265616970713814
 GameObject:
   m_ObjectHideFlags: 0
@@ -217,9 +255,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8309265616970713809}
   - component: {fileID: 8309265616970713808}
-  m_Layer: 0
-  m_Name: NTlikeTDSSprites_Shotgun4
-  m_TagString: Untagged
+  m_Layer: 10
+  m_Name: Shotgun
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -234,7 +272,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.07, y: -0.31, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4509556523143213931}
   m_Father: {fileID: 2697565397965260715}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -275,7 +314,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300102, guid: 75d93423fea138f4dbfee3439bb63a05, type: 3}
+  m_Sprite: {fileID: 21300100, guid: 75d93423fea138f4dbfee3439bb63a05, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
