@@ -17,7 +17,7 @@ public class GunmanEnemy : WandererEnemy
 
 
     private bool isShooting = false;
-    
+
 
     public override void Start()
     {
@@ -40,6 +40,7 @@ public class GunmanEnemy : WandererEnemy
 
         RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, directionToPlayer, shootingRange);
 
+        if (!hitInfo) { return; }
         //Player is on enemy's line of sight
         if (hitInfo.collider.gameObject.tag == "Player")
         {
@@ -68,7 +69,15 @@ public class GunmanEnemy : WandererEnemy
     {
         GameObject projectile = Instantiate(projectilePrefab, shotPoint.position, gunTransform.rotation) as GameObject;
 
-        if (projectile != null )
+        float randomRotation = Random.Range(-accuracyOffset, accuracyOffset);
+
+        projectile.transform.Rotate(new Vector3(
+            projectile.transform.rotation.x,
+            projectile.transform.rotation.y,
+            projectile.transform.rotation.z + randomRotation)
+        );
+
+        if (projectile != null)
         {
             projectile.GetComponent<EnemyProjectile>().Init(attackDamage, projectileSpeed, projectileLifetime);
         }

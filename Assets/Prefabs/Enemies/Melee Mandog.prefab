@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 76174417}
   - component: {fileID: 76174418}
   m_Layer: 10
-  m_Name: Enemy Melee Dog
+  m_Name: Melee Mandog
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -169,8 +169,8 @@ MonoBehaviour:
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5
   rotationSpeed: 360
-  slowdownDistance: 0.6
-  pickNextWaypointDist: 2
+  slowdownDistance: 0
+  pickNextWaypointDist: 1.08
   endReachedDistance: 3.8
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1

@@ -7,6 +7,11 @@ public class Player : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 10f;
     [SerializeField] float health = 50f;
+    [SerializeField] float dashSpeed = 30f;
+    [SerializeField] float dashCooldown = 5f;
+    [SerializeField] float dashLength = .15f;
+
+    [SerializeField] Ghost ghostPrefab = default;
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -17,12 +22,16 @@ public class Player : MonoBehaviour
     private float horizontal;
     private float vertical;
     private float moveLimiter = 0.7f;
+    private bool isDashing = false;
+    private bool canDash = true;
+    private Vector2 currentDashTargetPos;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
     }
 
     private void Update()
@@ -33,10 +42,38 @@ public class Player : MonoBehaviour
         ChangeDirectionFaced();
         SetPlayerAnimation();
 
-        if (Input.GetMouseButtonDown(1))
+        Dash();
+    }
+
+    private void Dash()
+    {
+        if (Input.GetMouseButtonDown(1) && canDash)
         {
-            transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            canDash = false;
+            ghostPrefab.shouldMakeGhost = true;
+            isDashing = true;
+            StartCoroutine(DashRoutine());
         }
+    }
+
+    IEnumerator DashRoutine()
+    {
+        currentDashTargetPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        float t = 0;
+
+        while (t < dashLength)
+        {
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+        isDashing = false;
+        ghostPrefab.shouldMakeGhost = false;
+
+        yield return new WaitForSeconds(dashCooldown);
+
+        canDash = true;
     }
 
     private void FixedUpdate()
@@ -50,10 +87,13 @@ public class Player : MonoBehaviour
         if (horizontal < 0)
         {
             spriteRenderer.flipX = true;
+            //transform.localScale = new Vector3(-1, 1, 1);
         }
         else if (horizontal > 0)
         {
             spriteRenderer.flipX = false;
+            //transform.localScale = new Vector3(1, 1, 1);
+
         }
     }
 
@@ -71,15 +111,44 @@ public class Player : MonoBehaviour
 
     private void MovePlayer()
     {
-        
-        if (horizontal != 0 && vertical != 0)
+        if (isDashing)
         {
-            //limit movement when moving diagonally, so you don't move so fast
-            horizontal *= moveLimiter;
-            vertical *= moveLimiter;
-        }
+            Vector3 nextMovePoint = Vector3.MoveTowards(transform.position, currentDashTargetPos, dashSpeed * Time.deltaTime);
+            bool hasHitObstacle = false;
 
-        rb.velocity = new Vector2(horizontal * moveSpeed, vertical * moveSpeed);
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(nextMovePoint, .2f);
+            if (colliders.Length == 0)
+            {
+                transform.position = nextMovePoint;
+            }
+            else
+            {
+                foreach (Collider2D collider in colliders)
+                {
+                    if (collider.tag == "Obstacle")
+                    {
+                        hasHitObstacle = true;
+                        break;
+                    }
+                }
+
+                if (!hasHitObstacle)
+                {
+                    transform.position = nextMovePoint;
+                }
+            }
+        }
+        else
+        {
+            if (horizontal != 0 && vertical != 0)
+            {
+                //limit movement when moving diagonally, so you don't move so fast
+                horizontal *= moveLimiter;
+                vertical *= moveLimiter;
+            }
+
+            rb.velocity = new Vector2(horizontal * moveSpeed, vertical * moveSpeed);
+        }
     }
 
     public void TakeDamage(int damageAmount)
@@ -96,5 +165,5 @@ public class Player : MonoBehaviour
         // TODO : death fx
         Destroy(gameObject);
     }
-    
+
 }

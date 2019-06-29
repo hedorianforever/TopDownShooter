@@ -197,6 +197,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1088681078, guid: ea7919d8ce47f7848a13d2d82af4a58d, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1088681076, guid: ea7919d8ce47f7848a13d2d82af4a58d, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1088681075, guid: ea7919d8ce47f7848a13d2d82af4a58d, type: 3}
+      propertyPath: ghostPrefab
+      value: 
+      objectReference: {fileID: 1422305796}
+    - target: {fileID: 1088681075, guid: ea7919d8ce47f7848a13d2d82af4a58d, type: 3}
+      propertyPath: dashSpeed
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 1088681075, guid: ea7919d8ce47f7848a13d2d82af4a58d, type: 3}
+      propertyPath: maxDashTime
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1088681075, guid: ea7919d8ce47f7848a13d2d82af4a58d, type: 3}
+      propertyPath: dashLength
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1088681075, guid: ea7919d8ce47f7848a13d2d82af4a58d, type: 3}
+      propertyPath: dashCooldown
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea7919d8ce47f7848a13d2d82af4a58d, type: 3}
 --- !u!1 &91249101
@@ -28284,11 +28312,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AssetsPPU: 16
-  m_RefResolutionX: 400
-  m_RefResolutionY: 200
+  m_RefResolutionX: 320
+  m_RefResolutionY: 160
   m_UpscaleRT: 0
   m_PixelSnapping: 0
-  m_CropFrameX: 1
+  m_CropFrameX: 0
   m_CropFrameY: 0
   m_StretchFill: 0
 --- !u!20 &519420031
@@ -33796,16 +33824,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2266717365324582841, guid: d67d25d6d15acdb4f9b0b21ab178080a,
-        type: 3}
-      propertyPath: slowdownDistance
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2266717365324582841, guid: d67d25d6d15acdb4f9b0b21ab178080a,
-        type: 3}
-      propertyPath: pickNextWaypointDist
-      value: 1.08
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d67d25d6d15acdb4f9b0b21ab178080a, type: 3}
@@ -47555,6 +47573,28 @@ Transform:
   m_Father: {fileID: 1454106130}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1422305795 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1088681073, guid: ea7919d8ce47f7848a13d2d82af4a58d,
+    type: 3}
+  m_PrefabInstance: {fileID: 85143732}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1422305796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1422305795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea30663753788f74ba7837f1e8658f2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghostDelay: 0.01
+  ghostLifetime: 0.2
+  ghost: {fileID: 4681358664918621953, guid: 31bc1aa9522c69a469cc733d9cf95880, type: 3}
+  shouldMakeGhost: 0
 --- !u!1 &1454106129
 GameObject:
   m_ObjectHideFlags: 0
@@ -47769,7 +47809,7 @@ PrefabInstance:
     - target: {fileID: 8499782558145743665, guid: 24f3484e739cf474cbcb798e9c5e8314,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.1
+      value: -14.62
       objectReference: {fileID: 0}
     - target: {fileID: 8499782558145743665, guid: 24f3484e739cf474cbcb798e9c5e8314,
         type: 3}

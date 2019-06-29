@@ -210,7 +210,7 @@ MonoBehaviour:
   shootingRange: 20
   accuracyOffset: 5
   projectileLifetime: 2
-  projectileSpeed: 14
+  projectileSpeed: 12
   gunTransform: {fileID: 8309265616970713809}
   shotPoint: {fileID: 4509556523143213931}
   projectilePrefab: {fileID: 7981850473498567483, guid: fbad130f6f3e6d54393584fb3da1c8f1,
