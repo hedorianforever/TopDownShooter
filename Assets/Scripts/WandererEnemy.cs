@@ -54,6 +54,11 @@ public class WandererEnemy : Enemy
         {
             GetComponent<SpriteRenderer>().flipX = false;
         }
+
+        if (!hasNoticedPlayer)
+        {
+            CheckForPlayer();
+        }
     }
 
     private void FindDestination()

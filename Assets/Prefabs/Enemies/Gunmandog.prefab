@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2697565397965260726}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.94, y: 12.87, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8309265616970713809}
@@ -200,14 +200,14 @@ MonoBehaviour:
   moveSpeed: 4
   timeBetweenAttacks: 3
   attackDamage: 10
-  noticePlayerRadius: 15
+  noticePlayerRadius: 9.5
   playerTransform: {fileID: 0}
   wanderRadius: 10
   timeBetweenWanderingMax: 6
   timeBetweenWanderingMin: 2
   minWanderDistance: 5
   maxTimeWalking: 3
-  shootingRange: 20
+  shootingRange: 18
   accuracyOffset: 5
   projectileLifetime: 2
   projectileSpeed: 12

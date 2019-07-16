@@ -32,6 +32,8 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
+        Physics2D.queriesStartInColliders = false;
+
     }
 
     private void Update()

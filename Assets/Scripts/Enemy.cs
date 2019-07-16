@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float noticePlayerRadius = 15f;
 
     [HideInInspector] public Transform playerTransform;
-    protected bool playerIsNearby = false;
+    protected bool hasNoticedPlayer = false;
     protected Animator anim;
 
     public virtual void Start()
@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour
     public virtual void TakeDamage(int damageAmount)
     {
         health -= damageAmount;
+        hasNoticedPlayer = true;
 
         if (health <= 0)
         {
@@ -38,7 +39,7 @@ public class Enemy : MonoBehaviour
         {
             if (hitColliders[i].tag == "Player")
             {
-                playerIsNearby = true;
+                hasNoticedPlayer = true;
                 return;
             }
         }

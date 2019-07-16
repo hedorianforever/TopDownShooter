@@ -45,8 +45,9 @@ public class GunmanEnemy : WandererEnemy
         if (hitInfo.collider.gameObject.tag == "Player")
         {
             Debug.DrawLine(transform.position, hitInfo.point, Color.red);
+            //TODO: maybe should show this line as a preview for the player to dodge
             LookAtPlayer();
-            if (!isShooting)
+            if (!isShooting && hasNoticedPlayer)
             {
                 isShooting = true;
                 StartCoroutine(ShootRoutine());

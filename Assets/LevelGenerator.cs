@@ -22,7 +22,6 @@ public class LevelGenerator : MonoBehaviour
     }
 
     //Making the walkers spawns more often and turn more often should generally make your rooms wider.
-
     List<walker> walkers;
     [SerializeField] float chanceWalkerChangeDir = 0.5f;
     [SerializeField] float chanceWalkerSpawn = 0.05f;
@@ -39,8 +38,22 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] Tilemap spaceTilemap = default;
     
 
-
     [SerializeField] bool shouldRemoveSingleWalls = true;
+
+    [Header("Enemies related variables")]
+    [SerializeField] Transform playerTransform = default;
+
+    //for percentage, add more of the same enemy ie 4 gunman prefabs and 1 summoner prefab for 80% chance to summon the gunman
+    [SerializeField] Enemy[] enemies = default;
+
+    [SerializeField] int maxNumberEnemies = 15;
+    [SerializeField] int minNumberEnemies = 6;
+
+    //chance to spawn enemy per tile
+    [SerializeField] float chanceToSpawnEnemy = .05f;
+
+    private float minEnemyDistanceFromPlayer = 12f;
+    private int enemiesAlive = 0;
 
 
     private void Start()
@@ -57,6 +70,8 @@ public class LevelGenerator : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log("ENEMIES ALIVE: " + enemiesAlive);
+
         if (Input.GetKeyDown(KeyCode.R))
         {
             ClearGrid();
@@ -311,6 +326,7 @@ public class LevelGenerator : MonoBehaviour
                         break;
                     case gridSpace.floor:
                         Spawn(x, y, floorTile, groundTilemap);
+                        //SpawnEnemy(x, y);
                         break;
                     case gridSpace.wall:
                         //also spawning the floorTile below the wallTile in case the walltile has transparent background
@@ -320,25 +336,67 @@ public class LevelGenerator : MonoBehaviour
                 }
             }
         }
-        //for some reason it's not working if called immediately; the tilemap must take a while to recalculate everything
+        //for some reason it's not working if called immediately; the tilemap probably takes a while to recalculate everything
         Invoke("ScanLevel", .1f);
+        Invoke("SpawnEnemies", .3f);
 
     }
 
-    //void Spawn(float x, float y, GameObject toSpawn)
-    //{
-    //    //find the position to spawn
-    //    Vector2 offset = roomSizeWorldUnits / 2.0f;
-    //    Vector2 spawnPos = new Vector2(x, y) * worldUnitsInOneGridCell - offset;
-    //    //spawn object
-    //    GameObject spawnedObj = Instantiate(toSpawn, spawnPos, Quaternion.identity) as GameObject;
-    //    gridObjs.Add(spawnedObj);
-    //}
+    void SpawnEnemies()
+    {
+        Debug.Log("SPAWNENEMIES() CALLED WITH ENEMIES ALIVE == " + enemiesAlive);
+
+        for (int x = 0; x < roomWidth - 1; x++)
+        {
+            for (int y = 0; y < roomHeight - 1; y++)
+            {
+                if (grid[x, y] == gridSpace.floor)
+                {
+                    SpawnEnemy(x, y);
+                }
+            }
+        }
+
+        if (enemiesAlive < minNumberEnemies)
+        {
+            SpawnEnemies();
+        } else
+        {
+            //originally false for testing if spawned enemies are inside walls
+            obstacleTilemap.GetComponent<TilemapCollider2D>().usedByComposite = true;
+        }
+    }
+
+    void SpawnEnemy(int x, int y)
+    {
+        Vector2 offset = roomSizeWorldUnits / 2.0f;
+        Vector2 spawnPos = new Vector2(x, y) * worldUnitsInOneGridCell - offset;
+
+        float distanceToPlayer = Vector2.Distance(spawnPos, playerTransform.position);
+        
+        if (Random.value < chanceToSpawnEnemy && enemiesAlive < maxNumberEnemies && distanceToPlayer > minEnemyDistanceFromPlayer)
+        {
+            Enemy enemyToSpawn = enemies[Random.Range(0, enemies.Length)];
+            Enemy spawnedEnemy = Instantiate(enemyToSpawn, spawnPos, Quaternion.identity);
+            enemiesAlive++;
+
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(spawnedEnemy.transform.position, 1f);
+            foreach (Collider2D col in colliders)
+            {
+                if (col.tag == "Obstacle")
+                {
+                    Destroy(spawnedEnemy.gameObject);
+                    enemiesAlive--;
+                }
+            }
+        }
+    }
 
     void Spawn(float x, float y, TileBase tile, Tilemap tilemap)
     {
-        Vector2 offset = roomSizeWorldUnits / 2.0f; 
-        Vector2 spawnPos = new Vector2(x, y) * worldUnitsInOneGridCell - offset; //if x and y range from 0 to 30; world units from -15 to 15, for example
+        Vector2 offset = roomSizeWorldUnits / 2.0f;
+        //if x and y range from 0 to 30; world units from -15 to 15, for example
+        Vector2 spawnPos = new Vector2(x, y) * worldUnitsInOneGridCell - offset; 
 
         tilemap.SetTile(new Vector3Int((int)spawnPos.x, (int)spawnPos.y, 0), tile);
     }

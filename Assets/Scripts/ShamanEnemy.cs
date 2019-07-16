@@ -39,7 +39,7 @@ public class ShamanEnemy : Enemy
         {
             anim.SetBool("isMoving", false);
             CheckForPlayer();
-            if (playerIsNearby && !isSummoning)
+            if (hasNoticedPlayer && !isSummoning)
             {
                 FacePlayer();
                 isSummoning = true;
@@ -82,7 +82,7 @@ public class ShamanEnemy : Enemy
             yield return null;
         }
         aiDestSetter.target = newDestination;
-        playerIsNearby = false;
+        hasNoticedPlayer = false;
         isSummoning = false;
     }
 

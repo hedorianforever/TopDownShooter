@@ -30,7 +30,7 @@ public class MeleeEnemy : Enemy
     private void Update()
     {
         if (playerTransform == null) { return; }
-        
+
         if ((aiPath.velocity.y >= .5f || aiPath.velocity.x >= .5f) && !isAttacking)
         {
             anim.SetBool("isMoving", true);
@@ -41,14 +41,15 @@ public class MeleeEnemy : Enemy
             anim.SetBool("isMoving", false);
         }
 
-        if (!playerIsNearby)
+        if (!hasNoticedPlayer)
         {
             CheckForPlayer();
-            if (playerIsNearby)
-            {
-                aiPath.canMove = true;
-            }
             return;
+        }
+
+        if (hasNoticedPlayer && !isAttacking)
+        {
+            aiPath.canMove = true;
         }
 
         FacePlayer();
@@ -106,9 +107,10 @@ public class MeleeEnemy : Enemy
     public override void TakeDamage(int damageAmount)
     {
         base.TakeDamage(damageAmount);
-        if (!playerIsNearby)
+        if (!hasNoticedPlayer)
         {
-            playerIsNearby = aiPath.canMove = true;
+            hasNoticedPlayer = true;
+            aiPath.canMove = true;
         }
     }
 }
