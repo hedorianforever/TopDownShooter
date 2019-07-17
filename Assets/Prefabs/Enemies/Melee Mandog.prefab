@@ -133,13 +133,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 30
-  moveSpeed: 10
+  moveSpeed: 7.5
   timeBetweenAttacks: 1.5
   attackDamage: 10
   noticePlayerRadius: 8
   playerTransform: {fileID: 0}
   stopDistance: 3
-  leapAttackSpeed: 4.5
+  leapAttackSpeed: 3
 --- !u!114 &2266717365324582841
 MonoBehaviour:
   m_ObjectHideFlags: 0

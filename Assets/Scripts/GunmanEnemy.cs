@@ -9,6 +9,9 @@ public class GunmanEnemy : WandererEnemy
     [SerializeField] float accuracyOffset = 5f;
     [SerializeField] float projectileLifetime = 2f;
     [SerializeField] float projectileSpeed = 10f;
+    [Range(0, 1)]
+    [Tooltip("Chance to shoot player while on sight")]
+    [SerializeField] float chanceToShoot = .2f;
     //[Range(0, 100)] [SerializeField] int chanceToShootOnSight = 20;
 
     [SerializeField] Transform gunTransform = default; //to look at player 
@@ -47,7 +50,7 @@ public class GunmanEnemy : WandererEnemy
             Debug.DrawLine(transform.position, hitInfo.point, Color.red);
             //TODO: maybe should show this line as a preview for the player to dodge
             LookAtPlayer();
-            if (!isShooting && hasNoticedPlayer)
+            if (!isShooting && hasNoticedPlayer && Random.value < chanceToShoot)
             {
                 isShooting = true;
                 StartCoroutine(ShootRoutine());

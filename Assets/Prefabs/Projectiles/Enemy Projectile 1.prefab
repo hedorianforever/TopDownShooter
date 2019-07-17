@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 7981850473498567485}
   - component: {fileID: 7981850473498567482}
   - component: {fileID: 2933754991043484921}
-  - component: {fileID: 5928522045917720818}
+  - component: {fileID: 1525630043731707150}
+  - component: {fileID: 3394538418036094185}
   m_Layer: 12
   m_Name: Enemy Projectile 1
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 7981850473498567483}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7.75, y: 7.05, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -70,8 +71,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300110, guid: 75d93423fea138f4dbfee3439bb63a05, type: 3}
-  m_Color: {r: 1, g: 0.980739, b: 0.7688679, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 17283d44d077e6b4a9fc914120d585b2, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -95,8 +96,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyFX: {fileID: 113567941566372775, guid: 13a8a126f39555c4192ca524bb37bc08,
     type: 3}
---- !u!61 &5928522045917720818
-BoxCollider2D:
+--- !u!50 &1525630043731707150
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7981850473498567483}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!58 &3394538418036094185
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -109,15 +131,5 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 0.75}
-    newSize: {x: 1, y: 0.8125}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.89, y: 0.69}
-  m_EdgeRadius: 0
+  m_Radius: 0.35

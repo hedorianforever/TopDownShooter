@@ -123,11 +123,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae9e9facdb886394aa218c1a48c6f9d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 6616136591709005103, guid: 7fd6be86ef9f42c479083c0cb7e31a6e,
+  projectilePrefab: {fileID: 692041066808304314, guid: afbe3e66eafbf6042bb026988a3ff1d7,
     type: 3}
   shotPoint: {fileID: 1068845873551912941}
   timeBetweenShots: 0.8
-  accuracyOffset: 3
+  accuracyOffset: 5
   damage: 10
-  projectileSpeed: 16
-  projectileLifetime: 0.7
+  projectileSpeed: 14
+  projectileLifetime: 0.8
+  maxAmmo: 6
+  magazineSize: 6
+  reloadSpeed: 2
+  hasInfiniteAmmo: 1
+  ammoPerShot: 1
+  currentAmmo: 40

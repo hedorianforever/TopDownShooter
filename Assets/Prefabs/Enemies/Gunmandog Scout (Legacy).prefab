@@ -203,15 +203,14 @@ MonoBehaviour:
   noticePlayerRadius: 9.5
   playerTransform: {fileID: 0}
   wanderRadius: 10
-  timeBetweenWanderingMax: 1.2
-  timeBetweenWanderingMin: 0.5
+  timeBetweenWanderingMax: 6
+  timeBetweenWanderingMin: 2
   minWanderDistance: 5
-  maxTimeWalking: 1
+  maxTimeWalking: 3
   shootingRange: 18
   accuracyOffset: 6
-  projectileLifetime: 4
-  projectileSpeed: 6
-  chanceToShoot: 0.2
+  projectileLifetime: 2.5
+  projectileSpeed: 8
   gunTransform: {fileID: 8309265616970713809}
   shotPoint: {fileID: 4509556523143213931}
   projectilePrefab: {fileID: 7981850473498567483, guid: fbad130f6f3e6d54393584fb3da1c8f1,

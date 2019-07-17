@@ -14,6 +14,20 @@ public class Weapon : MonoBehaviour
     public float projectileSpeed = 10f;
     public float projectileLifetime = 5f;
 
+    [Header("Ammo related variables")]
+    [SerializeField] int maxAmmo = 100;
+    [SerializeField] int magazineSize = 6;
+    [SerializeField] float reloadSpeed = 2f;
+    [SerializeField] bool hasInfiniteAmmo = false;
+    [SerializeField] int ammoPerShot = 1;
+
+    //later will be saved with the player, for there can be multiple weapons of the same type which uses the same ammo
+    [SerializeField] int currentAmmo = 40;
+
+    private int currentLoadedAmmo = 6;
+    private bool isReloading = false;
+
+
     private bool isOnCooldown = false;
 
     private void Update()
@@ -38,11 +52,22 @@ public class Weapon : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (!isOnCooldown)
+            if (!isOnCooldown && currentLoadedAmmo > 0 && !isReloading)
             {
+                currentLoadedAmmo -= ammoPerShot;
                 StartCoroutine(ShootCoroutine());
+            } else if (currentLoadedAmmo <= 0)
+            {
+                Reload();
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Reload();
+        }
+
+        //Debug.Log("CURRENT AMMO: " + currentAmmo);
     }
 
     IEnumerator ShootCoroutine()
@@ -63,6 +88,43 @@ public class Weapon : MonoBehaviour
         yield return new WaitForSeconds(timeBetweenShots);
 
         isOnCooldown = false;
+    }
+
+    private void Reload()
+    {
+        if (currentAmmo <= 0)
+        {
+            Debug.Log("NO AMMO! ");
+            return;
+        }
+
+        if (currentLoadedAmmo == magazineSize || isReloading)
+        {
+            //Debug.Log("WEAPON FULLY LOADED, CANT RELOAD");
+            return;
+        }
+
+        StartCoroutine(ReloadRoutine());
+    }
+
+    IEnumerator ReloadRoutine()
+    {
+        isReloading = true;
+        //reload animation
+        yield return new WaitForSeconds(reloadSpeed);
+        if (hasInfiniteAmmo)
+        {
+            currentLoadedAmmo = magazineSize;
+        } else
+        {
+            while (currentAmmo != 0 && currentLoadedAmmo != magazineSize)
+            {
+                currentLoadedAmmo++;
+                currentAmmo--;
+                yield return null;
+            }
+        }
+        isReloading = false;
     }
 
     public int GetDamage()

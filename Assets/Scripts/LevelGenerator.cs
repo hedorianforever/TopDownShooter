@@ -41,7 +41,6 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] bool shouldRemoveSingleWalls = true;
 
     [Header("Enemies related variables")]
-    [SerializeField] Transform playerTransform = default;
 
     //for percentage, add more of the same enemy ie 4 gunman prefabs and 1 summoner prefab for 80% chance to summon the gunman
     [SerializeField] Enemy[] enemies = default;
@@ -49,15 +48,19 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] int maxNumberEnemies = 15;
     [SerializeField] int minNumberEnemies = 6;
 
+    [SerializeField] float minDistanceBetweenEnemies = 5f;
+
     //chance to spawn enemy per tile
     [SerializeField] float chanceToSpawnEnemy = .05f;
 
+    private Transform playerTransform = default;
     private float minEnemyDistanceFromPlayer = 12f;
-    private int enemiesAlive = 0;
+    private int enemiesSpawned = 0;
 
 
     private void Start()
     {
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         Setup();
         CreateFloors();
         CreateWalls();
@@ -66,13 +69,14 @@ public class LevelGenerator : MonoBehaviour
             RemoveSingleWalls();
         }
         SpawnLevel();
+        SpawnPlayer();
     }
 
     private void Update()
     {
-        Debug.Log("ENEMIES ALIVE: " + enemiesAlive);
+        //Debug.Log("ENEMIES ALIVE: " + enemiesAlive);
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.Alpha9))
         {
             ClearGrid();
             Setup();
@@ -338,33 +342,37 @@ public class LevelGenerator : MonoBehaviour
         }
         //for some reason it's not working if called immediately; the tilemap probably takes a while to recalculate everything
         Invoke("ScanLevel", .1f);
-        Invoke("SpawnEnemies", .3f);
+        Invoke("SpawnPlayer", .3f);
+        Invoke("SpawnEnemies", .4f);
 
     }
 
     void SpawnEnemies()
     {
-        Debug.Log("SPAWNENEMIES() CALLED WITH ENEMIES ALIVE == " + enemiesAlive);
-
-        for (int x = 0; x < roomWidth - 1; x++)
+        int iterations = 100;
+        while(enemiesSpawned < minNumberEnemies)
         {
-            for (int y = 0; y < roomHeight - 1; y++)
+            for (int x = 0; x < roomWidth - 1; x++)
             {
-                if (grid[x, y] == gridSpace.floor)
+                for (int y = 0; y < roomHeight - 1; y++)
                 {
-                    SpawnEnemy(x, y);
+                    if (grid[x, y] == gridSpace.floor)
+                    {
+                        SpawnEnemy(x, y);
+                    }
                 }
             }
+            iterations--;
+            if (iterations <= 0)
+            {
+                Debug.LogError("BROKE SPAWN ENEMIES ITERATIONS LIMIT! ");
+                break;
+            }
         }
+        
+        //originally false for testing if spawned enemies are inside walls
+        obstacleTilemap.GetComponent<TilemapCollider2D>().usedByComposite = true;
 
-        if (enemiesAlive < minNumberEnemies)
-        {
-            SpawnEnemies();
-        } else
-        {
-            //originally false for testing if spawned enemies are inside walls
-            obstacleTilemap.GetComponent<TilemapCollider2D>().usedByComposite = true;
-        }
     }
 
     void SpawnEnemy(int x, int y)
@@ -372,21 +380,34 @@ public class LevelGenerator : MonoBehaviour
         Vector2 offset = roomSizeWorldUnits / 2.0f;
         Vector2 spawnPos = new Vector2(x, y) * worldUnitsInOneGridCell - offset;
 
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(spawnPos, 15f);
+
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.tag == "Enemy")
+            {
+                if (Vector2.Distance(spawnPos, collider.transform.position) < minDistanceBetweenEnemies)
+                {
+                    return;
+                }
+            }
+        }
+
         float distanceToPlayer = Vector2.Distance(spawnPos, playerTransform.position);
         
-        if (Random.value < chanceToSpawnEnemy && enemiesAlive < maxNumberEnemies && distanceToPlayer > minEnemyDistanceFromPlayer)
+        if (Random.value < chanceToSpawnEnemy && enemiesSpawned < maxNumberEnemies && distanceToPlayer > minEnemyDistanceFromPlayer)
         {
             Enemy enemyToSpawn = enemies[Random.Range(0, enemies.Length)];
             Enemy spawnedEnemy = Instantiate(enemyToSpawn, spawnPos, Quaternion.identity);
-            enemiesAlive++;
+            enemiesSpawned++;
 
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(spawnedEnemy.transform.position, 1f);
+            colliders = Physics2D.OverlapCircleAll(spawnedEnemy.transform.position, 1f);
             foreach (Collider2D col in colliders)
             {
                 if (col.tag == "Obstacle")
                 {
                     Destroy(spawnedEnemy.gameObject);
-                    enemiesAlive--;
+                    enemiesSpawned--;
                 }
             }
         }
@@ -410,6 +431,32 @@ public class LevelGenerator : MonoBehaviour
         else
         {
             Debug.LogError("No active AstarPath found in the scene");
+        }
+    }
+
+    void SpawnPlayer()
+    {
+        Vector2 offset = roomSizeWorldUnits / 2.0f;
+
+        for (int x = Mathf.FloorToInt(-offset.x + 2); x < Mathf.FloorToInt(offset.x - 2); x++)
+        {
+            for (int y = Mathf.FloorToInt(-offset.y + 2); y < Mathf.FloorToInt(offset.y - 2); y++)
+            {
+                Vector2 spawnPos = new Vector2(x, y);
+                bool hasHitObstacle = false;
+                foreach (Collider2D collider in Physics2D.OverlapCircleAll(spawnPos, .3f))
+                {
+                    if (collider.tag == "Obstacle")
+                    {
+                        hasHitObstacle = true;
+                        break;
+                    }
+                };
+                if (!hasHitObstacle)
+                {
+                    playerTransform.position = spawnPos;
+                }
+            }
         }
     }
 
