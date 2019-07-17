@@ -196,7 +196,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b63ec3744af4e845bd867323c8f64bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 30
+  health: 20
   moveSpeed: 4
   timeBetweenAttacks: 2
   attackDamage: 10

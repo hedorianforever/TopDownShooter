@@ -105,8 +105,8 @@ public class LevelGenerator : MonoBehaviour
         groundTilemap.ClearAllTiles();
         obstacleTilemap.ClearAllTiles();
         //find grid size
-        roomHeight = Mathf.RoundToInt(roomSizeWorldUnits.x / worldUnitsInOneGridCell);
-        roomWidth = Mathf.RoundToInt(roomSizeWorldUnits.y / worldUnitsInOneGridCell);
+        roomWidth = Mathf.RoundToInt(roomSizeWorldUnits.x / worldUnitsInOneGridCell);
+        roomHeight = Mathf.RoundToInt(roomSizeWorldUnits.y / worldUnitsInOneGridCell);
         //create grid
         grid = new gridSpace[roomWidth, roomHeight];
         //set grid's default state 
@@ -349,7 +349,7 @@ public class LevelGenerator : MonoBehaviour
 
     void SpawnEnemies()
     {
-        int iterations = 100;
+        int iterations = 200;
         while(enemiesSpawned < minNumberEnemies)
         {
             for (int x = 0; x < roomWidth - 1; x++)
@@ -444,7 +444,8 @@ public class LevelGenerator : MonoBehaviour
             {
                 Vector2 spawnPos = new Vector2(x, y);
                 bool hasHitObstacle = false;
-                foreach (Collider2D collider in Physics2D.OverlapCircleAll(spawnPos, .3f))
+                Collider2D[] colliders = Physics2D.OverlapCircleAll(spawnPos, .6f);
+                foreach (Collider2D collider in colliders)
                 {
                     if (collider.tag == "Obstacle")
                     {

@@ -15,25 +15,35 @@ public class Weapon : MonoBehaviour
     public float projectileLifetime = 5f;
 
     [Header("Ammo related variables")]
-    [SerializeField] int maxAmmo = 100;
+
+    [SerializeField] WeaponType myWeaponType = WeaponType.Infinite;
     [SerializeField] int magazineSize = 6;
     [SerializeField] float reloadSpeed = 2f;
-    [SerializeField] bool hasInfiniteAmmo = false;
     [SerializeField] int ammoPerShot = 1;
 
-    //later will be saved with the player, for there can be multiple weapons of the same type which uses the same ammo
-    [SerializeField] int currentAmmo = 40;
-
-    private int currentLoadedAmmo = 6;
+    private int currentLoadedAmmo = 0;
     private bool isReloading = false;
-
-
     private bool isOnCooldown = false;
+    private WeaponManager weaponManager;
 
+    private void Start()
+    {
+        weaponManager = WeaponManager.Instance;
+        weaponManager.AddAmmo(myWeaponType, magazineSize);
+        float originalReloadSpeed = reloadSpeed;
+        reloadSpeed = 0f;
+        Reload();
+        reloadSpeed = originalReloadSpeed;
+    }
     private void Update()
     {
         LookAtMouse();
         Shoot();
+
+        //if (isReloading)
+        //{
+        //    Debug.Log("RELOADING...");
+        //}
     }
 
     private void LookAtMouse()
@@ -50,19 +60,17 @@ public class Weapon : MonoBehaviour
 
     private void Shoot()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0) )
         {
             if (!isOnCooldown && currentLoadedAmmo > 0 && !isReloading)
             {
                 currentLoadedAmmo -= ammoPerShot;
+                isOnCooldown = true;
                 StartCoroutine(ShootCoroutine());
-            } else if (currentLoadedAmmo <= 0)
-            {
-                Reload();
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) || (Input.GetMouseButtonDown(0) && currentLoadedAmmo <= 0))
         {
             Reload();
         }
@@ -72,8 +80,6 @@ public class Weapon : MonoBehaviour
 
     IEnumerator ShootCoroutine()
     {
-        isOnCooldown = true;
-
         GameObject projectile = Instantiate(projectilePrefab, shotPoint.position, transform.rotation) as GameObject;
 
         float randomRotation = Random.Range(-accuracyOffset, accuracyOffset);
@@ -92,8 +98,9 @@ public class Weapon : MonoBehaviour
 
     private void Reload()
     {
-        if (currentAmmo <= 0)
+        if (weaponManager.GetCurrentAmmo(myWeaponType) <= 0)
         {
+            //play error sound / show not allowed sign
             Debug.Log("NO AMMO! ");
             return;
         }
@@ -112,17 +119,20 @@ public class Weapon : MonoBehaviour
         isReloading = true;
         //reload animation
         yield return new WaitForSeconds(reloadSpeed);
-        if (hasInfiniteAmmo)
+        if (myWeaponType == WeaponType.Infinite)
         {
             currentLoadedAmmo = magazineSize;
         } else
         {
+            int currentAmmo = weaponManager.GetCurrentAmmo(myWeaponType);
+            int initialAmmo = currentAmmo;
             while (currentAmmo != 0 && currentLoadedAmmo != magazineSize)
             {
                 currentLoadedAmmo++;
                 currentAmmo--;
                 yield return null;
             }
+            weaponManager.UseAmmo(myWeaponType, initialAmmo - currentAmmo);
         }
         isReloading = false;
     }

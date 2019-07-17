@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 2266717365324582841}
   - component: {fileID: 76174417}
   - component: {fileID: 76174418}
+  - component: {fileID: 6877865887352877084}
   m_Layer: 10
   m_Name: Melee Mandog
   m_TagString: Enemy
@@ -132,14 +133,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5db887f3f9097584383d61275dd54145, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 30
-  moveSpeed: 7.5
+  health: 15
+  moveSpeed: 6
   timeBetweenAttacks: 1.5
   attackDamage: 10
   noticePlayerRadius: 8
   playerTransform: {fileID: 0}
   stopDistance: 3
-  leapAttackSpeed: 3
+  leapAttackSpeed: 4.5
 --- !u!114 &2266717365324582841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,3 +219,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   target: {fileID: 0}
+--- !u!50 &6877865887352877084
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 294067842146335551}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
