@@ -171,7 +171,7 @@ MonoBehaviour:
   health: 50
   dashSpeed: 16
   dashCooldown: 2
-  dashLength: 0.1
+  dashLength: 0.12
   ghostPrefab: {fileID: 1876059252}
 --- !u!70 &1876059253
 CapsuleCollider2D:

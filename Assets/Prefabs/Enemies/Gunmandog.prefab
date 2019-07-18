@@ -209,7 +209,7 @@ MonoBehaviour:
   maxTimeWalking: 1
   shootingRange: 18
   accuracyOffset: 6
-  projectileLifetime: 4
+  projectileLifetime: 20
   projectileSpeed: 6
   chanceToShoot: 0.2
   gunTransform: {fileID: 8309265616970713809}

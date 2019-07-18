@@ -8,12 +8,18 @@ public class LevelGenerator : MonoBehaviour
 {
     enum gridSpace { empty, floor, wall };
 
-    gridSpace[,] grid;
-    //GameObject[,] gridObjs;
-    List<GameObject> gridObjs = new List<GameObject>();
-    int roomHeight, roomWidth;
-    [SerializeField] Vector2 roomSizeWorldUnits = new Vector2(30, 30);
-    float worldUnitsInOneGridCell = 1;
+    private gridSpace[,] grid;
+    //GameObject[,] gridObjs;]
+
+    //temporary; used for testing purposes
+    private List<GameObject> gridObjs = new List<GameObject>();
+
+    private Vector3 randomValidFloorTile;
+    private List<Vector3> floorTilesPositions = new List<Vector3>();
+
+    private int roomHeight, roomWidth;
+    [SerializeField] private Vector2 roomSizeWorldUnits = new Vector2(30, 30);
+    private float worldUnitsInOneGridCell = 1;
 
     struct walker
     {
@@ -23,35 +29,35 @@ public class LevelGenerator : MonoBehaviour
 
     //Making the walkers spawns more often and turn more often should generally make your rooms wider.
     List<walker> walkers;
-    [SerializeField] float chanceWalkerChangeDir = 0.5f;
-    [SerializeField] float chanceWalkerSpawn = 0.05f;
-    [SerializeField] float chanceWalkerDestroy = 0.05f;
-    [SerializeField] int maxWalkers = 10;
-    [SerializeField] float percentToFill = 0.2f;
+    [SerializeField] private float chanceWalkerChangeDir = 0.5f;
+    [SerializeField] private float chanceWalkerSpawn = 0.05f;
+    [SerializeField] private float chanceWalkerDestroy = 0.05f;
+    [SerializeField] private int maxWalkers = 10;
+    [SerializeField] private float percentToFill = 0.2f;
 
-    [SerializeField] TileBase floorTile = default;
-    [SerializeField] TileBase wallTile = default;
-    [SerializeField] TileBase emptySpaceTile = default;
+    [SerializeField] private TileBase floorTile = default;
+    [SerializeField] private TileBase wallTile = default;
+    //[SerializeField] private TileBase emptySpaceTile = default;
 
-    [SerializeField] Tilemap groundTilemap = default;
-    [SerializeField] Tilemap obstacleTilemap = default;
-    [SerializeField] Tilemap spaceTilemap = default;
+    [SerializeField] private Tilemap groundTilemap = default;
+    [SerializeField] private Tilemap obstacleTilemap = default;
+    //[SerializeField] private Tilemap spaceTilemap = default;
     
 
-    [SerializeField] bool shouldRemoveSingleWalls = true;
+    [SerializeField] private bool shouldRemoveSingleWalls = true;
 
     [Header("Enemies related variables")]
 
     //for percentage, add more of the same enemy ie 4 gunman prefabs and 1 summoner prefab for 80% chance to summon the gunman
-    [SerializeField] Enemy[] enemies = default;
+    [SerializeField] private Enemy[] enemies = default;
 
-    [SerializeField] int maxNumberEnemies = 15;
-    [SerializeField] int minNumberEnemies = 6;
+    [SerializeField] private int maxNumberEnemies = 15;
+    [SerializeField] private int minNumberEnemies = 6;
 
-    [SerializeField] float minDistanceBetweenEnemies = 5f;
+    [SerializeField] private float minDistanceBetweenEnemies = 5f;
 
     //chance to spawn enemy per tile
-    [SerializeField] float chanceToSpawnEnemy = .05f;
+    //[SerializeField] float chanceToSpawnEnemy = .05f;
 
     private Transform playerTransform = default;
     private float minEnemyDistanceFromPlayer = 12f;
@@ -69,7 +75,7 @@ public class LevelGenerator : MonoBehaviour
             RemoveSingleWalls();
         }
         SpawnLevel();
-        SpawnPlayer();
+        //SpawnPlayer();
     }
 
     private void Update()
@@ -296,8 +302,7 @@ public class LevelGenerator : MonoBehaviour
             case 0: return Vector2.down;
             case 1: return Vector2.left;
             case 2: return Vector2.up;
-            case 3: return Vector2.right;
-            default: return Vector2.zero;
+            default: return Vector2.right;
         }
     }
 
@@ -327,6 +332,7 @@ public class LevelGenerator : MonoBehaviour
 
                         //for now, I want empty space to be walls
                         Spawn(x, y, wallTile, obstacleTilemap);
+                        grid[x, y] = gridSpace.wall;
                         break;
                     case gridSpace.floor:
                         Spawn(x, y, floorTile, groundTilemap);
@@ -334,34 +340,65 @@ public class LevelGenerator : MonoBehaviour
                         break;
                     case gridSpace.wall:
                         //also spawning the floorTile below the wallTile in case the walltile has transparent background
-                        Spawn(x, y, floorTile, groundTilemap);
+                        //Spawn(x, y, floorTile, groundTilemap);
                         Spawn(x, y, wallTile, obstacleTilemap);
                         break;
                 }
             }
         }
+
+        //SpawnPlayer();
+        //SpawnEnemies();
         //for some reason it's not working if called immediately; the tilemap probably takes a while to recalculate everything
         Invoke("ScanLevel", .1f);
-        Invoke("SpawnPlayer", .3f);
-        Invoke("SpawnEnemies", .4f);
+        Invoke("SpawnPlayer", 1f);
+        Invoke("SpawnEnemies", 2f);
 
     }
 
     void SpawnEnemies()
     {
-        int iterations = 200;
-        while(enemiesSpawned < minNumberEnemies)
+        int iterations = 1000;
+
+        int enemiesToSpawn = Random.Range(minNumberEnemies, maxNumberEnemies);
+
+        while (enemiesSpawned < enemiesToSpawn)
         {
-            for (int x = 0; x < roomWidth - 1; x++)
+            randomValidFloorTile = floorTilesPositions[Random.Range(0, floorTilesPositions.Count)];
+
+            //test distance between enemies from this position
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(randomValidFloorTile, 2f);
+            //foreach (Collider2D collider in colliders)
+            //{
+            //    if (collider.tag == "Enemy")
+            //    {
+            //        if (Vector2.Distance(randomValidFloorTile, collider.transform.position) < minDistanceBetweenEnemies)
+            //        {
+            //            return;
+            //        }
+            //    }
+            //}
+
+            float distanceToPlayer = Vector2.Distance(randomValidFloorTile, playerTransform.position);
+
+            //test if enemy is not too close to the player
+            if (distanceToPlayer > minEnemyDistanceFromPlayer)
             {
-                for (int y = 0; y < roomHeight - 1; y++)
+                Enemy spawnedEnemy = Instantiate(enemies[Random.Range(0, enemies.Length)], new Vector3(randomValidFloorTile.x, randomValidFloorTile.y, 0), Quaternion.identity);
+
+                enemiesSpawned++;
+
+                colliders = Physics2D.OverlapCircleAll(spawnedEnemy.transform.position, 1f);
+                foreach (Collider2D col in colliders)
                 {
-                    if (grid[x, y] == gridSpace.floor)
+                    if (col.tag == "Obstacle")
                     {
-                        SpawnEnemy(x, y);
+                        Destroy(spawnedEnemy.gameObject);
+                        enemiesSpawned--;
                     }
                 }
             }
+
             iterations--;
             if (iterations <= 0)
             {
@@ -369,56 +406,18 @@ public class LevelGenerator : MonoBehaviour
                 break;
             }
         }
-        
-        //originally false for testing if spawned enemies are inside walls
+
         obstacleTilemap.GetComponent<TilemapCollider2D>().usedByComposite = true;
 
-    }
-
-    void SpawnEnemy(int x, int y)
-    {
-        Vector2 offset = roomSizeWorldUnits / 2.0f;
-        Vector2 spawnPos = new Vector2(x, y) * worldUnitsInOneGridCell - offset;
-
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(spawnPos, 15f);
-
-        foreach (Collider2D collider in colliders)
-        {
-            if (collider.tag == "Enemy")
-            {
-                if (Vector2.Distance(spawnPos, collider.transform.position) < minDistanceBetweenEnemies)
-                {
-                    return;
-                }
-            }
-        }
-
-        float distanceToPlayer = Vector2.Distance(spawnPos, playerTransform.position);
-        
-        if (Random.value < chanceToSpawnEnemy && enemiesSpawned < maxNumberEnemies && distanceToPlayer > minEnemyDistanceFromPlayer)
-        {
-            Enemy enemyToSpawn = enemies[Random.Range(0, enemies.Length)];
-            Enemy spawnedEnemy = Instantiate(enemyToSpawn, spawnPos, Quaternion.identity);
-            enemiesSpawned++;
-
-            colliders = Physics2D.OverlapCircleAll(spawnedEnemy.transform.position, 1f);
-            foreach (Collider2D col in colliders)
-            {
-                if (col.tag == "Obstacle")
-                {
-                    Destroy(spawnedEnemy.gameObject);
-                    enemiesSpawned--;
-                }
-            }
-        }
     }
 
     void Spawn(float x, float y, TileBase tile, Tilemap tilemap)
     {
         Vector2 offset = roomSizeWorldUnits / 2.0f;
         //if x and y range from 0 to 30; world units from -15 to 15, for example
-        Vector2 spawnPos = new Vector2(x, y) * worldUnitsInOneGridCell - offset; 
+        Vector2 spawnPos = new Vector2(x, y) * worldUnitsInOneGridCell - offset;
 
+        //tilemap.SetTile(tilemap.WorldToCell(spawnPos), tile);
         tilemap.SetTile(new Vector3Int((int)spawnPos.x, (int)spawnPos.y, 0), tile);
     }
 
@@ -436,29 +435,132 @@ public class LevelGenerator : MonoBehaviour
 
     void SpawnPlayer()
     {
-        Vector2 offset = roomSizeWorldUnits / 2.0f;
-
-        for (int x = Mathf.FloorToInt(-offset.x + 2); x < Mathf.FloorToInt(offset.x - 2); x++)
+       
+        foreach (var position in groundTilemap.cellBounds.allPositionsWithin)
         {
-            for (int y = Mathf.FloorToInt(-offset.y + 2); y < Mathf.FloorToInt(offset.y - 2); y++)
+            if (groundTilemap.HasTile(position))
             {
-                Vector2 spawnPos = new Vector2(x, y);
-                bool hasHitObstacle = false;
-                Collider2D[] colliders = Physics2D.OverlapCircleAll(spawnPos, .6f);
-                foreach (Collider2D collider in colliders)
+                floorTilesPositions.Add(groundTilemap.CellToWorld(position));
+            }
+        }
+
+        for (int i = 0; i < floorTilesPositions.Count; i++)
+        {
+            randomValidFloorTile = floorTilesPositions[i];
+
+            bool hasHitObstacle = false;
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(randomValidFloorTile, .5f);
+            foreach (Collider2D collider in colliders)
+            {
+                if (collider.tag == "Obstacle")
                 {
-                    if (collider.tag == "Obstacle")
-                    {
-                        hasHitObstacle = true;
-                        break;
-                    }
-                };
-                if (!hasHitObstacle)
-                {
-                    playerTransform.position = spawnPos;
+                    hasHitObstacle = true;
+                    break;
                 }
+            };
+            if (!hasHitObstacle)
+            {
+                playerTransform.position = new Vector3(randomValidFloorTile.x, randomValidFloorTile.y, 0);
+                break;
             }
         }
     }
 
 }
+
+
+// [LEGACY]
+//void SpawnEnemies()
+//{
+//    int iterations = 200;
+//    while (enemiesSpawned < minNumberEnemies)
+//    {
+//        for (int x = 0; x < roomWidth - 1; x++)
+//        {
+//            for (int y = 0; y < roomHeight - 1; y++)
+//            {
+//                if (grid[x, y] == gridSpace.floor)
+//                {
+//                    SpawnEnemy(x, y);
+//                }
+//            }
+//        }
+//        iterations--;
+//        if (iterations <= 0)
+//        {
+//            Debug.LogError("BROKE SPAWN ENEMIES ITERATIONS LIMIT! ");
+//            break;
+//        }
+//    }
+
+//    //originally false for testing if spawned enemies are inside walls
+//    obstacleTilemap.GetComponent<TilemapCollider2D>().usedByComposite = true;
+
+//}
+
+//// [LEGACY]
+//void SpawnEnemy(int x, int y)
+//{
+//    Vector2 offset = roomSizeWorldUnits / 2.0f;
+//    Vector2 spawnPos = new Vector2(x, y) * worldUnitsInOneGridCell - offset;
+
+//    Collider2D[] colliders = Physics2D.OverlapCircleAll(spawnPos, 15f);
+
+//    foreach (Collider2D collider in colliders)
+//    {
+//        if (collider.tag == "Enemy")
+//        {
+//            if (Vector2.Distance(spawnPos, collider.transform.position) < minDistanceBetweenEnemies)
+//            {
+//                return;
+//            }
+//        }
+//    }
+
+//    float distanceToPlayer = Vector2.Distance(spawnPos, playerTransform.position);
+
+//    if (Random.value < chanceToSpawnEnemy && enemiesSpawned < maxNumberEnemies && distanceToPlayer > minEnemyDistanceFromPlayer)
+//    {
+//        Enemy enemyToSpawn = enemies[Random.Range(0, enemies.Length)];
+//        Enemy spawnedEnemy = Instantiate(enemyToSpawn, spawnPos, Quaternion.identity);
+//        enemiesSpawned++;
+
+//colliders = Physics2D.OverlapCircleAll(spawnedEnemy.transform.position, 1f);
+//        foreach (Collider2D col in colliders)
+//        {
+//            if (col.tag == "Obstacle")
+//            {
+//                Destroy(spawnedEnemy.gameObject);
+//enemiesSpawned--;
+//            }
+//        }
+//    }
+//}
+
+//    [LEGACY]
+//    void SpawnPlayer()
+//{
+//Vector2 offset = roomSizeWorldUnits / 2.0f;
+
+//for (int x = Mathf.FloorToInt(-offset.x + 2); x < Mathf.FloorToInt(offset.x - 2); x++)
+//{
+//    for (int y = Mathf.FloorToInt(-offset.y + 2); y < Mathf.FloorToInt(offset.y - 2); y++)
+//    {
+//        Vector2 spawnPos = new Vector2(x, y);
+//        bool hasHitObstacle = false;
+//        Collider2D[] colliders = Physics2D.OverlapCircleAll(spawnPos, .6f);
+//        foreach (Collider2D collider in colliders)
+//        {
+//            if (collider.tag == "Obstacle")
+//            {
+//                hasHitObstacle = true;
+//                break;
+//            }
+//        };
+//        if (!hasHitObstacle)
+//        {
+//            playerTransform.position = spawnPos;
+//        }
+//    }
+//}
+//}

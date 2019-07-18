@@ -6,8 +6,9 @@ public enum WeaponType { Infinite, Pistol, MachineGun, Shotgun, Explosive}
 
 public class WeaponManager : Singleton<WeaponManager>
 {
-    private int currentPistolAmmo, currentMachineGunAmmo, currentShotgunAmmo, currentExplosiveAmmo;
-    private int maxPistolAmmo, maxMachineGunAmmo, maxShotgunAmmo, maxExplosiveAmmo;
+    private int currentPistolAmmo = 0, currentMachineGunAmmo = 0, currentShotgunAmmo = 0, currentExplosiveAmmo = 0;
+    [SerializeField]
+    private int maxPistolAmmo = 100, maxMachineGunAmmo = 100, maxShotgunAmmo = 100, maxExplosiveAmmo = 100;
 
     public int GetCurrentAmmo(WeaponType wt)
     {

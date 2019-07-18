@@ -255,6 +255,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbad130f6f3e6d54393584fb3da1c8f1, type: 3}
+--- !u!1 &1002950147 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2432736066580706307, guid: 84faeef2acdf8b74da59619a44fa5322,
+    type: 3}
+  m_PrefabInstance: {fileID: 2432736066310801378}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1002950148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002950147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da9647cfed6c8d64191b5a7024560186, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxPistolAmmo: 100
+  maxMachineGunAmmo: 250
+  maxShotgunAmmo: 60
+  maxExplosiveAmmo: 40
 --- !u!4 &1088681079 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1088681079, guid: 56cd5025256d5874d99f5ed34af9c8c2,
@@ -441,7 +463,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAACwn+sZo7CRUAIAAPYEAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VE1z2jAQ/SuMziWD+SjQW2sI6YHAhHRy8UW21liDLHkkOXwN/70r2cYunZwQb9+u3ttd+Uq4NAUkVumV5mytGJAfPeLO5FuvDb7Aie6V3PELNJwPzmzmSNRz3qjlCvHApRmVg9U8+Sn3wpEHCJaSp0rnS7aHUBlrEE6pMIAhrazLlghde+SEP/25SznjaTh1pwue5oPeDY8JSAu6pTbEhlaxSpkImhfAnOSWfC87nXiaRDM1Y/A0ctWVENzUWog9F97rrshAgzPLOEVr/v7x0wyBDPg+s05oN3uTpgZsrUrT84Jr7FFVlvxSVeNyag6VtE8qSnfRcPLdy6qKrv+L9wMfTrXKX5p7g4G7w2Y8ObzRc0KN7XS2Cy9a6YHv0JGKA40FfGQgX9VKq1IyDFpdutTSwHDR/r1bCzNIDi1eSX0Ay+Lr+TgPN+/+FAqex7714wrYCeUb7scEGofzGwX73TB1CUSdij8G3um+u0R14JlrYzFUu5ROXqxK7ahk6Xvm3JQ2VFqC7lYoQFJhz1usYx9n+BD7OuuZuvdS317HmmfwkOLhlj8YPIS26niflsnUcQ0m25RWcAltq13gFRsVKimrFetaatJ2pU5p0knbl5z9u1tkApPxMBix2Ww2nbJ43h/R+SxGWUE8G8ZBMCV++bhEn1RsK6F1e3Bssi0ucdGaz0hvpWnh151pelzxS65My+QyVbtEA8hNVeEuHDRegi+TLRnHBu3AWi79wMk1IkIlB2DRvVDknS5PVtOorRKRgn8q65CIhP67EZEbuf0FUEsDBBQAAAgIAACwn+s1bjmCbAAAAHcAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNEz0rPQUVBKL0osyCgGChiCOKWZKSB2tJJpqqmJkaFxioWFhbl5SpKlrnGipUWSoYGBYZKFUZKhoblSLFB9SWVBql9ibipET0BiSUZaZl5KZl66nntRZoo7yGil2FoAUEsBAi0AFAAACAgAALCf6xmjsJFQAgAA9gQAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAALCf6zVuOYJsAAAAdwAAAAkAJAAAAAAAAAAAAAAAnQIAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAABUAwAAAAA=
+    dataString: UEsDBBQAAAgIAACwn+s4yrmgUAIAAPcEAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VE2T2jAM/SuMz2WH8FGgtzawbA8szLKdveTixArx4NgZ21m+hv9e2UlISmdPCOlJek+ScyVcmgISq/RKc7ZWDMiPHnE2+dZrgy9wonsld/wCDeaDM5s5EPWYN2q5Qn/g0ozKwWqe/JR74cADdJaSp0rnS7aHUBlr0J1SYQBDWlmXLdF17ZET/vTnLuWM1nDqrAta80HvhmYC0oJuoQ2wgVWoUiaC5gUwR7kF38tOJx4mUUyNGDyNXHUlBDc1F2LPhde6KzLQ4MQyTlGa7z9+mqEjA77PrCPazd6kqQFbs9L0vOAaZ1SVJb9UNbicmkNF7ZOK0jUaTr57WlXR9X/xfuDDqVb5S9M3GLgeNuPJ4Y2eE2psZ7Jd96KlHvgJHak40FjARwbyVa20KiXDoNWlSy0NDBft37u0MIPk0Porqg/Osvh6P07Dzas/hYLnsR/9uHLshPID92sCjcv5jYT9bZi6BHodiz8G3um+e0R14JlrYzFUq5SOXqxK7aBk6Wfm1JQ2VFqC7lYoQFJhz1usYx93+BD7OuuZuvdSd69jzTN4SPHuFj8YPIS26njflsnUcQ0m25RWcAntqF3gFQcVKimrE+tKatJ2pU5p0knbl5z9e1tkApPxMBix2Ww2nbJ43h/R+SxGWkE8G8ZBMCX++LhEnVRsK6L1eHBtsi0u8dCaz0hvpWnhz51pelzxS666BLlM1S7RAHJTlbgzB41d8GmyJeM4oR1Yy6XfOLlGRKjkACy694y81OXJahq1VSJS8E9lnSciof9wRORGbn8BUEsDBBQAAAgIAACwn+s1bjmCbAAAAHcAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNEz0rPQUVBKL0osyCgGChiCOKWZKSB2tJJpqqmJkaFxioWFhbl5SpKlrnGipUWSoYGBYZKFUZKhoblSLFB9SWVBql9ibipET0BiSUZaZl5KZl66nntRZoo7yGil2FoAUEsBAi0AFAAACAgAALCf6zjKuaBQAgAA9wQAAAsAJAAAAAAAAAAAAAAAAAAAAGdyYXBoMC5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsBAi0AFAAACAgAALCf6zVuOYJsAAAAdwAAAAkAJAAAAAAAAAAAAAAAnQIAAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLBQYAAAAAAgACALgAAABUAwAAAAA=
     upgradeData: 
     file_cachedStartup: {fileID: 0}
     data_cachedStartup: 
@@ -619,7 +641,7 @@ PrefabInstance:
     - target: {fileID: 1778470567310727499, guid: 795f2643f3afd9341aaae0fd5a331a70,
         type: 3}
       propertyPath: maxWalkers
-      value: 15
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1778470567310727499, guid: 795f2643f3afd9341aaae0fd5a331a70,
         type: 3}
@@ -654,7 +676,12 @@ PrefabInstance:
     - target: {fileID: 1778470567310727499, guid: 795f2643f3afd9341aaae0fd5a331a70,
         type: 3}
       propertyPath: percentToFill
-      value: 0.35
+      value: 0.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 1778470567310727499, guid: 795f2643f3afd9341aaae0fd5a331a70,
+        type: 3}
+      propertyPath: shouldRemoveSingleWalls
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 795f2643f3afd9341aaae0fd5a331a70, type: 3}
@@ -991,6 +1018,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6744042715663193783, guid: 7cca07f5653a62e469a55b1a002a668c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 6744042715663193783, guid: 7cca07f5653a62e469a55b1a002a668c,
+        type: 3}
+      propertyPath: m_TagString
+      value: FloorTile
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7cca07f5653a62e469a55b1a002a668c, type: 3}

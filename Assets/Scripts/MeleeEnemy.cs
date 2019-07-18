@@ -31,7 +31,7 @@ public class MeleeEnemy : Enemy
     {
         if (playerTransform == null) { return; }
 
-        if ((aiPath.velocity.y >= .5f || aiPath.velocity.x >= .5f) && !isAttacking)
+        if ((Mathf.Abs(aiPath.velocity.y) >= .1f || Mathf.Abs(aiPath.velocity.x) >= .1f) && !isAttacking)
         {
             anim.SetBool("isMoving", true);
 
@@ -101,6 +101,7 @@ public class MeleeEnemy : Enemy
         //wait for cooldown between attacks(heavy breathing, for example) to resume going after player again
         yield return new WaitForSeconds(timeBetweenAttacks);
         aiPath.canMove = true;
+        anim.SetBool("isMoving", true);
         isAttacking = false;
     }
 
