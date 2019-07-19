@@ -7,21 +7,14 @@ public class Projectile : MonoBehaviour
 {
     [SerializeField] GameObject destroyFX = default;
 
-    private Weapon weapon;
+    private float speed = 0;
+    private int damage = 0;
 
-    private void Start()
-    {
-        Invoke("DestroyProjectile", weapon.projectileLifetime);
-    }
+    private BulletWeapon weapon;
 
     private void Update()
     {
-        if (weapon == null)
-        {
-            return;
-        }
-
-        transform.Translate(Vector2.right * weapon.projectileSpeed * Time.deltaTime);
+        transform.Translate(Vector2.right * speed * Time.deltaTime);
     }
 
     private void DestroyProjectile()
@@ -37,16 +30,18 @@ public class Projectile : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void Init(Weapon projectileWeapon)
+    public void Init(float projectileSpeed, float projectileLifetime, int projectileDamage)
     {
-        weapon = projectileWeapon;
+        speed = projectileSpeed;
+        damage = projectileDamage;
+        Invoke("DestroyProjectile", projectileLifetime);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Enemy")
         {
-            collision.GetComponent<Enemy>().TakeDamage(weapon.GetDamage());
+            collision.GetComponent<Enemy>().TakeDamage(damage);
             DestroyProjectile();
         }
         else if (collision.tag == "Obstacle")

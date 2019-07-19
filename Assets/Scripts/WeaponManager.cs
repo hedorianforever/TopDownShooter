@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum WeaponType { Infinite, Pistol, MachineGun, Shotgun, Explosive}
+public enum WeaponType { Infinite, Pistol, MachineGun, Shotgun, Explosive, Laser}
 
 public class WeaponManager : Singleton<WeaponManager>
 {
-    private int currentPistolAmmo = 0, currentMachineGunAmmo = 0, currentShotgunAmmo = 0, currentExplosiveAmmo = 0;
     [SerializeField]
-    private int maxPistolAmmo = 100, maxMachineGunAmmo = 100, maxShotgunAmmo = 100, maxExplosiveAmmo = 100;
+    private int currentPistolAmmo = 0, currentMachineGunAmmo = 0, currentShotgunAmmo = 0, currentExplosiveAmmo = 0, currentLaserAmmo = 0;
+    [SerializeField]
+    private int maxPistolAmmo = 100, maxMachineGunAmmo = 200, maxShotgunAmmo = 50, maxExplosiveAmmo = 40, maxLaserAmmo = 80;
 
     public int GetCurrentAmmo(WeaponType wt)
     {
@@ -18,6 +19,7 @@ public class WeaponManager : Singleton<WeaponManager>
             case WeaponType.MachineGun: return currentMachineGunAmmo;
             case WeaponType.Shotgun: return currentShotgunAmmo;
             case WeaponType.Explosive: return currentExplosiveAmmo;
+            case WeaponType.Laser: return currentLaserAmmo;
             default: return 1;
         }
     }
@@ -38,6 +40,9 @@ public class WeaponManager : Singleton<WeaponManager>
             case WeaponType.Explosive:
                 currentExplosiveAmmo -= value;
                 break;
+            case WeaponType.Laser:
+                currentLaserAmmo -= value;
+                break;
         }
     }
 
@@ -51,15 +56,19 @@ public class WeaponManager : Singleton<WeaponManager>
                 break;
             case WeaponType.MachineGun:
                 currentMachineGunAmmo += value;
-                Mathf.Clamp(currentPistolAmmo, 0, maxMachineGunAmmo);
+                Mathf.Clamp(currentMachineGunAmmo, 0, maxMachineGunAmmo);
                 break;
             case WeaponType.Shotgun:
                 currentShotgunAmmo += value;
-                Mathf.Clamp(currentPistolAmmo, 0, maxShotgunAmmo);
+                Mathf.Clamp(currentShotgunAmmo, 0, maxShotgunAmmo);
                 break;
             case WeaponType.Explosive:
                 currentExplosiveAmmo += value;
-                Mathf.Clamp(currentPistolAmmo, 0, maxExplosiveAmmo);
+                Mathf.Clamp(currentExplosiveAmmo, 0, maxExplosiveAmmo);
+                break;
+            case WeaponType.Laser:
+                currentLaserAmmo += value;
+                Mathf.Clamp(currentLaserAmmo, 0, maxLaserAmmo);
                 break;
         }
     }

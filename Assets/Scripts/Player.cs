@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField] float dashLength = .15f;
 
     [SerializeField] Ghost ghostPrefab = default;
+    [SerializeField] Weapon equippedWeapon = default;
 
     private Rigidbody2D rb;
     private Animator animator;

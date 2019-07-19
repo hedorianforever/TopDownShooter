@@ -54,7 +54,7 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private int maxNumberEnemies = 15;
     [SerializeField] private int minNumberEnemies = 6;
 
-    [SerializeField] private float minDistanceBetweenEnemies = 5f;
+    //[SerializeField] private float minDistanceBetweenEnemies = 5f;
 
     //chance to spawn enemy per tile
     //[SerializeField] float chanceToSpawnEnemy = .05f;
@@ -367,7 +367,7 @@ public class LevelGenerator : MonoBehaviour
             randomValidFloorTile = floorTilesPositions[Random.Range(0, floorTilesPositions.Count)];
 
             //test distance between enemies from this position
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(randomValidFloorTile, 2f);
+            //Collider2D[] colliders = Physics2D.OverlapCircleAll(randomValidFloorTile, 2f);
             //foreach (Collider2D collider in colliders)
             //{
             //    if (collider.tag == "Enemy")
@@ -388,7 +388,7 @@ public class LevelGenerator : MonoBehaviour
 
                 enemiesSpawned++;
 
-                colliders = Physics2D.OverlapCircleAll(spawnedEnemy.transform.position, 1f);
+                Collider2D[] colliders = Physics2D.OverlapCircleAll(spawnedEnemy.transform.position, 1f);
                 foreach (Collider2D col in colliders)
                 {
                     if (col.tag == "Obstacle")

@@ -4,38 +4,38 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    [SerializeField] GameObject projectilePrefab = default;
-    [SerializeField] Transform shotPoint = default;
-    [SerializeField] float timeBetweenShots = 1f;
-    [Tooltip("Random.Range(-accuracyOffset, +accuracyOffset) is added to rotation of projectile on click. For reference, 0 equals perfect accuracy, while 5 makes you miss slightly; 25 makes it a cone, basically")]
-    [SerializeField] float accuracyOffset = 0f; //added to rotation; accuracyOffset of 0 == perfect accuracy
-    [SerializeField] int damage = 1;
 
-    public float projectileSpeed = 10f;
-    public float projectileLifetime = 5f;
+    [SerializeField] protected Transform shotPoint = default;
+
+    [SerializeField] protected float timeBetweenShots = 1f;
+    [Tooltip("Random.Range(-accuracyOffset, +accuracyOffset) is added to rotation of projectile on click. For reference, 0 equals perfect accuracy, while 5 makes you miss slightly; 25 makes it a cone, basically")]
+    [SerializeField] protected float accuracyOffset = 0f; //added to rotation; accuracyOffset of 0 == perfect accuracy
+    [SerializeField] protected int damage = 1;
 
     [Header("Ammo related variables")]
 
-    [SerializeField] WeaponType myWeaponType = WeaponType.Infinite;
-    [SerializeField] int magazineSize = 6;
-    [SerializeField] float reloadSpeed = 2f;
-    [SerializeField] int ammoPerShot = 1;
+    [SerializeField] protected WeaponType myWeaponType = WeaponType.Infinite;
+    [SerializeField] protected int magazineSize = 6;
+    [SerializeField] protected float reloadSpeed = 2f;
+    [SerializeField] protected int ammoPerShot = 1;
 
-    private int currentLoadedAmmo = 0;
-    private bool isReloading = false;
-    private bool isOnCooldown = false;
-    private WeaponManager weaponManager;
+    protected int currentLoadedAmmo;
+    protected bool isReloading = false;
+    protected bool isOnCooldown = false; 
+    protected WeaponManager weaponManager;
 
-    private void Start()
+    public virtual void Start()
     {
         weaponManager = WeaponManager.Instance;
-        weaponManager.AddAmmo(myWeaponType, magazineSize);
-        float originalReloadSpeed = reloadSpeed;
-        reloadSpeed = 0f;
-        Reload();
-        reloadSpeed = originalReloadSpeed;
+        //weaponManager.AddAmmo(myWeaponType, magazineSize);
+        currentLoadedAmmo = magazineSize;
+        //float originalReloadSpeed = reloadSpeed;
+        //reloadSpeed = 0f;
+        //Reload();
+        //reloadSpeed = originalReloadSpeed;
     }
-    private void Update()
+
+    public virtual void Update()
     {
         LookAtMouse();
         Shoot();
@@ -58,11 +58,16 @@ public class Weapon : MonoBehaviour
         transform.Rotate(new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z + 90)); //add 90 to final rotation because the weapon is initially looking right;
     }
 
-    private void Shoot()
+    protected bool CanShoot()
     {
-        if (Input.GetMouseButton(0) )
+        return !isOnCooldown && currentLoadedAmmo > 0 && !isReloading;
+    }
+
+    public virtual void Shoot()
+    {
+        if (Input.GetMouseButtonDown(0))
         {
-            if (!isOnCooldown && currentLoadedAmmo > 0 && !isReloading)
+            if (CanShoot())
             {
                 currentLoadedAmmo -= ammoPerShot;
                 isOnCooldown = true;
@@ -72,31 +77,23 @@ public class Weapon : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R) || (Input.GetMouseButtonDown(0) && currentLoadedAmmo <= 0))
         {
-            Reload();
+            Reload();   
         }
 
         //Debug.Log("CURRENT AMMO: " + currentAmmo);
     }
 
-    IEnumerator ShootCoroutine()
+    /// <summary>
+    /// ShootCoroutine is always called for all weapon scripts, must be overwritten for each weapon type.
+    /// On starting, isOnCooldown is set to true and currentLoadedAmmo is already subtracted.
+    /// </summary>
+    /// <returns></returns>
+    public virtual IEnumerator ShootCoroutine()
     {
-        GameObject projectile = Instantiate(projectilePrefab, shotPoint.position, transform.rotation) as GameObject;
-
-        float randomRotation = Random.Range(-accuracyOffset, accuracyOffset);
-        projectile.transform.Rotate(new Vector3(
-            projectile.transform.rotation.x,
-            projectile.transform.rotation.y, 
-            projectile.transform.rotation.z + randomRotation)
-        );
-
-        projectile.GetComponent<Projectile>().Init(this);
-
         yield return new WaitForSeconds(timeBetweenShots);
-
-        isOnCooldown = false;
     }
 
-    private void Reload()
+    protected void Reload()
     {
         if (weaponManager.GetCurrentAmmo(myWeaponType) <= 0)
         {
@@ -114,7 +111,7 @@ public class Weapon : MonoBehaviour
         StartCoroutine(ReloadRoutine());
     }
 
-    IEnumerator ReloadRoutine()
+    protected IEnumerator ReloadRoutine()
     {
         isReloading = true;
         //reload animation
