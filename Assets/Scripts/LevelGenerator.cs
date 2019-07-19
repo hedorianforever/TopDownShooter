@@ -12,7 +12,7 @@ public class LevelGenerator : MonoBehaviour
     //GameObject[,] gridObjs;]
 
     //temporary; used for testing purposes
-    private List<GameObject> gridObjs = new List<GameObject>();
+    //private List<GameObject> gridObjs = new List<GameObject>();
 
     private Vector3 randomValidFloorTile;
     private List<Vector3> floorTilesPositions = new List<Vector3>();
@@ -42,7 +42,7 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private Tilemap groundTilemap = default;
     [SerializeField] private Tilemap obstacleTilemap = default;
     //[SerializeField] private Tilemap spaceTilemap = default;
-    
+
 
     [SerializeField] private bool shouldRemoveSingleWalls = true;
 
@@ -75,41 +75,47 @@ public class LevelGenerator : MonoBehaviour
             RemoveSingleWalls();
         }
         SpawnLevel();
+
+        //for some reason it's not working if called immediately; the tilemap probably takes a while to recalculate everything
+        Invoke("ScanLevel", .1f);
+        Invoke("SpawnPlayer", .5f);
+        Invoke("SpawnEnemies", 1f);
         //SpawnPlayer();
     }
 
-    private void Update()
-    {
-        //Debug.Log("ENEMIES ALIVE: " + enemiesAlive);
+    //private void Update()
+    //{
+    //    //Debug.Log("ENEMIES ALIVE: " + enemiesAlive);
 
-        if (Input.GetKeyDown(KeyCode.Alpha9))
-        {
-            ClearGrid();
-            Setup();
-            CreateFloors();
-            CreateWalls();
-            if (shouldRemoveSingleWalls)
-            {
-                RemoveSingleWalls();
-            }
-            SpawnLevel();
-        }
-    }
+    //    if (Input.GetKeyDown(KeyCode.Alpha9))
+    //    {
+    //        ClearGrid();
+    //        Setup();
+    //        CreateFloors();
+    //        CreateWalls();
+    //        if (shouldRemoveSingleWalls)
+    //        {
+    //            RemoveSingleWalls();
+    //        }
+    //        SpawnLevel();
+    //    }
+    //}
 
-    void ClearGrid()
-    {
-        foreach (GameObject go in gridObjs)
-        {
-            Destroy(go);
-        }
-        gridObjs.Clear();
-    }
+    //void ClearGrid()
+    //{
+    //    foreach (GameObject go in gridObjs)
+    //    {
+    //        Destroy(go);
+    //    }
+    //    gridObjs.Clear();
+    //}
 
     void Setup()
     {
         //Clear the map (ensures we dont overlap)
         groundTilemap.ClearAllTiles();
         obstacleTilemap.ClearAllTiles();
+
         //find grid size
         roomWidth = Mathf.RoundToInt(roomSizeWorldUnits.x / worldUnitsInOneGridCell);
         roomHeight = Mathf.RoundToInt(roomSizeWorldUnits.y / worldUnitsInOneGridCell);
@@ -162,7 +168,7 @@ public class LevelGenerator : MonoBehaviour
                 }
             }
 
-            //chance: walker pick a new direction
+            //chance: walker pick new direction
             for (int i = 0; i < walkers.Count; i++)
             {
                 if (Random.value < chanceWalkerChangeDir)
@@ -212,7 +218,7 @@ public class LevelGenerator : MonoBehaviour
                 break;
             }
             iterations++;
-        } while (iterations < 100000);
+        } while (iterations < 150000);
     }
 
     void CreateWalls()
@@ -250,17 +256,17 @@ public class LevelGenerator : MonoBehaviour
     //could be a create obstacle where there is a single wall instead
     void RemoveSingleWalls()
     {
-        //loop through every grid space
+        //loop though every grid space
         for (int x = 0; x < roomWidth - 1; x++)
         {
             for (int y = 0; y < roomHeight - 1; y++)
             {
-                //if there's a wall, check the spaces around it
+                //if theres a wall, check the spaces around it
                 if (grid[x, y] == gridSpace.wall)
                 {
-                    //assume all spaces around the wall are floors
+                    //assume all space around wall are floors
                     bool allFloors = true;
-                    //check each side to see if they are all floors 
+                    //check each side to see if they are all floors
                     for (int checkX = -1; checkX <= 1; checkX++)
                     {
                         for (int checkY = -1; checkY <= 1; checkY++)
@@ -282,7 +288,6 @@ public class LevelGenerator : MonoBehaviour
                             }
                         }
                     }
-                    //if is single wall
                     if (allFloors)
                     {
                         grid[x, y] = gridSpace.floor;
@@ -292,17 +297,51 @@ public class LevelGenerator : MonoBehaviour
         }
     }
 
+    void SpawnLevel()
+    {
+        for (int x = 0; x < roomWidth; x++)
+        {
+            for (int y = 0; y < roomHeight; y++)
+            {
+                switch (grid[x, y])
+                {
+                    case gridSpace.empty:
+                        //Spawn(x, y, emptySpaceTile, spaceTilemap);
+
+                        //for now, I want empty space to be walls
+                        Spawn(x, y, wallTile, obstacleTilemap);
+                        //grid[x, y] = gridSpace.wall;
+                        break;
+                    case gridSpace.floor:
+                        Spawn(x, y, floorTile, groundTilemap);
+                        break;
+                    case gridSpace.wall:
+                        Spawn(x, y, wallTile, obstacleTilemap);
+                        break;
+                }
+            }
+        }
+
+        //SpawnPlayer();
+        //SpawnEnemies();
+    }
+
+
     Vector2 RandomDirection()
     {
-        //pick random int between 1 and 3
+        //pick random int between 0 and 3
         int choice = Mathf.FloorToInt(Random.value * 3.99f);
-        //use that int to choose direction
+        //use that int to chose a direction
         switch (choice)
         {
-            case 0: return Vector2.down;
-            case 1: return Vector2.left;
-            case 2: return Vector2.up;
-            default: return Vector2.right;
+            case 0:
+                return Vector2.down;
+            case 1:
+                return Vector2.left;
+            case 2:
+                return Vector2.up;
+            default:
+                return Vector2.right;
         }
     }
 
@@ -319,41 +358,14 @@ public class LevelGenerator : MonoBehaviour
         return count;
     }
 
-    void SpawnLevel()
+    void Spawn(float x, float y, TileBase tile, Tilemap tilemap)
     {
-        for (int x = 0; x < roomWidth; x++)
-        {
-            for (int y = 0; y < roomHeight; y++)
-            {
-                switch (grid[x, y])
-                {
-                    case gridSpace.empty:
-                        //Spawn(x, y, emptySpaceTile, spaceTilemap);
+        Vector2 offset = roomSizeWorldUnits / 2.0f;
+        //if x and y range from 0 to 30; world units from -15 to 15, for example
+        Vector2 spawnPos = new Vector2(x, y) * worldUnitsInOneGridCell - offset;
 
-                        //for now, I want empty space to be walls
-                        Spawn(x, y, wallTile, obstacleTilemap);
-                        grid[x, y] = gridSpace.wall;
-                        break;
-                    case gridSpace.floor:
-                        Spawn(x, y, floorTile, groundTilemap);
-                        //SpawnEnemy(x, y);
-                        break;
-                    case gridSpace.wall:
-                        //also spawning the floorTile below the wallTile in case the walltile has transparent background
-                        //Spawn(x, y, floorTile, groundTilemap);
-                        Spawn(x, y, wallTile, obstacleTilemap);
-                        break;
-                }
-            }
-        }
-
-        //SpawnPlayer();
-        //SpawnEnemies();
-        //for some reason it's not working if called immediately; the tilemap probably takes a while to recalculate everything
-        Invoke("ScanLevel", .1f);
-        Invoke("SpawnPlayer", 1f);
-        Invoke("SpawnEnemies", 2f);
-
+        //tilemap.SetTile(new Vector3Int((int)spawnPos.x, (int)spawnPos.y, 0), tile);
+        tilemap.SetTile(tilemap.WorldToCell(spawnPos), tile);
     }
 
     void SpawnEnemies()
@@ -411,16 +423,6 @@ public class LevelGenerator : MonoBehaviour
 
     }
 
-    void Spawn(float x, float y, TileBase tile, Tilemap tilemap)
-    {
-        Vector2 offset = roomSizeWorldUnits / 2.0f;
-        //if x and y range from 0 to 30; world units from -15 to 15, for example
-        Vector2 spawnPos = new Vector2(x, y) * worldUnitsInOneGridCell - offset;
-
-        //tilemap.SetTile(tilemap.WorldToCell(spawnPos), tile);
-        tilemap.SetTile(new Vector3Int((int)spawnPos.x, (int)spawnPos.y, 0), tile);
-    }
-
     void ScanLevel()
     {
         if (AstarPath.active != null)
@@ -435,7 +437,7 @@ public class LevelGenerator : MonoBehaviour
 
     void SpawnPlayer()
     {
-       
+
         foreach (var position in groundTilemap.cellBounds.allPositionsWithin)
         {
             if (groundTilemap.HasTile(position))

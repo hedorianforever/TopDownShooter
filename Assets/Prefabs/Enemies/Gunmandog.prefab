@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2697565397965260726}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.028, y: 0.047, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8309265616970713809}
@@ -118,7 +118,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.05, y: -0.073346615}
-  m_Size: {x: 0.70489967, y: 1.1715045}
+  m_Size: {x: 0.35244986, y: 0.585752}
   m_Direction: 0
 --- !u!114 &4472055893848240944
 MonoBehaviour:
@@ -197,10 +197,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 20
-  moveSpeed: 4
-  timeBetweenAttacks: 2
+  moveSpeed: 1.5
+  timeBetweenAttacks: 2.2
   attackDamage: 10
-  noticePlayerRadius: 9.5
+  noticePlayerRadius: 8
   playerTransform: {fileID: 0}
   wanderRadius: 10
   timeBetweenWanderingMax: 1.2
@@ -209,8 +209,8 @@ MonoBehaviour:
   maxTimeWalking: 1
   shootingRange: 18
   accuracyOffset: 6
-  projectileLifetime: 20
-  projectileSpeed: 6
+  projectileLifetime: 50
+  projectileSpeed: 3
   chanceToShoot: 0.2
   gunTransform: {fileID: 8309265616970713809}
   shotPoint: {fileID: 4509556523143213931}
@@ -240,7 +240,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5019963218853697279}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.62, y: 0.15, z: 0}
+  m_LocalPosition: {x: 0.24, y: 0.074, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8309265616970713809}
@@ -271,7 +271,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8309265616970713814}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.07, y: -0.31, z: 0}
+  m_LocalPosition: {x: 0.089, y: -0.168, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4509556523143213931}

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2412539940139165912}
   - component: {fileID: 6214928325664000780}
   m_Layer: 10
-  m_Name: Gunmandog
+  m_Name: Gunmandog Scout (Legacy)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -197,10 +197,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 30
-  moveSpeed: 4
+  moveSpeed: 2.5
   timeBetweenAttacks: 2
   attackDamage: 10
-  noticePlayerRadius: 9.5
+  noticePlayerRadius: 4.75
   playerTransform: {fileID: 0}
   wanderRadius: 10
   timeBetweenWanderingMax: 6
@@ -211,6 +211,7 @@ MonoBehaviour:
   accuracyOffset: 6
   projectileLifetime: 2.5
   projectileSpeed: 8
+  chanceToShoot: 0.2
   gunTransform: {fileID: 8309265616970713809}
   shotPoint: {fileID: 4509556523143213931}
   projectilePrefab: {fileID: 7981850473498567483, guid: fbad130f6f3e6d54393584fb3da1c8f1,

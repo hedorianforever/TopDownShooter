@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 763451451834653405}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.346, y: 0.094, z: 0}
+  m_LocalPosition: {x: 0.131, y: 0.046, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2661190109132179932}
@@ -134,4 +134,4 @@ MonoBehaviour:
   projectilePrefab: {fileID: 692041066808304314, guid: 5992575260cdcc8429123514a19cf5dc,
     type: 3}
   projectileSpeed: 11
-  projectileLifetime: 2
+  projectileLifetime: 2.2

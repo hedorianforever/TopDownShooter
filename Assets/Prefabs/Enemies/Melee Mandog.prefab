@@ -118,8 +118,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.08524722, y: -0.112526536}
-  m_Size: {x: 0.6566783, y: 1.0931447}
+  m_Offset: {x: 0.03, y: 0}
+  m_Size: {x: 0.32833916, y: 0.5465725}
   m_Direction: 0
 --- !u!114 &76174416
 MonoBehaviour:
@@ -134,13 +134,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 15
-  moveSpeed: 6
+  moveSpeed: 2.5
   timeBetweenAttacks: 1.5
   attackDamage: 10
-  noticePlayerRadius: 8
+  noticePlayerRadius: 5
   playerTransform: {fileID: 0}
-  stopDistance: 3
-  leapAttackSpeed: 4.5
+  stopDistance: 2.5
+  leapAttackSpeed: 4
 --- !u!114 &2266717365324582841
 MonoBehaviour:
   m_ObjectHideFlags: 0
