@@ -97,6 +97,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyFX: {fileID: 6183588697642122322, guid: 179eba4d18d661545b65c6f4b2fd858a,
     type: 3}
+  destroyByTimeFX: {fileID: 4606249111963031051, guid: 68194b00d8d11e641bf09f75798eb789,
+    type: 3}
 --- !u!95 &5298632520884765945
 Animator:
   serializedVersion: 3

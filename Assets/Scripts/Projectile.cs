@@ -6,6 +6,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField] GameObject destroyFX = default;
+    [SerializeField] GameObject destroyByTimeFX = default;
 
     private float speed = 0;
     private int damage = 0;
@@ -15,6 +16,13 @@ public class Projectile : MonoBehaviour
     private void Update()
     {
         transform.Translate(Vector2.right * speed * Time.deltaTime);
+    }
+
+    public void Init(float projectileSpeed, float projectileLifetime, int projectileDamage)
+    {
+        speed = projectileSpeed;
+        damage = projectileDamage;
+        Invoke("DestroyProjectileByTime", projectileLifetime);
     }
 
     private void DestroyProjectile()
@@ -30,11 +38,16 @@ public class Projectile : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void Init(float projectileSpeed, float projectileLifetime, int projectileDamage)
+    private void DestroyProjectileByTime()
     {
-        speed = projectileSpeed;
-        damage = projectileDamage;
-        Invoke("DestroyProjectile", projectileLifetime);
+        if (destroyByTimeFX != null)
+        {
+            Instantiate(destroyByTimeFX, transform.position, Quaternion.identity);
+        } else
+        {
+            //use normal destroy fx
+            DestroyProjectile();
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

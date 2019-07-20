@@ -3925,7 +3925,7 @@ Transform:
   m_GameObject: {fileID: 6744042714855660199}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 10}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6744042715663193780}
   - {fileID: 6744042714778950880}
@@ -3956,9 +3956,9 @@ GameObject:
   - component: {fileID: 6744042715663193780}
   - component: {fileID: 6744042715663193778}
   - component: {fileID: 6744042715663193781}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Ground
-  m_TagString: Untagged
+  m_TagString: FloorTile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -27,12 +27,7 @@ public class Weapon : MonoBehaviour
     public virtual void Start()
     {
         weaponManager = WeaponManager.Instance;
-        //weaponManager.AddAmmo(myWeaponType, magazineSize);
         currentLoadedAmmo = magazineSize;
-        //float originalReloadSpeed = reloadSpeed;
-        //reloadSpeed = 0f;
-        //Reload();
-        //reloadSpeed = originalReloadSpeed;
     }
 
     public virtual void Update()
@@ -60,7 +55,15 @@ public class Weapon : MonoBehaviour
 
     protected bool CanShoot()
     {
-        return !isOnCooldown && currentLoadedAmmo > 0 && !isReloading;
+        bool shotPointIsBlocked = false;
+        //checks if weapon's shot point is not inside a wall
+        Collider2D col = Physics2D.OverlapCircle(shotPoint.position, .1f);
+        if (col != null)
+        {
+            shotPointIsBlocked = col.tag == "Obstacle";
+        }
+        //Debug.Log("IS SHOTPOINT BLOCKED? " + shotPointIsBlocked);
+        return !isOnCooldown && currentLoadedAmmo > 0 && !isReloading && !shotPointIsBlocked;
     }
 
     public virtual void Shoot()

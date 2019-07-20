@@ -80,7 +80,6 @@ public class LevelGenerator : MonoBehaviour
         Invoke("ScanLevel", .1f);
         Invoke("SpawnPlayer", .5f);
         Invoke("SpawnEnemies", 1f);
-        //SpawnPlayer();
     }
 
     //private void Update()
@@ -419,7 +418,8 @@ public class LevelGenerator : MonoBehaviour
             }
         }
 
-        obstacleTilemap.GetComponent<TilemapCollider2D>().usedByComposite = true;
+        //not sure if I should use the composite; it messes with some collider tests
+        //obstacleTilemap.GetComponent<TilemapCollider2D>().usedByComposite = true;
 
     }
 

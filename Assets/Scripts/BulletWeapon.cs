@@ -6,8 +6,8 @@ public class BulletWeapon : Weapon
 {
     [Header("BulletWeapon specific variables")]
     [SerializeField] protected GameObject projectilePrefab = default;
-    [SerializeField] float projectileSpeed = 11f;
-    [SerializeField] float projectileLifetime = 1f;
+    [SerializeField] protected float projectileSpeed = 11f;
+    [SerializeField] protected float projectileLifetime = 1f;
 
     public override IEnumerator ShootCoroutine()
     {
