@@ -22,8 +22,6 @@ public class BulletWeapon : Weapon
 
         projectile.GetComponent<Projectile>().Init(projectileSpeed, projectileLifetime, damage);
 
-        yield return new WaitForSeconds(timeBetweenShots);
-
-        isOnCooldown = false;
+        yield return null;
     }
 }

@@ -21,8 +21,6 @@ public class ExplosiveWeapon : Weapon
 
         explosive.LaunchAtDirection(shotPoint.right, launchSpeed, damage);
 
-        yield return new WaitForSeconds(timeBetweenShots);
-
-        isOnCooldown = false;
+        yield return null;
     }
 }

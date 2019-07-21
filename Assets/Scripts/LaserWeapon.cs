@@ -45,8 +45,6 @@ public class LaserWeapon : Weapon
         //shotPoint.rotation = Quaternion.identity;
         lineRenderer.enabled = false;
 
-        yield return new WaitForSeconds(timeBetweenShots);
-
-        isOnCooldown = false;
+        yield return null;
     }
 }

@@ -200,7 +200,7 @@ MonoBehaviour:
   health: 20
   moveSpeed: 2
   timeBetweenAttacks: 2.2
-  attackDamage: 10
+  attackDamage: 3
   noticePlayerRadius: 8
   playerTransform: {fileID: 0}
   wanderRadius: 10

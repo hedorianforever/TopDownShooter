@@ -8,9 +8,11 @@ public class WeaponPickup : MonoBehaviour
     //it's a game object and not a Weapon script so it's easy to drag and drop it here
     //might need to change it 
     [SerializeField] GameObject weaponPrefab = default;
+    [SerializeField] GameObject sparkVFX = default;
 
     private SpriteRenderer spriteRenderer;
     private BoxCollider2D boxCollider2D;
+    
 
     private void Start()
     {
@@ -32,6 +34,10 @@ public class WeaponPickup : MonoBehaviour
         //set collider's size to that of the sprite
         boxCollider2D = GetComponent<BoxCollider2D>();
         boxCollider2D.size = spriteRenderer.sprite.bounds.size;
+
+        //change spark vfx size to fit the weapon
+        var shape = sparkVFX.GetComponent<ParticleSystem>().shape;
+        shape.scale = spriteRenderer.sprite.bounds.size;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

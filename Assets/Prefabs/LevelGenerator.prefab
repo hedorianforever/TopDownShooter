@@ -48,7 +48,7 @@ MonoBehaviour:
   chanceWalkerSpawn: 0.05
   chanceWalkerDestroy: 1
   maxWalkers: 10
-  percentToFill: 0.25
+  percentToFill: 0.3
   floorTile: {fileID: 11400000, guid: 64ca9caaee775bb41a8f6eea7b74bb04, type: 2}
   wallTile: {fileID: 11400000, guid: 08a461ef0adf64340864d740613db643, type: 2}
   groundTilemap: {fileID: 0}
@@ -60,4 +60,4 @@ MonoBehaviour:
   - {fileID: 6214928325664000780, guid: d526a275579255e4d983a4414143e331, type: 3}
   maxNumberEnemies: 12
   minNumberEnemies: 8
-  minRadialDistanceBetweenEnemies: 2
+  minRadialDistanceBetweenEnemies: 1

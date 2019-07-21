@@ -146,7 +146,7 @@ MonoBehaviour:
   health: 15
   moveSpeed: 2.5
   timeBetweenAttacks: 1.5
-  attackDamage: 10
+  attackDamage: 2
   noticePlayerRadius: 5
   playerTransform: {fileID: 0}
   stopDistance: 1.2

@@ -4,17 +4,12 @@ using UnityEngine;
 
 public class MachineGunWeapon : BulletWeapon
 {
-    public override void Shoot()
+    public override void TryShoot()
     {
         //instead of original shoot function, can keep the button pressed
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && CanShoot())
         {
-            if (CanShoot())
-            {
-                weaponManager.UseAmmo(myWeaponType, ammoPerShot);
-                isOnCooldown = true;
-                StartCoroutine(ShootCoroutine());
-            }
+            Shoot();
         }
     }
 }

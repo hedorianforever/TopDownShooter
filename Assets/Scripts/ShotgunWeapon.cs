@@ -27,7 +27,5 @@ public class ShotgunWeapon : BulletWeapon
         }
 
         yield return new WaitForSeconds(timeBetweenShots);
-
-        isOnCooldown = false;
     }
 }

@@ -18,7 +18,7 @@ public class Weapon : MonoBehaviour
     [SerializeField] protected int ammoPerShot = 1;
 
     protected int currentAmmo;
-    protected bool isOnCooldown = false; 
+    //protected bool isOnCooldown = false; 
     protected WeaponManager weaponManager;
 
     public virtual void Start()
@@ -30,7 +30,7 @@ public class Weapon : MonoBehaviour
     public virtual void Update()
     {
         LookAtMouse();
-        Shoot();
+        TryShoot();
     }
 
     private void LookAtMouse()
@@ -54,20 +54,29 @@ public class Weapon : MonoBehaviour
         {
             shotPointIsBlocked = col.tag == "Obstacle";
         }
-        return !isOnCooldown && !shotPointIsBlocked && (currentAmmo - ammoPerShot >= 0);
+        return !weaponManager.IsOnCooldown() && !shotPointIsBlocked && (currentAmmo - ammoPerShot >= 0);
+    }
+
+    public virtual void TryShoot()
+    {
+        if (Input.GetMouseButtonDown(0) && CanShoot())
+        {
+            Shoot();
+        }
     }
 
     public virtual void Shoot()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (myWeaponType == WeaponType.Infinite)
         {
-            if (CanShoot())
-            {
-                weaponManager.UseAmmo(myWeaponType, ammoPerShot);
-                currentAmmo -= ammoPerShot;
-                isOnCooldown = true;
-                StartCoroutine(ShootCoroutine());
-            }
+            weaponManager.SetCooldown(timeBetweenShots);
+            StartCoroutine(ShootCoroutine());
+        } else
+        {
+            weaponManager.UseAmmo(myWeaponType, ammoPerShot);
+            weaponManager.SetCooldown(timeBetweenShots);
+            currentAmmo -= ammoPerShot;
+            StartCoroutine(ShootCoroutine());
         }
     }
 
@@ -78,8 +87,7 @@ public class Weapon : MonoBehaviour
     /// <returns></returns>
     public virtual IEnumerator ShootCoroutine()
     {
-        yield return new WaitForSeconds(timeBetweenShots);
-        isOnCooldown = false;
+        yield return null;
     }
 
     public int GetDamage()

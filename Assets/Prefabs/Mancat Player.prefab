@@ -168,12 +168,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 3.8
-  health: 50
+  maxHealth: 10
   dashSpeed: 15
   dashCooldown: 2
   dashLength: 0.1
   ghostPrefab: {fileID: 1876059252}
-  equippedWeapon: {fileID: 0}
+  weaponSlot: {fileID: 1739571956}
+  healthText: {fileID: 0}
 --- !u!70 &1876059253
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

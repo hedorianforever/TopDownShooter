@@ -33,7 +33,8 @@ public class Explosive : MonoBehaviour
         {
             if (col.tag == "Player")
             {
-                col.GetComponent<Player>().TakeDamage(damage);
+                //all explosives deal the same damage to the player
+                col.GetComponent<Player>().TakeDamage(5);
                 //Debug.Log(col.name + " has taken " + damage + " damage from " + name);
             } else if (col.tag == "Enemy")
             {

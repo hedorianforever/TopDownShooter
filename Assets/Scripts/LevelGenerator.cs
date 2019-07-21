@@ -78,7 +78,7 @@ public class LevelGenerator : MonoBehaviour
 
         //for some reason it's not working if called immediately; the tilemap probably takes a while to recalculate everything
         Invoke("ScanLevel", .1f);
-        Invoke("SpawnPlayer", .5f);
+        Invoke("SpawnPlayer", 1f);
         //if you don't wait a while to spawn enemies they all seem to spawn next to each other
         Invoke("SpawnEnemies", 2f);
     }
@@ -321,9 +321,6 @@ public class LevelGenerator : MonoBehaviour
                 }
             }
         }
-
-        //SpawnPlayer();
-        //SpawnEnemies();
     }
 
 
@@ -370,14 +367,6 @@ public class LevelGenerator : MonoBehaviour
 
     void SpawnEnemies()
     {
-        foreach (var position in groundTilemap.cellBounds.allPositionsWithin)
-        {
-            if (groundTilemap.HasTile(position))
-            {
-                floorTilesPositions.Add(groundTilemap.CellToWorld(position));
-            }
-        }
-
         int iterations = 10000;
 
         int enemiesToSpawn = Random.Range(minNumberEnemies, maxNumberEnemies);
@@ -449,6 +438,14 @@ public class LevelGenerator : MonoBehaviour
 
     void SpawnPlayer()
     {
+        foreach (var position in groundTilemap.cellBounds.allPositionsWithin)
+        {
+            if (groundTilemap.HasTile(position))
+            {
+                floorTilesPositions.Add(groundTilemap.CellToWorld(position));
+            }
+        }
+
         for (int i = 0; i < floorTilesPositions.Count; i++)
         {
             randomValidFloorTile = floorTilesPositions[i];

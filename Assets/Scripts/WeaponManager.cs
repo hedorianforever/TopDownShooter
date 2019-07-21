@@ -18,6 +18,7 @@ public class WeaponManager : Singleton<WeaponManager>
     private Player player;
     private int equippedWeaponIndex = 0;
     private Weapon equippedWeapon;
+    private bool isOnCooldown = false;
 
     private void Start()
     {
@@ -91,6 +92,8 @@ public class WeaponManager : Singleton<WeaponManager>
                 currentSniperAmmo += value;
                 Mathf.Clamp(currentSniperAmmo, 0, maxSniperAmmo);
                 break;
+            default:
+                break;
         }
     }
 
@@ -148,5 +151,21 @@ public class WeaponManager : Singleton<WeaponManager>
         EquipWeapon(ownedWeapons[equippedWeaponIndex]);
     }
 
+    public void SetCooldown(float cooldownTime)
+    {
+        isOnCooldown = true;
+        StartCoroutine(SetCooldownRoutine(cooldownTime));
+    }
+
+    IEnumerator SetCooldownRoutine(float cooldownTime)
+    {
+        yield return new WaitForSeconds(cooldownTime);
+        isOnCooldown = false;
+    }
+
+    public bool IsOnCooldown()
+    {
+        return isOnCooldown;
+    }
 
 }

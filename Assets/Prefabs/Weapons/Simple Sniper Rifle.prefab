@@ -128,10 +128,8 @@ MonoBehaviour:
   accuracyOffset: 1
   damage: 15
   myWeaponType: 6
-  magazineSize: 6
-  reloadSpeed: 2
   ammoPerShot: 1
   projectilePrefab: {fileID: 522487137636450981, guid: f4a6fe4a3a68c5d4390ce7dd233e5d4b,
     type: 3}
-  projectileSpeed: 20
+  projectileSpeed: 30
   projectileLifetime: 2

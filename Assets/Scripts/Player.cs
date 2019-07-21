@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(SpriteRenderer), typeof(Animator))]
 public class Player : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 10f;
-    [SerializeField] float health = 50f;
+    [SerializeField] float maxHealth = 50f;
     [SerializeField] float dashSpeed = 30f;
     [SerializeField] float dashCooldown = 5f;
     [SerializeField] float dashLength = .15f;
@@ -15,6 +16,8 @@ public class Player : MonoBehaviour
     //[SerializeField] Weapon equippedWeapon = default;
     [SerializeField] Transform weaponSlot = default;
 
+    [Header("UI related variables")]
+    [SerializeField] Text healthText; 
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -22,6 +25,7 @@ public class Player : MonoBehaviour
 
     private Vector2 moveAmount;
 
+    private float currentHealth;
     private float horizontal;
     private float vertical;
     private float moveLimiter = 0.7f;
@@ -40,6 +44,9 @@ public class Player : MonoBehaviour
 
         Physics2D.queriesStartInColliders = false;
 
+        currentHealth = maxHealth;
+
+        ChangeHealthUI(currentHealth);
     }
 
     private void Update()
@@ -167,8 +174,9 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damageAmount)
     {
-        health -= damageAmount;
-        if (health <= 0)
+        currentHealth -= damageAmount;
+        ChangeHealthUI(currentHealth);
+        if (currentHealth <= 0)
         {
             Die();
         }
@@ -176,12 +184,13 @@ public class Player : MonoBehaviour
 
     public void ChangeWeapon(Weapon weapon)
     {
-        Transform equippedWeapon = weaponSlot.GetChild(0);
         //already using a weapon
-        if (equippedWeapon != null)
+        if (weaponSlot.childCount > 0)
         {
+            Transform equippedWeapon = weaponSlot.GetChild(0);
             Destroy(equippedWeapon.gameObject);
-        }
+        } 
+ 
         Weapon newWeapon = Instantiate(weapon, weaponSlot.position, Quaternion.identity);
         newWeapon.transform.parent = weaponSlot;
     }
@@ -192,10 +201,20 @@ public class Player : MonoBehaviour
         Destroy(gameObject);
     }
 
+    private void ChangeHealthUI(float currentHealth)
+    {
+        healthText.text = Mathf.Clamp(currentHealth, 0, 1000).ToString() + "/" + maxHealth.ToString();
+        //if (currentHealth <= maxHealth / 2)
+        //{
+        //    //change sprite to half a heart
+        //    //TODO
+        //}
+    }
+
     IEnumerator ChangeWeaponRoutine()
     {
         WeaponManager.Instance.ChangeWeapon(Input.GetAxis("Mouse ScrollWheel"));
-        yield return new WaitForSeconds(.2f);
+        yield return new WaitForSeconds(.5f);
         isChangingWeapon = false;
     }
 
