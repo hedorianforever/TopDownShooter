@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4472055893848240944}
   - component: {fileID: 2412539940139165912}
   - component: {fileID: 6214928325664000780}
+  - component: {fileID: 5347787056793832256}
   m_Layer: 10
   m_Name: Gunmandog
   m_TagString: Enemy
@@ -197,7 +198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 20
-  moveSpeed: 1.5
+  moveSpeed: 2
   timeBetweenAttacks: 2.2
   attackDamage: 10
   noticePlayerRadius: 8
@@ -205,7 +206,7 @@ MonoBehaviour:
   wanderRadius: 10
   timeBetweenWanderingMax: 1.2
   timeBetweenWanderingMin: 0.5
-  minWanderDistance: 5
+  minWanderDistance: 7
   maxTimeWalking: 1
   shootingRange: 18
   accuracyOffset: 6
@@ -216,6 +217,27 @@ MonoBehaviour:
   shotPoint: {fileID: 4509556523143213931}
   projectilePrefab: {fileID: 7981850473498567483, guid: fbad130f6f3e6d54393584fb3da1c8f1,
     type: 3}
+--- !u!50 &5347787056793832256
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2697565397965260726}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &5019963218853697279
 GameObject:
   m_ObjectHideFlags: 0

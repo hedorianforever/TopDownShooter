@@ -10,9 +10,11 @@ public class Player : MonoBehaviour
     [SerializeField] float dashSpeed = 30f;
     [SerializeField] float dashCooldown = 5f;
     [SerializeField] float dashLength = .15f;
-
+    
     [SerializeField] Ghost ghostPrefab = default;
-    [SerializeField] Weapon equippedWeapon = default;
+    //[SerializeField] Weapon equippedWeapon = default;
+    [SerializeField] Transform weaponSlot = default;
+
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -26,6 +28,9 @@ public class Player : MonoBehaviour
     private bool isDashing = false;
     private bool canDash = true;
     private Vector2 currentDashTargetPos;
+
+    //needed so mouse scroll wheel input is not read multiple times at once
+    private bool isChangingWeapon = false;
 
     private void Start()
     {
@@ -46,6 +51,12 @@ public class Player : MonoBehaviour
         SetPlayerAnimation();
 
         Dash();
+
+        if (Input.GetAxis("Mouse ScrollWheel") != 0 && !isChangingWeapon)
+        {
+            isChangingWeapon = true;
+            StartCoroutine(ChangeWeaponRoutine());
+        }
     }
 
     private void Dash()
@@ -163,10 +174,29 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void ChangeWeapon(Weapon weapon)
+    {
+        Transform equippedWeapon = weaponSlot.GetChild(0);
+        //already using a weapon
+        if (equippedWeapon != null)
+        {
+            Destroy(equippedWeapon.gameObject);
+        }
+        Weapon newWeapon = Instantiate(weapon, weaponSlot.position, Quaternion.identity);
+        newWeapon.transform.parent = weaponSlot;
+    }
+
     private void Die()
     {
         // TODO : death fx
         Destroy(gameObject);
+    }
+
+    IEnumerator ChangeWeaponRoutine()
+    {
+        WeaponManager.Instance.ChangeWeapon(Input.GetAxis("Mouse ScrollWheel"));
+        yield return new WaitForSeconds(.2f);
+        isChangingWeapon = false;
     }
 
 }

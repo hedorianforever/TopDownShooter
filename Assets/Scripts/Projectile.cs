@@ -43,6 +43,7 @@ public class Projectile : MonoBehaviour
         if (destroyByTimeFX != null)
         {
             Instantiate(destroyByTimeFX, transform.position, Quaternion.identity);
+            Destroy(gameObject);
         } else
         {
             //use normal destroy fx

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 294067842146335522}
   - component: {fileID: 294067842146335521}
   - component: {fileID: 294067842146335520}
-  - component: {fileID: 4508933433649583038}
+  - component: {fileID: 7549388442095742122}
   - component: {fileID: 76174416}
   - component: {fileID: 2266717365324582841}
   - component: {fileID: 76174417}
@@ -105,8 +105,8 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!70 &4508933433649583038
-CapsuleCollider2D:
+--- !u!61 &7549388442095742122
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -118,9 +118,19 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.03, y: 0}
-  m_Size: {x: 0.32833916, y: 0.5465725}
-  m_Direction: 0
+  m_Offset: {x: 0.03, y: -0.04}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.65625, y: 0.65625}
+    newSize: {x: 1.25, y: 1.25}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.3327912, y: 0.56}
+  m_EdgeRadius: 0
 --- !u!114 &76174416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,7 +149,7 @@ MonoBehaviour:
   attackDamage: 10
   noticePlayerRadius: 5
   playerTransform: {fileID: 0}
-  stopDistance: 2.5
+  stopDistance: 1.2
   leapAttackSpeed: 4
 --- !u!114 &2266717365324582841
 MonoBehaviour:

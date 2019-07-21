@@ -10,7 +10,7 @@ public class Explosive : MonoBehaviour
 
     private int damage;
 
-    [SerializeField] GameObject explosionVFX;
+    [SerializeField] GameObject explosionVFX = default;
 
     void Start()
     {

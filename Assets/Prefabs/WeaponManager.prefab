@@ -48,8 +48,10 @@ MonoBehaviour:
   currentShotgunAmmo: 20
   currentExplosiveAmmo: 15
   currentLaserAmmo: 30
+  currentSniperAmmo: 25
   maxPistolAmmo: 100
   maxMachineGunAmmo: 200
   maxShotgunAmmo: 60
   maxExplosiveAmmo: 40
   maxLaserAmmo: 80
+  maxSniperAmmo: 60

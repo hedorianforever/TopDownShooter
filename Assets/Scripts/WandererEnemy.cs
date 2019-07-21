@@ -38,7 +38,7 @@ public class WandererEnemy : Enemy
             FindDestination();
         }
 
-        if (ai.velocity.x >= 0.05f || ai.velocity.y >= 0.05f)
+        if (Mathf.Abs(ai.velocity.x) >= 0.05f || Mathf.Abs(ai.velocity.y) >= 0.05f)
         {
             anim.SetBool("isMoving", true);
         }
@@ -94,6 +94,14 @@ public class WandererEnemy : Enemy
         if (Vector2.Distance(point, transform.position) < minWanderDistance)
         {
             point = PickRandomPoint();
+        }
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(point, .1f);
+        foreach(Collider2D col in colliders)
+        {
+            if (col.tag == "Obstacle")
+            {
+                point = PickRandomPoint();
+            }
         }
         point.z = 0;
 

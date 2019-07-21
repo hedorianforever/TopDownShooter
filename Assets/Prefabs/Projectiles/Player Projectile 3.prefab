@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36c91f75055540f4a9ce62636b75f330, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyFX: {fileID: 6183588697642122322, guid: 179eba4d18d661545b65c6f4b2fd858a,
+  destroyFX: {fileID: 6183588697642122322, guid: 4d38774b25925f54ba4604a6287af318,
     type: 3}
   destroyByTimeFX: {fileID: 4606249111963031051, guid: 68194b00d8d11e641bf09f75798eb789,
     type: 3}
@@ -142,7 +142,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16661835, y: 0.15336022}
+  m_Size: {x: 0.17378119, y: 0.17204593}
   m_EdgeRadius: 0
 --- !u!50 &1798063414656103433
 Rigidbody2D:

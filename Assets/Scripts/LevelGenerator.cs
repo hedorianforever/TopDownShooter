@@ -54,7 +54,7 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private int maxNumberEnemies = 15;
     [SerializeField] private int minNumberEnemies = 6;
 
-    //[SerializeField] private float minDistanceBetweenEnemies = 5f;
+    [SerializeField] private float minRadialDistanceBetweenEnemies = 2f;
 
     //chance to spawn enemy per tile
     //[SerializeField] float chanceToSpawnEnemy = .05f;
@@ -79,7 +79,8 @@ public class LevelGenerator : MonoBehaviour
         //for some reason it's not working if called immediately; the tilemap probably takes a while to recalculate everything
         Invoke("ScanLevel", .1f);
         Invoke("SpawnPlayer", .5f);
-        Invoke("SpawnEnemies", 1f);
+        //if you don't wait a while to spawn enemies they all seem to spawn next to each other
+        Invoke("SpawnEnemies", 2f);
     }
 
     //private void Update()
@@ -369,7 +370,15 @@ public class LevelGenerator : MonoBehaviour
 
     void SpawnEnemies()
     {
-        int iterations = 1000;
+        foreach (var position in groundTilemap.cellBounds.allPositionsWithin)
+        {
+            if (groundTilemap.HasTile(position))
+            {
+                floorTilesPositions.Add(groundTilemap.CellToWorld(position));
+            }
+        }
+
+        int iterations = 10000;
 
         int enemiesToSpawn = Random.Range(minNumberEnemies, maxNumberEnemies);
 
@@ -378,17 +387,20 @@ public class LevelGenerator : MonoBehaviour
             randomValidFloorTile = floorTilesPositions[Random.Range(0, floorTilesPositions.Count)];
 
             //test distance between enemies from this position
-            //Collider2D[] colliders = Physics2D.OverlapCircleAll(randomValidFloorTile, 2f);
-            //foreach (Collider2D collider in colliders)
-            //{
-            //    if (collider.tag == "Enemy")
-            //    {
-            //        if (Vector2.Distance(randomValidFloorTile, collider.transform.position) < minDistanceBetweenEnemies)
-            //        {
-            //            return;
-            //        }
-            //    }
-            //}
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(randomValidFloorTile, minRadialDistanceBetweenEnemies);
+
+            bool hasFoundNearbyEnemy = false;
+            foreach (Collider2D collider in colliders)
+            {
+                if (collider.tag == "Enemy")
+                {
+                    hasFoundNearbyEnemy = true;
+                }
+            }
+            if (hasFoundNearbyEnemy)
+            {
+                continue;
+            }
 
             float distanceToPlayer = Vector2.Distance(randomValidFloorTile, playerTransform.position);
 
@@ -399,7 +411,7 @@ public class LevelGenerator : MonoBehaviour
 
                 enemiesSpawned++;
 
-                Collider2D[] colliders = Physics2D.OverlapCircleAll(spawnedEnemy.transform.position, 1f);
+                colliders = Physics2D.OverlapCircleAll(spawnedEnemy.transform.position, 1f);
                 foreach (Collider2D col in colliders)
                 {
                     if (col.tag == "Obstacle")
@@ -437,15 +449,6 @@ public class LevelGenerator : MonoBehaviour
 
     void SpawnPlayer()
     {
-
-        foreach (var position in groundTilemap.cellBounds.allPositionsWithin)
-        {
-            if (groundTilemap.HasTile(position))
-            {
-                floorTilesPositions.Add(groundTilemap.CellToWorld(position));
-            }
-        }
-
         for (int i = 0; i < floorTilesPositions.Count; i++)
         {
             randomValidFloorTile = floorTilesPositions[i];

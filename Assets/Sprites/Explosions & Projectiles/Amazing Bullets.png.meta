@@ -1,10 +1,8 @@
 fileFormatVersion: 2
-guid: 6c230282ada6c544f85b565366e62b50
+guid: f547d0dd5ecb2e34e9d57a7eaa531d87
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Amazing Weapons_0
-    21300002: Amazing Weapons_1
-    21300004: Amazing Weapons_2
+    21300000: Amazing Bullets_0
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -48,7 +46,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 64
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -131,53 +129,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Amazing Weapons_0
+      name: Amazing Bullets_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 23
-        width: 21
-        height: 9
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bb41d33285f5f374c9f7e7cf1aed5a5a
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Amazing Weapons_1
-      rect:
-        serializedVersion: 2
-        x: 4
-        y: 6
-        width: 7
-        height: 7
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 313e016e9bcdf0845a81a45ff0b6c951
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Amazing Weapons_2
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 35
-        width: 27
-        height: 12
+        x: 8
+        y: 20
+        width: 17
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -185,7 +143,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3914dd2a61205cd4ea3084b7a9c12a36
+      spriteID: c2dc65cbe77b0d14eb3902244454830f
       vertices: []
       indices: 
       edges: []
@@ -193,7 +151,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 8c82f071892b40941b0ca47caf893bf3
+    spriteID: ad9029e228989934cb0a2ee467219e54
     vertices: []
     indices: 
     edges: []

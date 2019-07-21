@@ -43,12 +43,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c0c0876d6d796b4d853ac03766779bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomSizeWorldUnits: {x: 40, y: 25}
+  roomSizeWorldUnits: {x: 45, y: 30}
   chanceWalkerChangeDir: 0.5
-  chanceWalkerSpawn: 0.02
-  chanceWalkerDestroy: 0.02
-  maxWalkers: 5
-  percentToFill: 0.36
+  chanceWalkerSpawn: 0.05
+  chanceWalkerDestroy: 1
+  maxWalkers: 10
+  percentToFill: 0.25
   floorTile: {fileID: 11400000, guid: 64ca9caaee775bb41a8f6eea7b74bb04, type: 2}
   wallTile: {fileID: 11400000, guid: 08a461ef0adf64340864d740613db643, type: 2}
   groundTilemap: {fileID: 0}
@@ -58,6 +58,6 @@ MonoBehaviour:
   - {fileID: 6214928325664000780, guid: d526a275579255e4d983a4414143e331, type: 3}
   - {fileID: 76174416, guid: d67d25d6d15acdb4f9b0b21ab178080a, type: 3}
   - {fileID: 6214928325664000780, guid: d526a275579255e4d983a4414143e331, type: 3}
-  maxNumberEnemies: 10
-  minNumberEnemies: 6
-  minDistanceBetweenEnemies: 5
+  maxNumberEnemies: 12
+  minNumberEnemies: 8
+  minRadialDistanceBetweenEnemies: 2
