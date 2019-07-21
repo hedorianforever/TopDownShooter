@@ -15,30 +15,22 @@ public class Weapon : MonoBehaviour
     [Header("Ammo related variables")]
 
     [SerializeField] protected WeaponType myWeaponType = WeaponType.Infinite;
-    [SerializeField] protected int magazineSize = 6;
-    [SerializeField] protected float reloadSpeed = 2f;
     [SerializeField] protected int ammoPerShot = 1;
 
-    protected int currentLoadedAmmo;
-    protected bool isReloading = false;
+    protected int currentAmmo;
     protected bool isOnCooldown = false; 
     protected WeaponManager weaponManager;
 
     public virtual void Start()
     {
         weaponManager = WeaponManager.Instance;
-        currentLoadedAmmo = magazineSize;
+        currentAmmo = weaponManager.GetCurrentAmmo(myWeaponType);
     }
 
     public virtual void Update()
     {
         LookAtMouse();
         Shoot();
-
-        //if (isReloading)
-        //{
-        //    Debug.Log("RELOADING...");
-        //}
     }
 
     private void LookAtMouse()
@@ -62,8 +54,7 @@ public class Weapon : MonoBehaviour
         {
             shotPointIsBlocked = col.tag == "Obstacle";
         }
-        //Debug.Log("IS SHOTPOINT BLOCKED? " + shotPointIsBlocked);
-        return !isOnCooldown && currentLoadedAmmo > 0 && !isReloading && !shotPointIsBlocked;
+        return !isOnCooldown && !shotPointIsBlocked && (currentAmmo - ammoPerShot >= 0);
     }
 
     public virtual void Shoot()
@@ -72,18 +63,12 @@ public class Weapon : MonoBehaviour
         {
             if (CanShoot())
             {
-                currentLoadedAmmo -= ammoPerShot;
+                weaponManager.UseAmmo(myWeaponType, ammoPerShot);
+                currentAmmo -= ammoPerShot;
                 isOnCooldown = true;
                 StartCoroutine(ShootCoroutine());
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.R) || (Input.GetMouseButtonDown(0) && currentLoadedAmmo <= 0))
-        {
-            Reload();   
-        }
-
-        //Debug.Log("CURRENT AMMO: " + currentAmmo);
     }
 
     /// <summary>
@@ -94,47 +79,7 @@ public class Weapon : MonoBehaviour
     public virtual IEnumerator ShootCoroutine()
     {
         yield return new WaitForSeconds(timeBetweenShots);
-    }
-
-    protected void Reload()
-    {
-        if (weaponManager.GetCurrentAmmo(myWeaponType) <= 0)
-        {
-            //play error sound / show not allowed sign
-            Debug.Log("NO AMMO! ");
-            return;
-        }
-
-        if (currentLoadedAmmo == magazineSize || isReloading)
-        {
-            //Debug.Log("WEAPON FULLY LOADED, CANT RELOAD");
-            return;
-        }
-
-        StartCoroutine(ReloadRoutine());
-    }
-
-    protected IEnumerator ReloadRoutine()
-    {
-        isReloading = true;
-        //reload animation
-        yield return new WaitForSeconds(reloadSpeed);
-        if (myWeaponType == WeaponType.Infinite)
-        {
-            currentLoadedAmmo = magazineSize;
-        } else
-        {
-            int currentAmmo = weaponManager.GetCurrentAmmo(myWeaponType);
-            int initialAmmo = currentAmmo;
-            while (currentAmmo != 0 && currentLoadedAmmo != magazineSize)
-            {
-                currentLoadedAmmo++;
-                currentAmmo--;
-                yield return null;
-            }
-            weaponManager.UseAmmo(myWeaponType, initialAmmo - currentAmmo);
-        }
-        isReloading = false;
+        isOnCooldown = false;
     }
 
     public int GetDamage()

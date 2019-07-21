@@ -11,15 +11,10 @@ public class MachineGunWeapon : BulletWeapon
         {
             if (CanShoot())
             {
-                currentLoadedAmmo -= ammoPerShot;
+                weaponManager.UseAmmo(myWeaponType, ammoPerShot);
                 isOnCooldown = true;
                 StartCoroutine(ShootCoroutine());
             }
-        }
-
-        if (Input.GetKeyDown(KeyCode.R) || (Input.GetMouseButtonDown(0) && currentLoadedAmmo <= 0))
-        {
-            Reload();
         }
     }
 }

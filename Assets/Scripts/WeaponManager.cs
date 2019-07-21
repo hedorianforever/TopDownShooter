@@ -6,7 +6,6 @@ public enum WeaponType { Infinite, Pistol, MachineGun, Shotgun, Explosive, Laser
 
 public class WeaponManager : Singleton<WeaponManager>
 {
-    [Header("Ammo related variables")]
     [SerializeField]
     private int currentPistolAmmo = 0, currentMachineGunAmmo = 0, currentShotgunAmmo = 0, currentExplosiveAmmo = 0, currentLaserAmmo = 0, currentSniperAmmo = 0;
     [SerializeField]
