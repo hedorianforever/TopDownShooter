@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 3946237538956806855}
   - component: {fileID: 3757395684681954742}
   m_Layer: 0
-  m_Name: Pastel Laser Pistol
+  m_Name: Simple Laser Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -251,12 +251,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shotPoint: {fileID: 2087671072277818615}
+  shootingSound: {fileID: 8300000, guid: 92e01f109d01f044299d0e0449eeaaa3, type: 3}
   timeBetweenShots: 0.1
   accuracyOffset: 2
-  damage: 10
+  damage: 2
   myWeaponType: 5
-  magazineSize: 6
-  reloadSpeed: 1
   ammoPerShot: 1
   lineRenderer: {fileID: 708358291}
   layerMask:

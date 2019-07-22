@@ -12,8 +12,16 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float noticePlayerRadius = 15f;
 
     [HideInInspector] public Transform playerTransform;
+
+    [Header("Drops related variables")]
+    [SerializeField] protected AmmoPickup ammoDrop;
+    [SerializeField] protected HealthPickup healthDrop;
+    [Range(0, 1)] [SerializeField] protected float ammoDropChance;
+    [Range(0, 1)] [SerializeField] protected float healthDropChance;
+
     protected bool hasNoticedPlayer = false;
     protected Animator anim;
+    protected bool isAlive = true;
 
     public virtual void Start()
     {
@@ -26,8 +34,10 @@ public class Enemy : MonoBehaviour
         health -= damageAmount;
         hasNoticedPlayer = true;
 
-        if (health <= 0)
+        //isAlive bool is needed or else Die() is called multiple times if the enemy is hit (and killed) by more than 1 bullet
+        if (health <= 0 && isAlive)
         {
+            isAlive = false;
             Die();
         }
     }
@@ -59,6 +69,14 @@ public class Enemy : MonoBehaviour
 
     void Die()
     {
+        if (Random.Range(0, .9999f) < healthDropChance)
+        {
+            Instantiate(healthDrop, transform.position, Quaternion.identity);
+        }
+        if (Random.Range(0, .9999f) < ammoDropChance)
+        {
+            Instantiate(ammoDrop, transform.position, Quaternion.identity);
+        }
         Destroy(gameObject);
     }
 

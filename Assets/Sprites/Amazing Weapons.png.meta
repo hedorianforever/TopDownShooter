@@ -5,6 +5,7 @@ TextureImporter:
     21300000: Amazing Weapons_0
     21300002: Amazing Weapons_1
     21300004: Amazing Weapons_2
+    21300006: Amazing Weapons_3
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -179,13 +180,33 @@ TextureImporter:
         width: 27
         height: 12
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
       spriteID: 3914dd2a61205cd4ea3084b7a9c12a36
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Amazing Weapons_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 51
+        width: 26
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa9eee6a9e7c6524198ca40ff4dbd165
       vertices: []
       indices: 
       edges: []

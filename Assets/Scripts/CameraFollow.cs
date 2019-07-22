@@ -17,19 +17,18 @@ public class CameraFollow : MonoBehaviour
 
     private void Update()
     {
+        
+    }
+
+    private void LateUpdate()
+    {
         if (transformToFollow != null)
         {
             //float clampedX = Mathf.Clamp(transformToFollow.position.x, minX, maxX);
             //float clampedY = Mathf.Clamp(transformToFollow.position.y, minY, maxY);
 
             transform.position = Vector2.Lerp(transform.position, transformToFollow.position, speed);
-
-
         }
-    }
-
-    private void LateUpdate()
-    {
         //SNAPS CAMERA TO PIXEL PERFECT POSITION; DOESNT SEEM TO FIX ANYTHING
         double newX = transform.position.x - (transform.position.x % .0625);
         double newY = transform.position.y - (transform.position.y % .0625);

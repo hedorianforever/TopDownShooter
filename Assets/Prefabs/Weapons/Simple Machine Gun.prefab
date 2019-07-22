@@ -124,12 +124,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shotPoint: {fileID: 341375543089815009}
+  shootingSound: {fileID: 8300000, guid: 60ac6b5c4fb9a534fb91650782155212, type: 3}
   timeBetweenShots: 0.15
   accuracyOffset: 12
-  damage: 5
+  damage: 1
   myWeaponType: 2
-  magazineSize: 10
-  reloadSpeed: 2
   ammoPerShot: 1
   projectilePrefab: {fileID: 692041066808304314, guid: b462c85449f6bf344971004397922c48,
     type: 3}

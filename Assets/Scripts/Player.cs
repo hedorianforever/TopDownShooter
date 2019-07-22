@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using EZCameraShake;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(SpriteRenderer), typeof(Animator))]
 public class Player : MonoBehaviour
@@ -13,25 +14,27 @@ public class Player : MonoBehaviour
     [SerializeField] float dashLength = .15f;
     
     [SerializeField] Ghost ghostPrefab = default;
-    //[SerializeField] Weapon equippedWeapon = default;
     [SerializeField] Transform weaponSlot = default;
-
-    [Header("UI related variables")]
-    [SerializeField] Text healthText; 
 
     private Rigidbody2D rb;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
+    private UIManager uiManager;
+
 
     private Vector2 moveAmount;
 
     private float currentHealth;
+
     private float horizontal;
     private float vertical;
     private float moveLimiter = 0.7f;
+
     private bool isDashing = false;
     private bool canDash = true;
     private Vector2 currentDashTargetPos;
+
+    private bool isInvulnerable = false;
 
     //needed so mouse scroll wheel input is not read multiple times at once
     private bool isChangingWeapon = false;
@@ -41,12 +44,14 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        uiManager = UIManager.Instance;
 
+        //needed so it won't collide with itself on physics2d.overlapcircle calls
         Physics2D.queriesStartInColliders = false;
 
         currentHealth = maxHealth;
 
-        ChangeHealthUI(currentHealth);
+        uiManager.UpdatePlayerHealthUI(currentHealth, maxHealth);
     }
 
     private void Update()
@@ -73,6 +78,7 @@ public class Player : MonoBehaviour
             canDash = false;
             ghostPrefab.shouldMakeGhost = true;
             isDashing = true;
+            isInvulnerable = true;
             StartCoroutine(DashRoutine());
         }
     }
@@ -91,8 +97,9 @@ public class Player : MonoBehaviour
 
         isDashing = false;
         ghostPrefab.shouldMakeGhost = false;
+        isInvulnerable = false;
 
-        yield return new WaitForSeconds(dashCooldown);
+        yield return StartCoroutine(uiManager.DashCooldownRoutine(dashCooldown));
 
         canDash = true;
     }
@@ -175,7 +182,9 @@ public class Player : MonoBehaviour
     public void TakeDamage(int damageAmount)
     {
         currentHealth -= damageAmount;
-        ChangeHealthUI(currentHealth);
+        uiManager.UpdatePlayerHealthUI(currentHealth, maxHealth);
+        StartCoroutine(uiManager.PlayerHurtRoutine());
+
         if (currentHealth <= 0)
         {
             Die();
@@ -201,21 +210,39 @@ public class Player : MonoBehaviour
         Destroy(gameObject);
     }
 
-    private void ChangeHealthUI(float currentHealth)
-    {
-        healthText.text = Mathf.Clamp(currentHealth, 0, 1000).ToString() + "/" + maxHealth.ToString();
-        //if (currentHealth <= maxHealth / 2)
-        //{
-        //    //change sprite to half a heart
-        //    //TODO
-        //}
-    }
-
     IEnumerator ChangeWeaponRoutine()
     {
         WeaponManager.Instance.ChangeWeapon(Input.GetAxis("Mouse ScrollWheel"));
         yield return new WaitForSeconds(.5f);
         isChangingWeapon = false;
+    }
+
+    public void Heal(int healAmount)
+    {
+        Debug.Log("HEALING!");
+        currentHealth += healAmount;
+        currentHealth = Mathf.Clamp(currentHealth, healAmount, maxHealth);
+        uiManager.UpdatePlayerHealthUI(currentHealth, maxHealth);
+    }
+
+    public bool IsFullHealth()
+    {
+        return currentHealth == maxHealth;
+    }
+
+    public float GetCurrentHealth()
+    {
+        return currentHealth;
+    }
+
+    public float GetMaxHealth()
+    {
+        return maxHealth;
+    }
+
+    public bool GetIsInvulnerable()
+    {
+        return isInvulnerable;
     }
 
 }

@@ -143,12 +143,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5db887f3f9097584383d61275dd54145, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 15
+  health: 3
   moveSpeed: 2.5
   timeBetweenAttacks: 1.5
   attackDamage: 2
   noticePlayerRadius: 5
   playerTransform: {fileID: 0}
+  ammoDrop: {fileID: 2539502908945056113, guid: 3dcad4d9f8cbd194fbfd22df11b29761,
+    type: 3}
+  healthDrop: {fileID: 100816965239690911, guid: 02ec5b0f24bb7a245b9ddb456a082707,
+    type: 3}
+  ammoDropChance: 0
+  healthDropChance: 0.05
   stopDistance: 1.2
   leapAttackSpeed: 4
 --- !u!114 &2266717365324582841

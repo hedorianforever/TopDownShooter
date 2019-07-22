@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EZCameraShake;
 
 public class Weapon : MonoBehaviour
 {
 
     [SerializeField] protected Transform shotPoint = default;
+    [SerializeField] protected AudioClip shootingSound = default;
 
     [SerializeField] protected float timeBetweenShots = 1f;
     [Tooltip("Random.Range(-accuracyOffset, +accuracyOffset) is added to rotation of projectile on click. For reference, 0 equals perfect accuracy, while 5 makes you miss slightly; 25 makes it a cone, basically")]
@@ -17,14 +19,20 @@ public class Weapon : MonoBehaviour
     [SerializeField] protected WeaponType myWeaponType = WeaponType.Infinite;
     [SerializeField] protected int ammoPerShot = 1;
 
-    protected int currentAmmo;
+    public WeaponType MyWeaponType
+    {
+        get
+        {
+            return myWeaponType;
+        }
+    }
+
     //protected bool isOnCooldown = false; 
     protected WeaponManager weaponManager;
 
     public virtual void Start()
     {
         weaponManager = WeaponManager.Instance;
-        currentAmmo = weaponManager.GetCurrentAmmo(myWeaponType);
     }
 
     public virtual void Update()
@@ -54,7 +62,7 @@ public class Weapon : MonoBehaviour
         {
             shotPointIsBlocked = col.tag == "Obstacle";
         }
-        return !weaponManager.IsOnCooldown() && !shotPointIsBlocked && (currentAmmo - ammoPerShot >= 0);
+        return !weaponManager.IsOnCooldown() && !shotPointIsBlocked && (weaponManager.GetCurrentAmmo(myWeaponType) - ammoPerShot >= 0);
     }
 
     public virtual void TryShoot()
@@ -67,6 +75,9 @@ public class Weapon : MonoBehaviour
 
     public virtual void Shoot()
     {
+        CameraShaker.Instance.ShakeOnce(1.5f, 3f, .05f, .15f);
+        AudioManager.Instance.PlayClip(shootingSound);
+
         if (myWeaponType == WeaponType.Infinite)
         {
             weaponManager.SetCooldown(timeBetweenShots);
@@ -75,7 +86,6 @@ public class Weapon : MonoBehaviour
         {
             weaponManager.UseAmmo(myWeaponType, ammoPerShot);
             weaponManager.SetCooldown(timeBetweenShots);
-            currentAmmo -= ammoPerShot;
             StartCoroutine(ShootCoroutine());
         }
     }

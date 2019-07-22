@@ -43,11 +43,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da9647cfed6c8d64191b5a7024560186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentPistolAmmo: 45
+  currentPistolAmmo: 50
   currentMachineGunAmmo: 60
   currentShotgunAmmo: 20
   currentExplosiveAmmo: 15
-  currentLaserAmmo: 30
+  currentLaserAmmo: 35
   currentSniperAmmo: 25
   maxPistolAmmo: 100
   maxMachineGunAmmo: 200
@@ -55,3 +55,4 @@ MonoBehaviour:
   maxExplosiveAmmo: 40
   maxLaserAmmo: 80
   maxSniperAmmo: 60
+  ownedWeapons: []

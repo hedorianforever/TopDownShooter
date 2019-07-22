@@ -8,6 +8,7 @@ public class WeaponManager : Singleton<WeaponManager>
 {
     [SerializeField]
     private int currentPistolAmmo = 0, currentMachineGunAmmo = 0, currentShotgunAmmo = 0, currentExplosiveAmmo = 0, currentLaserAmmo = 0, currentSniperAmmo = 0;
+
     [SerializeField]
     private int maxPistolAmmo = 100, maxMachineGunAmmo = 200, maxShotgunAmmo = 50, maxExplosiveAmmo = 40, maxLaserAmmo = 80, maxSniperAmmo = 60;
 
@@ -23,6 +24,8 @@ public class WeaponManager : Singleton<WeaponManager>
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        player.ChangeWeapon(ownedWeapons[equippedWeaponIndex]);
+        equippedWeapon = ownedWeapons[equippedWeaponIndex];
     }
 
     public int GetCurrentAmmo(WeaponType wt)
@@ -35,6 +38,20 @@ public class WeaponManager : Singleton<WeaponManager>
             case WeaponType.Explosive: return currentExplosiveAmmo;
             case WeaponType.Laser: return currentLaserAmmo;
             case WeaponType.Sniper: return currentSniperAmmo;
+            default: return 1;
+        }
+    }
+
+    public int GetMaxAmmo(WeaponType wt)
+    {
+        switch (wt)
+        {
+            case WeaponType.Pistol: return maxPistolAmmo;
+            case WeaponType.MachineGun: return maxMachineGunAmmo;
+            case WeaponType.Shotgun: return maxShotgunAmmo;
+            case WeaponType.Explosive: return maxExplosiveAmmo;
+            case WeaponType.Laser: return maxLaserAmmo;
+            case WeaponType.Sniper: return maxSniperAmmo;
             default: return 1;
         }
     }
@@ -70,27 +87,27 @@ public class WeaponManager : Singleton<WeaponManager>
         {
             case WeaponType.Pistol:
                 currentPistolAmmo += value;
-                Mathf.Clamp(currentPistolAmmo, 0, maxPistolAmmo);
+                currentPistolAmmo = Mathf.Clamp(currentPistolAmmo, 0, maxPistolAmmo);
                 break;
             case WeaponType.MachineGun:
                 currentMachineGunAmmo += value;
-                Mathf.Clamp(currentMachineGunAmmo, 0, maxMachineGunAmmo);
+                currentMachineGunAmmo = Mathf.Clamp(currentMachineGunAmmo, 0, maxMachineGunAmmo);
                 break;
             case WeaponType.Shotgun:
                 currentShotgunAmmo += value;
-                Mathf.Clamp(currentShotgunAmmo, 0, maxShotgunAmmo);
+                currentShotgunAmmo = Mathf.Clamp(currentShotgunAmmo, 0, maxShotgunAmmo);
                 break;
             case WeaponType.Explosive:
                 currentExplosiveAmmo += value;
-                Mathf.Clamp(currentExplosiveAmmo, 0, maxExplosiveAmmo);
+                currentExplosiveAmmo = Mathf.Clamp(currentExplosiveAmmo, 0, maxExplosiveAmmo);
                 break;
             case WeaponType.Laser:
                 currentLaserAmmo += value;
-                Mathf.Clamp(currentLaserAmmo, 0, maxLaserAmmo);
+                currentLaserAmmo = Mathf.Clamp(currentLaserAmmo, 0, maxLaserAmmo);
                 break;
             case WeaponType.Sniper:
                 currentSniperAmmo += value;
-                Mathf.Clamp(currentSniperAmmo, 0, maxSniperAmmo);
+                currentSniperAmmo = Mathf.Clamp(currentSniperAmmo, 0, maxSniperAmmo);
                 break;
             default:
                 break;
@@ -166,6 +183,11 @@ public class WeaponManager : Singleton<WeaponManager>
     public bool IsOnCooldown()
     {
         return isOnCooldown;
+    }
+
+    public WeaponType GetEquippedWeaponType()
+    {
+        return equippedWeapon.MyWeaponType;
     }
 
 }

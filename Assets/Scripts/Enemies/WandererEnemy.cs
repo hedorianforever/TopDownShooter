@@ -5,6 +5,7 @@ using Pathfinding;
 
 public class WandererEnemy : Enemy
 {
+    [Header("Wander related variables")]
     [SerializeField] float wanderRadius = 10f;
     [SerializeField] float timeBetweenWanderingMax = 10f;
     [SerializeField] float timeBetweenWanderingMin = 1.5f;
