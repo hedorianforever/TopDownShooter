@@ -251,10 +251,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shotPoint: {fileID: 2087671072277818615}
-  shootingSound: {fileID: 8300000, guid: 92e01f109d01f044299d0e0449eeaaa3, type: 3}
+  shootingSound: {fileID: 8300000, guid: 92ac02ed0d39b2c4eadb72a962eee0ad, type: 3}
   timeBetweenShots: 0.1
   accuracyOffset: 2
-  damage: 2
+  damage: 1
   myWeaponType: 5
   ammoPerShot: 1
   lineRenderer: {fileID: 708358291}

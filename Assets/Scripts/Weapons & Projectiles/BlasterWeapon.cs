@@ -23,4 +23,10 @@ public class BlasterWeapon : Weapon
 
         yield return null;
     }
+
+    //doesnt care about hitting an obstacle
+    protected override bool CanShoot()
+    {
+        return !weaponManager.IsOnCooldown() && (weaponManager.GetCurrentAmmo(myWeaponType) - ammoPerShot >= 0);
+    }
 }

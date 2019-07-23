@@ -9,6 +9,8 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] Text healthText = default;
     [SerializeField] Image hurtPanel = default;
     [SerializeField] Image dashCooldownImage = default;
+    [SerializeField] Image equippedWeaponImage = default;
+    [SerializeField] Text equippedWeaponAmmoText = default;
 
     public IEnumerator DashCooldownRoutine(float dashCooldown)
     {
@@ -49,5 +51,20 @@ public class UIManager : Singleton<UIManager>
         yield return new WaitForSeconds(.1f);
 
         hurtPanel.color = new Color(hurtPanel.color.r, hurtPanel.color.g, hurtPanel.color.b, 0);
+    }
+
+    public void UpdateEquippedWeaponUI(Weapon equippedWeapon, int currentAmmo, int maxAmmo)
+    {
+        equippedWeaponImage.sprite = equippedWeapon.GetComponent<SpriteRenderer>().sprite;
+        if (equippedWeapon.MyWeaponType == WeaponType.Infinite)
+        {
+            equippedWeaponAmmoText.resizeTextForBestFit = true;
+            equippedWeaponAmmoText.text = "∞";
+        }
+        else
+        {
+            equippedWeaponAmmoText.resizeTextForBestFit = false;
+            equippedWeaponAmmoText.text = currentAmmo.ToString() + "/" + maxAmmo.ToString();
+        }
     }
 }

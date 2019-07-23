@@ -10,6 +10,11 @@ TextureImporter:
     21300010: Tentative UI_5
     21300012: Tentative UI_6
     21300014: Tentative UI_7
+    21300016: Tentative UI_8
+    21300018: Tentative UI_9
+    21300020: Tentative UI_10
+    21300022: Tentative UI_11
+    21300024: Tentative UI_12
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -291,6 +296,106 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 367579f0b328e964cb30559a55ff08b1
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tentative UI_8
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 97
+        width: 30
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55e3465e0e7888f449f822dd9129b770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tentative UI_9
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 97
+        width: 30
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67d14e03d46004b4a9c3ae76e4464192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tentative UI_10
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 124
+        width: 31
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7771ec83d34802c43b855b208912dc89
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tentative UI_11
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 163
+        width: 39
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea0c32ff4f8ff2645994be9c5394ca95
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tentative UI_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 205
+        width: 31
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39162841c14270c45b9bb35cfaf27268
       vertices: []
       indices: 
       edges: []

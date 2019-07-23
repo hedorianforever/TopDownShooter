@@ -20,12 +20,15 @@ public class WeaponManager : Singleton<WeaponManager>
     private int equippedWeaponIndex = 0;
     private Weapon equippedWeapon;
     private bool isOnCooldown = false;
+    private UIManager uiManager;
 
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         player.ChangeWeapon(ownedWeapons[equippedWeaponIndex]);
         equippedWeapon = ownedWeapons[equippedWeaponIndex];
+        uiManager = UIManager.Instance;
+        UpdateWeaponUI();        
     }
 
     public int GetCurrentAmmo(WeaponType wt)
@@ -38,7 +41,7 @@ public class WeaponManager : Singleton<WeaponManager>
             case WeaponType.Explosive: return currentExplosiveAmmo;
             case WeaponType.Laser: return currentLaserAmmo;
             case WeaponType.Sniper: return currentSniperAmmo;
-            default: return 1;
+            default: return 99;
         }
     }
 
@@ -52,7 +55,7 @@ public class WeaponManager : Singleton<WeaponManager>
             case WeaponType.Explosive: return maxExplosiveAmmo;
             case WeaponType.Laser: return maxLaserAmmo;
             case WeaponType.Sniper: return maxSniperAmmo;
-            default: return 1;
+            default: return 99;
         }
     }
 
@@ -79,6 +82,7 @@ public class WeaponManager : Singleton<WeaponManager>
                 currentSniperAmmo -= value;
                 break;
         }
+        UpdateWeaponUI();
     }
 
     public void AddAmmo(WeaponType wt, int value)
@@ -112,6 +116,7 @@ public class WeaponManager : Singleton<WeaponManager>
             default:
                 break;
         }
+        UpdateWeaponUI();
     }
 
     public void TakeWeapon(Weapon weapon)
@@ -133,6 +138,7 @@ public class WeaponManager : Singleton<WeaponManager>
     {
         equippedWeapon = weapon;
         player.ChangeWeapon(weapon);
+        UpdateWeaponUI();
     }
 
     public void ChangeWeapon(float scrollWheelInput)
@@ -188,6 +194,11 @@ public class WeaponManager : Singleton<WeaponManager>
     public WeaponType GetEquippedWeaponType()
     {
         return equippedWeapon.MyWeaponType;
+    }
+
+    public void UpdateWeaponUI()
+    {
+        uiManager.UpdateEquippedWeaponUI(equippedWeapon, GetCurrentAmmo(equippedWeapon.MyWeaponType), GetMaxAmmo(equippedWeapon.MyWeaponType));
     }
 
 }

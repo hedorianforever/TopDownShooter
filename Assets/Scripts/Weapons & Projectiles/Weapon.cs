@@ -53,13 +53,15 @@ public class Weapon : MonoBehaviour
         transform.Rotate(new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z + 90)); //add 90 to final rotation because the weapon is initially looking right;
     }
 
-    protected bool CanShoot()
+    //virtual so weapons that don't care about hitting obstacles can override it
+    protected virtual bool CanShoot()
     {
         bool shotPointIsBlocked = false;
         //checks if weapon's shot point is not inside a wall
-        Collider2D col = Physics2D.OverlapCircle(shotPoint.position, .1f);
+        Collider2D col = Physics2D.OverlapCircle(shotPoint.position, .1f, 1 << LayerMask.NameToLayer("Obstacle"));
         if (col != null)
         {
+            Debug.Log(col.name);
             shotPointIsBlocked = col.tag == "Obstacle";
         }
         return !weaponManager.IsOnCooldown() && !shotPointIsBlocked && (weaponManager.GetCurrentAmmo(myWeaponType) - ammoPerShot >= 0);

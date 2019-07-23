@@ -15,36 +15,36 @@ public class LaserWeapon : Weapon
 
         shotPoint.Rotate(new Vector3(0, 0, randomRotation));
 
-        RaycastHit2D hitInfo = Physics2D.Raycast(shotPoint.position, shotPoint.right, 1000, layerMask);
+        RaycastHit2D[] hitsInfo = Physics2D.RaycastAll(shotPoint.position, shotPoint.right, 1000, layerMask);
 
-        if (hitInfo)
+        foreach (RaycastHit2D hit in hitsInfo)
         {
-            Enemy enemy = hitInfo.transform.GetComponent<Enemy>();
+            Enemy enemy = hit.transform.GetComponent<Enemy>();
             if (enemy != null)
             {
                 enemy.TakeDamage(damage);
+                Instantiate(impactFX, hit.point, Quaternion.identity);
             }
-            Instantiate(impactFX, hitInfo.point, Quaternion.identity);
-
-            lineRenderer.SetPosition(0, shotPoint.position);
-            lineRenderer.SetPosition(1, hitInfo.point);
-        } else
-        {
-            lineRenderer.SetPosition(0, shotPoint.position);
-            lineRenderer.SetPosition(1, shotPoint.position + shotPoint.right * 100);
-
+            if (hit.transform.tag == "Obstacle")
+            {
+                Instantiate(impactFX, hit.point, Quaternion.identity);
+                lineRenderer.SetPosition(0, shotPoint.position);
+                lineRenderer.SetPosition(1, hit.point);
+                break;
+            }
         }
 
+        //rotate shot point to original position
         shotPoint.Rotate(new Vector3(0, 0, -randomRotation));
-
 
         lineRenderer.enabled = true;
 
         yield return new WaitForSeconds(.05f);
 
-        //shotPoint.rotation = Quaternion.identity;
         lineRenderer.enabled = false;
 
         yield return null;
+
     }
+
 }

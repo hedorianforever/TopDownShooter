@@ -44,4 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthText: {fileID: 0}
+  hurtPanel: {fileID: 0}
   dashCooldownImage: {fileID: 0}
+  equippedWeaponImage: {fileID: 0}
+  equippedWeaponAmmoText: {fileID: 0}

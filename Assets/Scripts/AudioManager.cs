@@ -8,12 +8,21 @@ public class AudioManager : Singleton<AudioManager>
     public AudioSource EffectsSource;
     public AudioSource MusicSource;
 
-    [Range(0, 1)] public float musicVolume = 0.5f;
+    public AudioClip musicClip;
+
+    [Range(0, 1)] public float musicVolume = 0.4f;
     [Range(0, 1)] public float fxVolume = 1f;
 
     // Random pitch adjustment range.
     [SerializeField] float lowPitchRange = .90f;
     [SerializeField] float highPitchRange = 1.10f;
+
+    private void Start()
+    {
+        MusicSource.volume = musicVolume;
+        EffectsSource.volume = fxVolume;
+        PlayMusic(musicClip);
+    }
 
     //// Play a single clip through the sound effects source.
     //public void Play(AudioClip clip)
@@ -22,12 +31,12 @@ public class AudioManager : Singleton<AudioManager>
     //    EffectsSource.Play();
     //}
 
-    //// Play a single clip through the music source.
-    //public void PlayMusic(AudioClip clip)
-    //{
-    //    MusicSource.clip = clip;
-    //    MusicSource.Play();
-    //}
+    // Play a single clip through the music source.
+    public void PlayMusic(AudioClip clip)
+    {
+        MusicSource.clip = clip;
+        MusicSource.Play();
+    }
 
     //// Play a random clip from an array, and randomize the pitch slightly.
     //public void RandomSoundEffect(params AudioClip[] clips)
