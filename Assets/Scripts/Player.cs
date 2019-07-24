@@ -16,11 +16,12 @@ public class Player : MonoBehaviour
     [SerializeField] Ghost ghostPrefab = default;
     [SerializeField] Transform weaponSlot = default;
 
+    [SerializeField] AudioClip hurtSound = default;
+
     private Rigidbody2D rb;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     private UIManager uiManager;
-
 
     private Vector2 moveAmount;
 
@@ -188,6 +189,9 @@ public class Player : MonoBehaviour
         if (currentHealth <= 0)
         {
             Die();
+        } else
+        {
+            AudioManager.Instance.PlayClip(hurtSound);
         }
     }
 

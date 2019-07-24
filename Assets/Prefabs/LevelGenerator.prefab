@@ -49,7 +49,7 @@ MonoBehaviour:
   chanceWalkerDestroy: 1
   maxWalkers: 10
   percentToFill: 0.3
-  floorTile: {fileID: 11400000, guid: 64ca9caaee775bb41a8f6eea7b74bb04, type: 2}
+  floorTile: {fileID: 11400000, guid: 44350ab9c9d781f449ea6c658349e31b, type: 2}
   wallTile: {fileID: 11400000, guid: 08a461ef0adf64340864d740613db643, type: 2}
   groundTilemap: {fileID: 0}
   obstacleTilemap: {fileID: 0}

@@ -49,7 +49,7 @@ public class AudioManager : Singleton<AudioManager>
     //    EffectsSource.Play(); 
     //}
 
-    public void PlayClip(AudioClip clip, bool useRandomPitch = true, float volume = 1f)
+    public void PlayClip(AudioClip clip, float volume = 1f, bool useRandomPitch = true)
     {
         if (clip != null)
         {

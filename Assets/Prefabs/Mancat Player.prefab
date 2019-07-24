@@ -174,7 +174,7 @@ MonoBehaviour:
   dashLength: 0.1
   ghostPrefab: {fileID: 1876059252}
   weaponSlot: {fileID: 1739571956}
-  healthText: {fileID: 0}
+  hurtSound: {fileID: 8300000, guid: e30d476efae4c494f95dbf0ac7daf1e6, type: 3}
 --- !u!70 &1876059253
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

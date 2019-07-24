@@ -5,8 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D), typeof(BoxCollider2D))]
 public class Projectile : MonoBehaviour
 {
-    [SerializeField] GameObject destroyFX = default;
-    [SerializeField] GameObject destroyByTimeFX = default;
+    [SerializeField] GameObject destroyVFX = default;
+    [SerializeField] GameObject destroyByTimeVFX = default;
+    [SerializeField] AudioClip impactSFX = default;
+    [Range(0, 1)] [SerializeField] float impactSFXVolume = .4f;
 
     private float speed = 0;
     private int damage = 0;
@@ -27,9 +29,9 @@ public class Projectile : MonoBehaviour
 
     private void DestroyProjectile()
     {
-        if (destroyFX != null)
+        if (destroyVFX != null)
         {
-            Instantiate(destroyFX, transform.position, Quaternion.identity);
+            Instantiate(destroyVFX, transform.position, Quaternion.identity);
         }
         else
         {
@@ -40,9 +42,9 @@ public class Projectile : MonoBehaviour
 
     private void DestroyProjectileByTime()
     {
-        if (destroyByTimeFX != null)
+        if (destroyByTimeVFX != null)
         {
-            Instantiate(destroyByTimeFX, transform.position, Quaternion.identity);
+            Instantiate(destroyByTimeVFX, transform.position, Quaternion.identity);
             Destroy(gameObject);
         } else
         {
@@ -56,6 +58,7 @@ public class Projectile : MonoBehaviour
         if (collision.tag == "Enemy")
         {
             collision.GetComponent<Enemy>().TakeDamage(damage);
+            AudioManager.Instance.PlayClip(impactSFX, impactSFXVolume);
             DestroyProjectile();
         }
         else if (collision.tag == "Obstacle")

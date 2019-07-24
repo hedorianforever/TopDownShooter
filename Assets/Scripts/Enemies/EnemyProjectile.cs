@@ -17,10 +17,10 @@ public class EnemyProjectile : MonoBehaviour
         rotationToMove = transform.rotation;
     }
 
-    public void Init(int enemyDamage, float enemySpeed, float enemyLifetime)
+    public void Init(int enemyDamage, float projectileSpeed, float projectileLifetime = 100f)
     {
-        lifetime = enemyLifetime;
-        speed = enemySpeed;
+        lifetime = projectileLifetime;
+        speed = projectileSpeed;
         damage = enemyDamage;
     }
 

@@ -47,12 +47,13 @@ MonoBehaviour:
   currentMachineGunAmmo: 60
   currentShotgunAmmo: 20
   currentExplosiveAmmo: 15
-  currentLaserAmmo: 35
-  currentSniperAmmo: 25
+  currentLaserAmmo: 40
+  currentSniperAmmo: 20
   maxPistolAmmo: 100
   maxMachineGunAmmo: 200
   maxShotgunAmmo: 60
   maxExplosiveAmmo: 40
   maxLaserAmmo: 80
   maxSniperAmmo: 60
-  ownedWeapons: []
+  ownedWeapons:
+  - {fileID: 415144917485759177, guid: 8171f45a0fe721f4088718aadc55ecb3, type: 3}

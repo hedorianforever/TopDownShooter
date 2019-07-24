@@ -31,6 +31,7 @@ TextureImporter:
     21300052: My Own Placeholder Tileset_26
     21300054: My Own Placeholder Tileset_27
     21300056: My Own Placeholder Tileset_28
+    21300058: My Own Placeholder Tileset_29
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -725,13 +726,33 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
       spriteID: b4525a18e0356794fb65a5e905bac5bb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: My Own Placeholder Tileset_29
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 32
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97d8ee4bd43940d448f2909d5c811501
       vertices: []
       indices: 
       edges: []
