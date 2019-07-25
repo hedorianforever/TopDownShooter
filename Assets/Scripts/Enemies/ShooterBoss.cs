@@ -69,15 +69,19 @@ public class ShooterBoss : Enemy
 
             if (health <= maxHealth / 2 && !isEnraged)
             {
+                //shows angry emoji
+                GetComponent<FloatingEmoji>().ShowEmoji(transform);
+
                 //turns red
-                Debug.Log(GetComponent<SpriteRenderer>().color);
                 GetComponent<SpriteRenderer>().color = new Color32(255, 67, 67, 255);
-                Debug.Log(GetComponent<SpriteRenderer>().color);
-                Debug.Log(name + " IS FURIOUS!");
+
+                //buffs
                 timeBetweenAttacks *= .6f;
-                timeToWaitBeforeAttacking = .8f;
                 aiPath.maxSpeed *= 1.2f;
                 isEnraged = true;
+                yield return new WaitForSeconds(timeToWaitBeforeAttacking);
+                timeToWaitBeforeAttacking = .8f;
+                GetComponent<FloatingEmoji>().DestroyEmoji();
             }
         }
 
@@ -129,6 +133,7 @@ public class ShooterBoss : Enemy
 
     private void LookAtPlayer()
     {
+        if (playerTransform == null) { return; }
         var lookDirection = playerTransform.position - machineGunTransform.position;
         FacePlayer();
         machineGunTransform.right = lookDirection;
@@ -166,15 +171,18 @@ public class ShooterBoss : Enemy
 
     IEnumerator ShootRoutine()
     {
-        if (isUsingMachineGun)
+        if (playerTransform != null)
         {
-            ShootMachineGun();
-            yield return new WaitForSeconds(timeBetweenAttacks);
-        }
-        else
-        {
-            ShootShotgun();
-            yield return new WaitForSeconds(timeBetweenAttacks *  3);
+            if (isUsingMachineGun)
+            {
+                ShootMachineGun();
+                yield return new WaitForSeconds(timeBetweenAttacks);
+            }
+            else
+            {
+                ShootShotgun();
+                yield return new WaitForSeconds(timeBetweenAttacks * 3);
+            }
         }
 
         isAttacking = false;
