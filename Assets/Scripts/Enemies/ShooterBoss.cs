@@ -10,10 +10,17 @@ public class ShooterBoss : Enemy
     [SerializeField] float accuracyOffset = 5f;
     [SerializeField] float projectileSpeed = 10f;
     //[Range(0, 100)] [SerializeField] int chanceToShootOnSight = 20;
+    [SerializeField] float timeToWaitBeforeAttacking = 3f;
+    [SerializeField] float timeShooting = 5f;
 
-    [SerializeField] Transform gunTransform = default; //to look at player 
-    [SerializeField] Transform shotPoint = default;
+    [SerializeField] Transform machineGunTransform = default; //to look at player 
+    [SerializeField] Transform machineGunShotPoint = default;
+    [SerializeField] Transform shotgunTransform = default;
+    [SerializeField] Transform[] shotgunShotPoints = default;
     [SerializeField] GameObject projectilePrefab = default;
+
+    [SerializeField] AudioClip shootSound1 = default;
+    [SerializeField] AudioClip shootSound2 = default;
 
     [SerializeField] float stopDistance = 3f;
     [SerializeField] float leapAttackSpeed = 4f;
@@ -22,13 +29,19 @@ public class ShooterBoss : Enemy
 
     private bool isAttacking = false;
     private bool isMoving = true;
-    private bool isUsingMachineGun = true; 
+    private bool isUsingMachineGun = true;
+    private bool isEnraged = false;
+
+    private int maxHealth;
 
     //private Rigidbody2D rb;
 
     public override void Start()
     {
         base.Start();
+
+        maxHealth = health;
+
         Physics2D.queriesStartInColliders = false;
         //rb = GetComponent<Rigidbody2D>();
         aiPath = GetComponent<AIPath>();
@@ -36,39 +49,91 @@ public class ShooterBoss : Enemy
         aiPath.maxSpeed = moveSpeed;
         aiPath.endReachedDistance = stopDistance;
 
-        //wait a few seconds to change this
+        //should wait a few seconds to change this
         aiPath.canMove = true;
 
         if (playerTransform != null && GetComponent<AIDestinationSetter>().target == null)
         {
             GetComponent<AIDestinationSetter>().target = playerTransform;
         }
+
+        StartCoroutine(BossRoutine());
     }
 
-    private void Update()
+    IEnumerator BossRoutine()
     {
-        if (playerTransform == null) { return; }
-
-        if ((Mathf.Abs(aiPath.velocity.y) >= .1f || Mathf.Abs(aiPath.velocity.x) >= .1f))
+        while (playerTransform != null)
         {
-            anim.SetBool("isMoving", true);
+            yield return StartCoroutine(AttackStage());
+            yield return StartCoroutine(WaitStage());
 
+            if (health <= maxHealth / 2 && !isEnraged)
+            {
+                //turns red
+                Debug.Log(GetComponent<SpriteRenderer>().color);
+                GetComponent<SpriteRenderer>().color = new Color32(255, 67, 67, 255);
+                Debug.Log(GetComponent<SpriteRenderer>().color);
+                Debug.Log(name + " IS FURIOUS!");
+                timeBetweenAttacks *= .6f;
+                timeToWaitBeforeAttacking = .8f;
+                aiPath.maxSpeed *= 1.2f;
+                isEnraged = true;
+            }
         }
-        else
-        {
-            anim.SetBool("isMoving", false);
-        }
 
-        FacePlayer();
-
-        Shoot();
     }
+
+    IEnumerator WaitStage()
+    {
+        anim.SetBool("isMoving", false);
+        aiPath.canMove = false;
+        yield return new WaitForSeconds(timeToWaitBeforeAttacking);
+        ChangeWeapon();
+    }
+
+    IEnumerator AttackStage()
+    {
+        aiPath.canMove = true;
+        anim.SetBool("isMoving", true);
+        float t = 0;
+        while (t < timeShooting)
+        {
+            Shoot();
+            FacePlayer();
+            yield return null;
+            t += Time.deltaTime;
+            //if is enraged, stop this attack stage
+            if (health <= maxHealth / 2 && !isEnraged)
+            {
+                break;
+            }
+        }
+    }
+
+    //private void Update()
+    //{
+    //    if (playerTransform == null) { return; }
+
+    //    if ((Mathf.Abs(aiPath.velocity.y) >= .1f || Mathf.Abs(aiPath.velocity.x) >= .1f))
+    //    {
+    //        anim.SetBool("isMoving", true);
+
+    //    }
+    //    else
+    //    {
+    //        anim.SetBool("isMoving", false);
+    //    }
+
+    //    FacePlayer();
+    //}
 
     private void LookAtPlayer()
     {
-        var lookDirection = playerTransform.position - gunTransform.position;
+        var lookDirection = playerTransform.position - machineGunTransform.position;
         FacePlayer();
-        gunTransform.right = lookDirection;
+        machineGunTransform.right = lookDirection;
+        shotgunTransform.right = lookDirection;
+
     }
 
     private void Shoot()
@@ -101,24 +166,32 @@ public class ShooterBoss : Enemy
 
     IEnumerator ShootRoutine()
     {
-        ShootMachineGun();
-        //ShootShotgun();
-
-        yield return new WaitForSeconds(timeBetweenAttacks);
+        if (isUsingMachineGun)
+        {
+            ShootMachineGun();
+            yield return new WaitForSeconds(timeBetweenAttacks);
+        }
+        else
+        {
+            ShootShotgun();
+            yield return new WaitForSeconds(timeBetweenAttacks *  3);
+        }
 
         isAttacking = false;
-        ChangeWeapon();
     }
 
     void ChangeWeapon()
     {
         isUsingMachineGun = !isUsingMachineGun;
-        //change weapon
+
+        machineGunTransform.gameObject.SetActive(isUsingMachineGun);
+        shotgunTransform.gameObject.SetActive(!isUsingMachineGun);
     }
 
     void ShootMachineGun()
     {
-        GameObject projectile = Instantiate(projectilePrefab, shotPoint.position, gunTransform.rotation) as GameObject;
+        AudioManager.Instance.PlayClip(shootSound1, .5f);
+        GameObject projectile = Instantiate(projectilePrefab, machineGunShotPoint.position, machineGunTransform.rotation) as GameObject;
 
         float randomRotation = Random.Range(-accuracyOffset, accuracyOffset);
 
@@ -131,6 +204,20 @@ public class ShooterBoss : Enemy
         if (projectile != null)
         {
             projectile.GetComponent<EnemyProjectile>().Init(attackDamage, projectileSpeed);
+        }
+    }
+
+    void ShootShotgun()
+    {
+        AudioManager.Instance.PlayClip(shootSound2, .6f);
+        foreach (Transform shotPoint in shotgunShotPoints)
+        {
+            GameObject projectile = Instantiate(projectilePrefab, shotPoint.position, shotPoint.rotation) as GameObject;
+
+            if (projectile != null)
+            {
+                projectile.GetComponent<EnemyProjectile>().Init(attackDamage, projectileSpeed);
+            }
         }
     }
 
