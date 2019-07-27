@@ -56,11 +56,21 @@ public class LevelGenerator : MonoBehaviour
 
     [SerializeField] private float minRadialDistanceBetweenEnemies = 2f;
 
+    [SerializeField] private float minEnemyDistanceFromPlayer = 10f;
+
+
+    [Header("Chest related variables")]
+
+    [SerializeField] private Weapon[] possibleWeaponDrops = default;
+    [SerializeField] private WeaponPickup weaponPickup = default;
+    [SerializeField] private int numberOfWeaponDrops = 1;
+
+    [SerializeField] float minChestDistanceFromPlayer = 25f;
+
     //chance to spawn enemy per tile
     //[SerializeField] float chanceToSpawnEnemy = .05f;
 
     private Transform playerTransform = default;
-    private float minEnemyDistanceFromPlayer = 12f;
     private int enemiesSpawned = 0;
 
 
@@ -81,6 +91,7 @@ public class LevelGenerator : MonoBehaviour
         Invoke("SpawnPlayer", 1f);
         //if you don't wait a while to spawn enemies they all seem to spawn next to each other
         Invoke("SpawnEnemies", 2f);
+        Invoke("SpawnWeapons", 2f);
     }
 
     //private void Update()
@@ -365,12 +376,64 @@ public class LevelGenerator : MonoBehaviour
         tilemap.SetTile(tilemap.WorldToCell(spawnPos), tile);
     }
 
+    void SpawnWeapons()
+    {
+        int iterations = 1000;
+
+        int weaponsSpawned = 0;
+
+        while (weaponsSpawned < numberOfWeaponDrops)
+        {
+            randomValidFloorTile = floorTilesPositions[Random.Range(0, floorTilesPositions.Count)];
+
+            float distanceToPlayer = Vector2.Distance(randomValidFloorTile, playerTransform.position);
+
+            //test if enemy is not too close to the player
+            if (distanceToPlayer > minChestDistanceFromPlayer)
+            {
+                Vector3 randomFloor = new Vector3(randomValidFloorTile.x, randomValidFloorTile.y, 0);
+
+                Collider2D[] colliders = Physics2D.OverlapCircleAll(randomFloor, .2f);
+
+                bool canSpawn = true;
+
+                foreach (Collider2D col in colliders)
+                {
+                    if (col.tag == "Obstacle")
+                    {
+                        canSpawn = false;
+                    }
+                }
+
+                if (canSpawn)
+                {
+                    //Chest spawnedChest = Instantiate(weaponChest, randomFloor, Quaternion.identity) as Chest;
+                    WeaponPickup spawnedWeaponPickup = Instantiate(weaponPickup, randomFloor, Quaternion.identity) as WeaponPickup;
+
+                    //choose a random weapon
+                    Weapon weaponToSpawn = possibleWeaponDrops[Random.Range(0, possibleWeaponDrops.Length)];
+                    spawnedWeaponPickup.SetWeapon(weaponToSpawn);
+
+                    weaponsSpawned++;
+                }
+            }
+
+            iterations--;
+            if (iterations <= 0)
+            {
+                Debug.LogError("BROKE SPAWN CHEST ITERATIONS LIMIT! ");
+                break;
+            }
+        }
+    }
+
     void SpawnEnemies()
     {
         int iterations = 10000;
 
         int enemiesToSpawn = Random.Range(minNumberEnemies, maxNumberEnemies);
 
+        //summon enemies loop
         while (enemiesSpawned < enemiesToSpawn)
         {
             randomValidFloorTile = floorTilesPositions[Random.Range(0, floorTilesPositions.Count)];
@@ -396,18 +459,25 @@ public class LevelGenerator : MonoBehaviour
             //test if enemy is not too close to the player
             if (distanceToPlayer > minEnemyDistanceFromPlayer)
             {
-                Enemy spawnedEnemy = Instantiate(enemies[Random.Range(0, enemies.Length)], new Vector3(randomValidFloorTile.x, randomValidFloorTile.y, 0), Quaternion.identity);
+                Vector3 randomFloor = new Vector3(randomValidFloorTile.x, randomValidFloorTile.y, 0);
 
-                enemiesSpawned++;
+                colliders = Physics2D.OverlapCircleAll(randomFloor, .001f);
 
-                colliders = Physics2D.OverlapCircleAll(spawnedEnemy.transform.position, 1f);
+                bool canSummon = true;
+
                 foreach (Collider2D col in colliders)
                 {
                     if (col.tag == "Obstacle")
                     {
-                        Destroy(spawnedEnemy.gameObject);
-                        enemiesSpawned--;
+                        canSummon = false;
                     }
+                }
+
+                if (canSummon)
+                {
+                    Enemy spawnedEnemy = Instantiate(enemies[Random.Range(0, enemies.Length)], new Vector3(randomValidFloorTile.x, randomValidFloorTile.y, 0), Quaternion.identity);
+
+                    enemiesSpawned++;
                 }
             }
 
@@ -418,6 +488,8 @@ public class LevelGenerator : MonoBehaviour
                 break;
             }
         }
+
+        GameManager.Instance.SetEnemyCount(enemiesSpawned);
 
         //not sure if I should use the composite; it messes with some collider tests
         //obstacleTilemap.GetComponent<TilemapCollider2D>().usedByComposite = true;

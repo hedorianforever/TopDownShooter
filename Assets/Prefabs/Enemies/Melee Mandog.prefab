@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 294067842146335522}
   - component: {fileID: 294067842146335521}
   - component: {fileID: 294067842146335520}
-  - component: {fileID: 7549388442095742122}
   - component: {fileID: 76174416}
   - component: {fileID: 2266717365324582841}
   - component: {fileID: 76174417}
   - component: {fileID: 76174418}
   - component: {fileID: 6877865887352877084}
+  - component: {fileID: 5055481554655508827}
   m_Layer: 10
   m_Name: Melee Mandog
   m_TagString: Enemy
@@ -105,32 +105,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!61 &7549388442095742122
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 294067842146335551}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.03, y: -0.04}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.65625, y: 0.65625}
-    newSize: {x: 1.25, y: 1.25}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.3327912, y: 0.56}
-  m_EdgeRadius: 0
 --- !u!114 &76174416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,6 +122,8 @@ MonoBehaviour:
   timeBetweenAttacks: 1.5
   attackDamage: 2
   noticePlayerRadius: 5
+  deathVFX: {fileID: 5111852914969929664, guid: 7c41e6539a55a0149ba099e0468be75a,
+    type: 3}
   playerTransform: {fileID: 0}
   ammoDrop: {fileID: 2539502908945056113, guid: 3dcad4d9f8cbd194fbfd22df11b29761,
     type: 3}
@@ -256,3 +232,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!70 &5055481554655508827
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 294067842146335551}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.026044324, y: -0.035810888}
+  m_Size: {x: 0.29163, y: 0.49998438}
+  m_Direction: 0

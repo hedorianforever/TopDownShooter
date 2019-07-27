@@ -6,11 +6,15 @@ using EZCameraShake;
 
 public class UIManager : Singleton<UIManager>
 {
+    [Header("General variables")]
     [SerializeField] Text healthText = default;
     [SerializeField] Image hurtPanel = default;
     [SerializeField] Image dashCooldownImage = default;
     [SerializeField] Image equippedWeaponImage = default;
     [SerializeField] Text equippedWeaponAmmoText = default;
+
+    [Header("Boss variables")]
+    [SerializeField] Image bossHealthFill = default;
 
     public IEnumerator DashCooldownRoutine(float dashCooldown)
     {
@@ -66,5 +70,21 @@ public class UIManager : Singleton<UIManager>
             equippedWeaponAmmoText.resizeTextForBestFit = false;
             equippedWeaponAmmoText.text = currentAmmo.ToString() + "/" + maxAmmo.ToString();
         }
+    }
+
+    public IEnumerator UpdateBossHealth(float maxHealth, float currentHealth)
+    {
+        if (bossHealthFill == null)
+        {
+            Debug.Log("TRYING TO UPDATE NON EXISTENT BOSS HEALTH");
+            yield break;
+        }
+
+        bossHealthFill.color = Color.red;
+
+        bossHealthFill.fillAmount = currentHealth / maxHealth;
+        yield return new WaitForSeconds(.1f);
+
+        bossHealthFill.color = Color.white;
     }
 }

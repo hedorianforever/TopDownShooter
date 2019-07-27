@@ -53,6 +53,8 @@ public class Player : MonoBehaviour
         currentHealth = maxHealth;
 
         uiManager.UpdatePlayerHealthUI(currentHealth, maxHealth);
+
+    
     }
 
     private void Update()
@@ -86,7 +88,8 @@ public class Player : MonoBehaviour
 
     IEnumerator DashRoutine()
     {
-        currentDashTargetPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //currentDashTargetPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        currentDashTargetPos = transform.position + new Vector3(horizontal, vertical, 0) * 10;
 
         float t = 0;
 

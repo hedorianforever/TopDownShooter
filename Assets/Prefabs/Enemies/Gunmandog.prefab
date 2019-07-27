@@ -202,6 +202,8 @@ MonoBehaviour:
   timeBetweenAttacks: 2.2
   attackDamage: 3
   noticePlayerRadius: 8
+  deathVFX: {fileID: 5111852914969929664, guid: 7c41e6539a55a0149ba099e0468be75a,
+    type: 3}
   playerTransform: {fileID: 0}
   ammoDrop: {fileID: 2539502908945056113, guid: 3dcad4d9f8cbd194fbfd22df11b29761,
     type: 3}

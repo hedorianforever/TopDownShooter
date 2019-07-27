@@ -10,6 +10,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float timeBetweenAttacks;
     [SerializeField] protected int attackDamage;
     [SerializeField] protected float noticePlayerRadius = 15f;
+    [SerializeField] protected GameObject deathVFX;
+
 
     [HideInInspector] public Transform playerTransform;
 
@@ -76,6 +78,12 @@ public class Enemy : MonoBehaviour
         if (Random.Range(0, .9999f) < ammoDropChance)
         {
             Instantiate(ammoDrop, transform.position, Quaternion.identity);
+        }
+        GameManager.Instance.DecreaseEnemyCount(transform.position);
+
+        if (deathVFX != null)
+        {
+            Instantiate(deathVFX, transform.position, Quaternion.identity);
         }
         Destroy(gameObject);
     }

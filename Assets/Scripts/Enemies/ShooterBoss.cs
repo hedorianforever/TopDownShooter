@@ -23,12 +23,12 @@ public class ShooterBoss : Enemy
     [SerializeField] AudioClip shootSound2 = default;
 
     [SerializeField] float stopDistance = 3f;
-    [SerializeField] float leapAttackSpeed = 4f;
+    //[SerializeField] float leapAttackSpeed = 4f;
 
     private AIPath aiPath;
 
     private bool isAttacking = false;
-    private bool isMoving = true;
+    //private bool isMoving = true;
     private bool isUsingMachineGun = true;
     private bool isEnraged = false;
 
@@ -60,6 +60,14 @@ public class ShooterBoss : Enemy
         StartCoroutine(BossRoutine());
     }
 
+    private void Update()
+    {
+        if (playerTransform == null)
+        {
+            this.enabled = false;
+        }
+    }
+
     IEnumerator BossRoutine()
     {
         while (playerTransform != null)
@@ -67,6 +75,7 @@ public class ShooterBoss : Enemy
             yield return StartCoroutine(AttackStage());
             yield return StartCoroutine(WaitStage());
 
+            //check if below half health
             if (health <= maxHealth / 2 && !isEnraged)
             {
                 //shows angry emoji
@@ -79,6 +88,7 @@ public class ShooterBoss : Enemy
                 timeBetweenAttacks *= .6f;
                 aiPath.maxSpeed *= 1.2f;
                 isEnraged = true;
+                timeToWaitBeforeAttacking = 1.5f;
                 yield return new WaitForSeconds(timeToWaitBeforeAttacking);
                 timeToWaitBeforeAttacking = .8f;
                 GetComponent<FloatingEmoji>().DestroyEmoji();
@@ -227,6 +237,12 @@ public class ShooterBoss : Enemy
                 projectile.GetComponent<EnemyProjectile>().Init(attackDamage, projectileSpeed);
             }
         }
+    }
+
+    public override void TakeDamage(int damageAmount)
+    {
+        base.TakeDamage(damageAmount);
+        StartCoroutine(UIManager.Instance.UpdateBossHealth(maxHealth, health));
     }
 
     //returns a random point from which the player is in the line of sight of the boss

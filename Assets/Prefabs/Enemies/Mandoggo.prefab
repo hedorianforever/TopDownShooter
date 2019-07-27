@@ -331,6 +331,7 @@ GameObject:
   - component: {fileID: 8009828591117820069}
   - component: {fileID: 8009828591117820090}
   - component: {fileID: 8009828591117820071}
+  - component: {fileID: 2012878097}
   m_Layer: 10
   m_Name: Mandoggo
   m_TagString: Enemy
@@ -433,7 +434,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1876d1ef278d76c43b3bab89c9cf6522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 50
+  health: 100
   moveSpeed: 2.5
   timeBetweenAttacks: 0.3
   attackDamage: 2
@@ -577,6 +578,19 @@ CapsuleCollider2D:
   m_Offset: {x: 0.02042538, y: 0.006808281}
   m_Size: {x: 0.6024445, y: 0.8387461}
   m_Direction: 0
+--- !u!114 &2012878097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8009828591117820076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68b95521d023fdc4a9c3b445024b9dc4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emoji: {fileID: 3558208420983785277, guid: 7fe3739b96a8cb346874ccb63b9cc1e2, type: 3}
 --- !u!1 &8009828591402940139
 GameObject:
   m_ObjectHideFlags: 0

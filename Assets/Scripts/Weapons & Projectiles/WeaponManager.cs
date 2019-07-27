@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum WeaponType { Infinite, Pistol, MachineGun, Shotgun, Explosive, Laser, Sniper }
 
@@ -22,13 +23,45 @@ public class WeaponManager : Singleton<WeaponManager>
     private bool isOnCooldown = false;
     private UIManager uiManager;
 
-    private void Start()
+    private void OnEnable()
     {
+        //Tell our 'OnLevelFinishedLoading' function to start listening for a scene change as soon as this script is enabled.
+        SceneManager.sceneLoaded += OnLevelFinishedLoading;
+    }
+
+    private void OnDisable()
+    {
+        //Tell our 'OnLevelFinishedLoading' function to stop listening for a scene change as soon as this script is disabled. Remember to always have an unsubscription for every delegate you subscribe to!
+        SceneManager.sceneLoaded -= OnLevelFinishedLoading;
+    }
+
+    private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log("Level Loaded");
+        Debug.Log(scene.name);
+
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         player.ChangeWeapon(ownedWeapons[equippedWeaponIndex]);
         equippedWeapon = ownedWeapons[equippedWeaponIndex];
         uiManager = UIManager.Instance;
-        UpdateWeaponUI();        
+        UpdateWeaponUI();
+    }
+
+    private void Start()
+    {
+        //player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        //player.ChangeWeapon(ownedWeapons[equippedWeaponIndex]);
+        //equippedWeapon = ownedWeapons[equippedWeaponIndex];
+        //uiManager = UIManager.Instance;
+        //UpdateWeaponUI();
+    }
+
+    public void InitPlayer(Player player)
+    {
+        this.player = player;
+        player.ChangeWeapon(ownedWeapons[equippedWeaponIndex]);
+        equippedWeapon = ownedWeapons[equippedWeaponIndex];
+        UpdateWeaponUI();
     }
 
     public int GetCurrentAmmo(WeaponType wt)

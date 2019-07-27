@@ -61,3 +61,13 @@ MonoBehaviour:
   maxNumberEnemies: 12
   minNumberEnemies: 8
   minRadialDistanceBetweenEnemies: 1
+  possibleWeaponDrops:
+  - {fileID: 415144917485759177, guid: 3c01288f0fa08f146984ea0d3d3635ea, type: 3}
+  - {fileID: 3757395684681954742, guid: 617771cafc6cdfc4a90209e5e1212a8d, type: 3}
+  - {fileID: 3352913267347471278, guid: b9e761747c0c4cd4a9a1f0a642217edf, type: 3}
+  - {fileID: 2959074677979581781, guid: 91b647ebd29cb6540ad0157e26adcf09, type: 3}
+  - {fileID: 5461477046466325820, guid: 795b5d8c96c5edb40b7b160596aa22b3, type: 3}
+  weaponPickup: {fileID: 2819014337513833944, guid: a6d37dbfb4ec34047b5cc41df4483888,
+    type: 3}
+  numberOfWeaponDrops: 1
+  minChestDistanceFromPlayer: 25

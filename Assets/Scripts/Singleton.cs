@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
+    [SerializeField] bool shouldNotDestroyOnLoad = false;
+
     static T m_instance;
 
     public static T Instance
@@ -31,6 +33,11 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         {
             m_instance = this as T;
 
+            if (shouldNotDestroyOnLoad)
+            {
+                //this will not work unless its parent is null!!
+                DontDestroyOnLoad(this.gameObject);
+            }
             //transform.parent = null;
             //DontDestroyOnLoad(this.gameObject);
         }

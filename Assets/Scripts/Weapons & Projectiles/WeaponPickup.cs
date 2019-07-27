@@ -7,7 +7,7 @@ public class WeaponPickup : MonoBehaviour
 {
     //it's a game object and not a Weapon script so it's easy to drag and drop it here
     //might need to change it 
-    [SerializeField] GameObject weaponPrefab = default;
+    [SerializeField] Weapon weaponPrefab = default;
     [SerializeField] GameObject sparkVFX = default;
 
     private SpriteRenderer spriteRenderer;
@@ -18,14 +18,20 @@ public class WeaponPickup : MonoBehaviour
     {
         if (weaponPrefab == null)
         {
-            Debug.LogError("NO WEAPON PREFAB ASSIGNED AT WEAPON PICKUP");
+            //Debug.LogError("NO WEAPON PREFAB ASSIGNED AT WEAPON PICKUP");
             return;
         } else if (weaponPrefab.GetComponent<Weapon>() == null)
         {
-            Debug.LogError("NOT A WEAPON AT WEAPON PICKUP");
+            //Debug.LogError("NOT A WEAPON AT WEAPON PICKUP");
             return;
         }
 
+        SetWeapon(weaponPrefab);
+    }
+
+    public void SetWeapon(Weapon weaponPrefab)
+    {
+        this.weaponPrefab = weaponPrefab;
         //make pickup's sprite same as weapon's sprite
         //should have a shining effect though
         spriteRenderer = GetComponent<SpriteRenderer>();

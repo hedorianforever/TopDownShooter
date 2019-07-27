@@ -237,6 +237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 970044227ea9cee4ba1b831b67931b1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shouldNotDestroyOnLoad: 1
   EffectsSource: {fileID: 1086400582081929248}
   MusicSource: {fileID: 1086400582081929249}
   musicClip: {fileID: 8300000, guid: 17e2bbb231e42bb4bb72200710616cbd, type: 3}
