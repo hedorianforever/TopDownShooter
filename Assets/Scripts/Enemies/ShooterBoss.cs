@@ -64,7 +64,7 @@ public class ShooterBoss : Enemy
     {
         if (playerTransform == null)
         {
-            this.enabled = false;
+            enabled = false;
         }
     }
 
@@ -151,31 +151,43 @@ public class ShooterBoss : Enemy
 
     }
 
+    //private void Shoot()
+    //{
+    //    if (playerTransform == null) { return; }
+
+    //    Vector2 directionToPlayer = playerTransform.position - transform.position;
+
+    //    //checks if player is on sight
+    //    RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, directionToPlayer, 100);
+    //    if (!hitInfo) { return; }
+
+    //    //Player is on enemy's line of sight
+    //    if (hitInfo.collider.gameObject.tag == "Player")
+    //    {
+    //        Debug.DrawLine(transform.position, hitInfo.point, Color.red);
+    //        //TODO: maybe should show this line as a preview for the player to dodge
+    //        LookAtPlayer();
+    //        if (!isAttacking)
+    //        {
+    //            isAttacking = true;
+    //            StartCoroutine(ShootRoutine());
+    //        }
+    //    }
+    //    else
+    //    {
+    //        Debug.DrawLine(transform.position, hitInfo.point, Color.green);
+    //    }
+    //}
+
     private void Shoot()
     {
         if (playerTransform == null) { return; }
 
-        Vector2 directionToPlayer = playerTransform.position - transform.position;
-
-        //checks if player is on sight
-        RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, directionToPlayer, 100);
-        if (!hitInfo) { return; }
-
-        //Player is on enemy's line of sight
-        if (hitInfo.collider.gameObject.tag == "Player")
+        LookAtPlayer();
+        if (!isAttacking)
         {
-            Debug.DrawLine(transform.position, hitInfo.point, Color.red);
-            //TODO: maybe should show this line as a preview for the player to dodge
-            LookAtPlayer();
-            if (!isAttacking)
-            {
-                isAttacking = true;
-                StartCoroutine(ShootRoutine());
-            }
-        }
-        else
-        {
-            Debug.DrawLine(transform.position, hitInfo.point, Color.green);
+            isAttacking = true;
+            StartCoroutine(ShootRoutine());
         }
     }
 

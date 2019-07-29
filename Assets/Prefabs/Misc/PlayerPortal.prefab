@@ -131,6 +131,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   portalCenter: {fileID: 5477310385600227437}
+  targetSceneName: 
+  openPortalSound: {fileID: 8300000, guid: b0067e9352a584944be90737052d64b8, type: 3}
+  closePortalSound: {fileID: 8300000, guid: 63a50ea3af2365b41a3bcd35a5ab12ca, type: 3}
 --- !u!1 &9220895018441616312
 GameObject:
   m_ObjectHideFlags: 0

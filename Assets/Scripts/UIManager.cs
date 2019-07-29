@@ -59,6 +59,11 @@ public class UIManager : Singleton<UIManager>
 
     public void UpdateEquippedWeaponUI(Weapon equippedWeapon, int currentAmmo, int maxAmmo)
     {
+        if (equippedWeapon == null)
+        {
+            return;
+        }
+
         equippedWeaponImage.sprite = equippedWeapon.GetComponent<SpriteRenderer>().sprite;
         if (equippedWeapon.MyWeaponType == WeaponType.Infinite)
         {

@@ -6,11 +6,20 @@ using UnityEngine.SceneManagement;
 public class PlayerPortal : MonoBehaviour
 {
     [SerializeField] Transform portalCenter = default;
+
+    [SerializeField] string targetSceneName = null;
+
+    [SerializeField] AudioClip openPortalSound = default;
+    [SerializeField] AudioClip closePortalSound = default;
+
     private GameObject player;
+    private SceneTransitions sceneTransition;
 
     private void Start()
     {
+        AudioManager.Instance.PlayClip(openPortalSound, 1, false);
         player = GameObject.FindGameObjectWithTag("Player");
+        sceneTransition = GameObject.FindGameObjectWithTag("SceneTransitions").GetComponent<SceneTransitions>();
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -24,6 +33,7 @@ public class PlayerPortal : MonoBehaviour
     IEnumerator ClosePortalRoutine()
     {
         player.GetComponent<Animator>().SetTrigger("teleportTrigger");
+
 
         float t = 0;
 
@@ -43,11 +53,34 @@ public class PlayerPortal : MonoBehaviour
         GetComponent<Animator>().SetTrigger("closeTrigger");
     }
 
-    public IEnumerator GoToNextLevel()
+    public void ClosePortal()
     {
-        yield return new WaitForSeconds(.5f);
+        AudioManager.Instance.PlayClip(closePortalSound, 1, false);
+    }
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    //public IEnumerator GoToNextLevel()
+    //{
+    //    yield return new WaitForSeconds(.5f);
+
+    //    if (targetSceneName != null)
+    //    {
+    //        sceneTransition.LoadScene(targetSceneName);
+    //    } else
+    //    {
+    //        sceneTransition.LoadNextScene();
+    //    }
+    //}
+
+    public void GoToNextLevel()
+    {
+        if (targetSceneName != "")
+        {
+            sceneTransition.LoadScene(targetSceneName);
+        }
+        else
+        {
+            sceneTransition.LoadNextScene();
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

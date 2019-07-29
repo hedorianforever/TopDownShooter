@@ -52,9 +52,10 @@ public class Player : MonoBehaviour
 
         currentHealth = maxHealth;
 
-        uiManager.UpdatePlayerHealthUI(currentHealth, maxHealth);
-
-    
+        if (uiManager != null)
+        {
+            uiManager.UpdatePlayerHealthUI(currentHealth, maxHealth);
+        }
     }
 
     private void Update()
@@ -103,7 +104,10 @@ public class Player : MonoBehaviour
         ghostPrefab.shouldMakeGhost = false;
         isInvulnerable = false;
 
-        yield return StartCoroutine(uiManager.DashCooldownRoutine(dashCooldown));
+        if (uiManager != null)
+        {
+            yield return StartCoroutine(uiManager.DashCooldownRoutine(dashCooldown));
+        }
 
         canDash = true;
     }
@@ -186,8 +190,11 @@ public class Player : MonoBehaviour
     public void TakeDamage(int damageAmount)
     {
         currentHealth -= damageAmount;
-        uiManager.UpdatePlayerHealthUI(currentHealth, maxHealth);
-        StartCoroutine(uiManager.PlayerHurtRoutine());
+        if (uiManager != null)
+        {
+            uiManager.UpdatePlayerHealthUI(currentHealth, maxHealth);
+            StartCoroutine(uiManager.PlayerHurtRoutine());
+        }
 
         if (currentHealth <= 0)
         {
@@ -229,7 +236,10 @@ public class Player : MonoBehaviour
         Debug.Log("HEALING!");
         currentHealth += healAmount;
         currentHealth = Mathf.Clamp(currentHealth, healAmount, maxHealth);
-        uiManager.UpdatePlayerHealthUI(currentHealth, maxHealth);
+        if (uiManager != null)
+        {
+            uiManager.UpdatePlayerHealthUI(currentHealth, maxHealth);
+        }
     }
 
     public bool IsFullHealth()
@@ -250,6 +260,12 @@ public class Player : MonoBehaviour
     public bool GetIsInvulnerable()
     {
         return isInvulnerable;
+    }
+
+    private void LateUpdate()
+    {
+        rb.velocity = new Vector2(horizontal * moveSpeed, vertical * moveSpeed);
+
     }
 
 }

@@ -37,23 +37,20 @@ public class WeaponManager : Singleton<WeaponManager>
 
     private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("Level Loaded");
-        Debug.Log(scene.name);
+        //Debug.Log("Level Loaded");
+        //Debug.Log(scene.name);
+
+        //if this weapon manager comes from the tutorial, destroy it to not keep the tutorial weapons   
+        if (SceneManager.GetActiveScene().name == "Main Menu")
+        {
+            Destroy(gameObject);
+        }
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         player.ChangeWeapon(ownedWeapons[equippedWeaponIndex]);
         equippedWeapon = ownedWeapons[equippedWeaponIndex];
         uiManager = UIManager.Instance;
         UpdateWeaponUI();
-    }
-
-    private void Start()
-    {
-        //player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        //player.ChangeWeapon(ownedWeapons[equippedWeaponIndex]);
-        //equippedWeapon = ownedWeapons[equippedWeaponIndex];
-        //uiManager = UIManager.Instance;
-        //UpdateWeaponUI();
     }
 
     public void InitPlayer(Player player)
