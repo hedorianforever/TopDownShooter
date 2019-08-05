@@ -69,7 +69,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void Die()
+    public virtual void Die()
     {
         if (Random.Range(0, .9999f) < healthDropChance)
         {

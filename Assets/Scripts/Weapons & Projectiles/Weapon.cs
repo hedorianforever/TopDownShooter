@@ -61,7 +61,6 @@ public class Weapon : MonoBehaviour
         Collider2D col = Physics2D.OverlapCircle(shotPoint.position, .1f, 1 << LayerMask.NameToLayer("Obstacle"));
         if (col != null)
         {
-            Debug.Log(col.name);
             shotPointIsBlocked = col.tag == "Obstacle";
         }
         return !weaponManager.IsOnCooldown() && !shotPointIsBlocked && (weaponManager.GetCurrentAmmo(myWeaponType) - ammoPerShot >= 0);

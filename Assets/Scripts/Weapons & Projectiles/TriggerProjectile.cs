@@ -16,7 +16,6 @@ public class TriggerProjectile : MonoBehaviour
     {
         if (collision.tag == "Enemy")
         {
-            Debug.Log("HURT THE ENEMY " + collision.name);
             collision.GetComponent<Enemy>().TakeDamage(damage);
         }
     }

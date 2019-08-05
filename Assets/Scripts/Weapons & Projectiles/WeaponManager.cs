@@ -47,10 +47,13 @@ public class WeaponManager : Singleton<WeaponManager>
         }
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        player.ChangeWeapon(ownedWeapons[equippedWeaponIndex]);
-        equippedWeapon = ownedWeapons[equippedWeaponIndex];
-        uiManager = UIManager.Instance;
-        UpdateWeaponUI();
+        if (player != null)
+        {
+            player.ChangeWeapon(ownedWeapons[equippedWeaponIndex]);
+            equippedWeapon = ownedWeapons[equippedWeaponIndex];
+            uiManager = UIManager.Instance;
+            UpdateWeaponUI();
+        }
     }
 
     public void InitPlayer(Player player)

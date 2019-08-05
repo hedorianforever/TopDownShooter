@@ -88,9 +88,9 @@ public class LevelGenerator : MonoBehaviour
 
         //for some reason it's not working if called immediately; the tilemap probably takes a while to recalculate everything
         Invoke("ScanLevel", .5f);
-        Invoke("SpawnPlayer", 1f);
+        Invoke("SpawnPlayer", .7f);
         //if you don't wait a while to spawn enemies they all seem to spawn next to each other
-        Invoke("SpawnEnemies", 2f);
+        Invoke("SpawnEnemies", 1.5f);
         Invoke("SpawnWeapons", 2f);
     }
 

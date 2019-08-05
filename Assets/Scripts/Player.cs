@@ -227,7 +227,7 @@ public class Player : MonoBehaviour
     IEnumerator ChangeWeaponRoutine()
     {
         WeaponManager.Instance.ChangeWeapon(Input.GetAxis("Mouse ScrollWheel"));
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.3f);
         isChangingWeapon = false;
     }
 

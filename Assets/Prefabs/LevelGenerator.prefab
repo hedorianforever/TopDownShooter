@@ -49,8 +49,8 @@ MonoBehaviour:
   chanceWalkerDestroy: 1
   maxWalkers: 10
   percentToFill: 0.3
-  floorTile: {fileID: 11400000, guid: 44350ab9c9d781f449ea6c658349e31b, type: 2}
-  wallTile: {fileID: 11400000, guid: 08a461ef0adf64340864d740613db643, type: 2}
+  floorTile: {fileID: 11400000, guid: de576dfa22d7abb4b8289d5a179b049a, type: 2}
+  wallTile: {fileID: 11400000, guid: 336e824b9d001e54ba2b1d217bc09dd6, type: 2}
   groundTilemap: {fileID: 0}
   obstacleTilemap: {fileID: 0}
   shouldRemoveSingleWalls: 1
@@ -58,16 +58,18 @@ MonoBehaviour:
   - {fileID: 6214928325664000780, guid: d526a275579255e4d983a4414143e331, type: 3}
   - {fileID: 76174416, guid: d67d25d6d15acdb4f9b0b21ab178080a, type: 3}
   - {fileID: 6214928325664000780, guid: d526a275579255e4d983a4414143e331, type: 3}
-  maxNumberEnemies: 12
-  minNumberEnemies: 8
+  maxNumberEnemies: 8
+  minNumberEnemies: 12
   minRadialDistanceBetweenEnemies: 1
+  minEnemyDistanceFromPlayer: 10
   possibleWeaponDrops:
   - {fileID: 415144917485759177, guid: 3c01288f0fa08f146984ea0d3d3635ea, type: 3}
   - {fileID: 3757395684681954742, guid: 617771cafc6cdfc4a90209e5e1212a8d, type: 3}
   - {fileID: 3352913267347471278, guid: b9e761747c0c4cd4a9a1f0a642217edf, type: 3}
   - {fileID: 2959074677979581781, guid: 91b647ebd29cb6540ad0157e26adcf09, type: 3}
   - {fileID: 5461477046466325820, guid: 795b5d8c96c5edb40b7b160596aa22b3, type: 3}
+  - {fileID: 8846025049794868152, guid: 210d8bf028e8a9b4eb1850d9d441dd9e, type: 3}
   weaponPickup: {fileID: 2819014337513833944, guid: a6d37dbfb4ec34047b5cc41df4483888,
     type: 3}
   numberOfWeaponDrops: 1
-  minChestDistanceFromPlayer: 25
+  minChestDistanceFromPlayer: 12

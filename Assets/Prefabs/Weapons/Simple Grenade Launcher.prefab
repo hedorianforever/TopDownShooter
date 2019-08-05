@@ -88,6 +88,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -127,7 +128,7 @@ MonoBehaviour:
   shootingSound: {fileID: 8300000, guid: 144cb964cac5355469b761f96865648f, type: 3}
   timeBetweenShots: 1
   accuracyOffset: 3
-  damage: 5
+  damage: 4
   myWeaponType: 4
   ammoPerShot: 1
   explosivePrefab: {fileID: 2843535616973306650, guid: 3f80fa487baba444cad8522e0c388dd8,

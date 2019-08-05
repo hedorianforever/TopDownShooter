@@ -93,6 +93,11 @@ public class ShooterBoss : Enemy
                 timeToWaitBeforeAttacking = .8f;
                 GetComponent<FloatingEmoji>().DestroyEmoji();
             }
+
+            if (health <= 0)
+            {
+                break;
+            }
         }
 
     }
@@ -255,6 +260,24 @@ public class ShooterBoss : Enemy
     {
         base.TakeDamage(damageAmount);
         StartCoroutine(UIManager.Instance.UpdateBossHealth(maxHealth, health));
+    }
+
+    public override void Die()
+    {
+        anim.SetTrigger("dieTrigger");
+        aiPath.canMove = false;
+        Destroy(gameObject, 3f);
+        GameManager.Instance.DecreaseEnemyCount(transform.position);
+        Destroy(machineGunTransform.gameObject);
+        Destroy(shotgunTransform.gameObject);  
+        Destroy(this);
+           //StartCoroutine(DieRoutine());
+    }
+
+    IEnumerator DieRoutine()
+    {
+
+        yield return new WaitForSeconds(3f);
     }
 
     //returns a random point from which the player is in the line of sight of the boss

@@ -18,7 +18,7 @@ public class UIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void OnPointerEnter(PointerEventData pointerEventData)
     {
         //Output to console the GameObject's name and the following message
-        Debug.Log("Cursor Entering " + name + " GameObject");
+        //Debug.Log("Cursor Entering " + name + " GameObject");
         anim.SetBool("hovering", true);
         AudioManager.Instance.PlayClip(hoverSound, 1, false); 
     }
@@ -27,7 +27,7 @@ public class UIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void OnPointerExit(PointerEventData pointerEventData)
     {
         //Output the following message with the GameObject's name
-        Debug.Log("Cursor Exiting " + name + " GameObject");
+        //Debug.Log("Cursor Exiting " + name + " GameObject");
         anim.SetBool("hovering", false);
     }
 
