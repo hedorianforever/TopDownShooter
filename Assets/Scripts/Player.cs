@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField] float dashSpeed = 30f;
     [SerializeField] float dashCooldown = 5f;
     [SerializeField] float dashLength = .15f;
-    
+
     [SerializeField] Ghost ghostPrefab = default;
     [SerializeField] Transform weaponSlot = default;
 
@@ -21,7 +21,6 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
-    private UIManager uiManager;
 
     private Vector2 moveAmount;
 
@@ -40,32 +39,40 @@ public class Player : MonoBehaviour
     //needed so mouse scroll wheel input is not read multiple times at once
     private bool isChangingWeapon = false;
 
+    [HideInInspector] public bool isDead = false;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        uiManager = UIManager.Instance;
 
         //needed so it won't collide with itself on physics2d.overlapcircle calls
         Physics2D.queriesStartInColliders = false;
 
-        currentHealth = maxHealth;
+        //being handled by the game manager
+        //currentHealth = maxHealth;
 
-        if (uiManager != null)
-        {
-            uiManager.UpdatePlayerHealthUI(currentHealth, maxHealth);
-        }
+        //if (uiManager != null)
+        //{
+        //    uiManager.UpdatePlayerHealthUI(currentHealth, maxHealth);
+        //}
     }
 
     private void Update()
     {
+        if (isDead)
+        {
+            return;
+        }
+
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
 
         ChangeDirectionFaced();
         SetPlayerAnimation();
 
+        Debug.Log("CAN DASH? " + canDash);
         Dash();
 
         if (Input.GetAxis("Mouse ScrollWheel") != 0 && !isChangingWeapon)
@@ -97,6 +104,10 @@ public class Player : MonoBehaviour
         while (t < dashLength)
         {
             t += Time.deltaTime;
+            if (isDead)
+            {
+                yield break;
+            }
             yield return null;
         }
 
@@ -104,10 +115,8 @@ public class Player : MonoBehaviour
         ghostPrefab.shouldMakeGhost = false;
         isInvulnerable = false;
 
-        if (uiManager != null)
-        {
-            yield return StartCoroutine(uiManager.DashCooldownRoutine(dashCooldown));
-        }
+        yield return StartCoroutine(UIManager.Instance.DashCooldownRoutine(dashCooldown));
+
 
         canDash = true;
     }
@@ -190,16 +199,16 @@ public class Player : MonoBehaviour
     public void TakeDamage(int damageAmount)
     {
         currentHealth -= damageAmount;
-        if (uiManager != null)
-        {
-            uiManager.UpdatePlayerHealthUI(currentHealth, maxHealth);
-            StartCoroutine(uiManager.PlayerHurtRoutine());
-        }
+
+        UIManager.Instance.UpdatePlayerHealthUI(currentHealth, maxHealth);
+        StartCoroutine(UIManager.Instance.PlayerHurtRoutine());
+        StartCoroutine(TakeDamageRoutine());
 
         if (currentHealth <= 0)
         {
             Die();
-        } else
+        }
+        else
         {
             AudioManager.Instance.PlayClip(hurtSound);
         }
@@ -212,8 +221,8 @@ public class Player : MonoBehaviour
         {
             Transform equippedWeapon = weaponSlot.GetChild(0);
             Destroy(equippedWeapon.gameObject);
-        } 
- 
+        }
+
         Weapon newWeapon = Instantiate(weapon, weaponSlot.position, Quaternion.identity);
         newWeapon.transform.parent = weaponSlot;
     }
@@ -221,7 +230,13 @@ public class Player : MonoBehaviour
     private void Die()
     {
         // TODO : death fx
-        Destroy(gameObject);
+        animator.SetTrigger("dieTrigger");
+        isDead = true;
+        Destroy(weaponSlot.gameObject);
+        Destroy(rb, .1f);
+        Destroy(gameObject, 1f);
+        GameObject.FindGameObjectWithTag("SceneTransitions").GetComponent<SceneTransitions>().LoadLoseScene();
+        Destroy(this);
     }
 
     IEnumerator ChangeWeaponRoutine()
@@ -236,10 +251,23 @@ public class Player : MonoBehaviour
         Debug.Log("HEALING!");
         currentHealth += healAmount;
         currentHealth = Mathf.Clamp(currentHealth, healAmount, maxHealth);
-        if (uiManager != null)
-        {
-            uiManager.UpdatePlayerHealthUI(currentHealth, maxHealth);
-        }
+
+        UIManager.Instance.UpdatePlayerHealthUI(currentHealth, maxHealth);
+
+    }
+
+    IEnumerator TakeDamageRoutine()
+    {
+        isInvulnerable = true;
+        yield return new WaitForSeconds(1f);
+        isInvulnerable = false;
+    }
+
+    public void SetHealth(int health)
+    {
+        currentHealth = health;
+
+        UIManager.Instance.UpdatePlayerHealthUI(currentHealth, maxHealth);
     }
 
     public bool IsFullHealth()

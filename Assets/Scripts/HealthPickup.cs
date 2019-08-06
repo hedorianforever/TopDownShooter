@@ -12,6 +12,8 @@ public class HealthPickup : MonoBehaviour
     [SerializeField] float timeToBeginFadeAway = 5;
     [SerializeField] float timeToFadeAway = 1.6f;
 
+    [SerializeField] private AudioClip pickupSFX = default;
+
     private void Start()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -37,6 +39,7 @@ public class HealthPickup : MonoBehaviour
                 return;
             } else
             {
+                AudioManager.Instance.PlayClip(pickupSFX, 1, false);
                 player.Heal(healAmount);
                 Destroy(gameObject);
             }

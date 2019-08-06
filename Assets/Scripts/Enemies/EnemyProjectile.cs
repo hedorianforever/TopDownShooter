@@ -50,12 +50,16 @@ public class EnemyProjectile : MonoBehaviour
         //Debug.Log("ENEMY PROJECTILE " + name + " COLLIDED WITH " + collision.name + " WITH TAG " + collision.tag);
         if (collision.tag == "Player")
         {
-            if (collision.GetComponent<Player>().GetIsInvulnerable())
+            Player player = collision.GetComponent<Player>();
+            if (player != null)
             {
-                return;
+                if (player.GetIsInvulnerable())
+                {
+                    return;
+                }
+                player.TakeDamage(damage);
+                DestroyProjectile();
             }
-            collision.GetComponent<Player>().TakeDamage(damage);
-            DestroyProjectile();
         }
         else if (collision.tag == "Obstacle")
         {

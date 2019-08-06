@@ -58,6 +58,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -69,8 +70,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300006, guid: daa5791dd98965a47a270e276dc0e553, type: 3}
+  m_SortingOrder: 6
+  m_Sprite: {fileID: 7438869448932923640, guid: daa5791dd98965a47a270e276dc0e553,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -94,18 +96,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.006503582}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.390625, y: 0.234375}
+    oldSize: {x: 0.453125, y: 0.375}
     newSize: {x: 0.78125, y: 0.46875}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.38, y: 0.21}
+  m_Size: {x: 0.38, y: 0.26202816}
   m_EdgeRadius: 0
 --- !u!114 &100816965239690911
 MonoBehaviour:
@@ -123,3 +125,4 @@ MonoBehaviour:
   playerHealthPercentageThreshold: 0.75
   timeToBeginFadeAway: 5
   timeToFadeAway: 1.6
+  pickupSFX: {fileID: 8300000, guid: cc3e7faecb27b2549b0639d5dabb2fa8, type: 3}

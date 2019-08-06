@@ -19,7 +19,10 @@ public class CameraFollow : MonoBehaviour
     {
         if (transformToFollow == null)
         {
-            transformToFollow = GameObject.FindGameObjectWithTag("Player").transform;
+            if (GameObject.FindGameObjectWithTag("Player") != null)
+            {
+                transformToFollow = GameObject.FindGameObjectWithTag("Player").transform;
+            }
         }
     }
 

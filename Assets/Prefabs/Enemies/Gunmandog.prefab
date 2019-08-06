@@ -75,7 +75,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 218759c9fd5a46c48bf92d851e8c1744, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -203,7 +203,9 @@ MonoBehaviour:
   timeBetweenAttacks: 2.2
   attackDamage: 3
   noticePlayerRadius: 8
-  deathVFX: {fileID: 5111852914969929664, guid: 7c41e6539a55a0149ba099e0468be75a,
+  deathVFX: {fileID: 8681529419230061794, guid: 3b1425c8d77f99a49a46d52bee152320,
+    type: 3}
+  deathRemains: {fileID: 5302796534646978697, guid: d882c4b5007cb284d8d67f9a846a9cb4,
     type: 3}
   playerTransform: {fileID: 0}
   ammoDrop: {fileID: 2539502908945056113, guid: 3dcad4d9f8cbd194fbfd22df11b29761,
@@ -346,7 +348,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300100, guid: 75d93423fea138f4dbfee3439bb63a05, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

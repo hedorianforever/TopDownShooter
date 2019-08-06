@@ -9,6 +9,8 @@ public class WeaponPickup : MonoBehaviour
     //might need to change it 
     [SerializeField] Weapon weaponPrefab = default;
     [SerializeField] GameObject sparkVFX = default;
+    [SerializeField] private AudioClip pickupSFX = default;
+
 
     private SpriteRenderer spriteRenderer;
     private BoxCollider2D boxCollider2D;
@@ -50,6 +52,7 @@ public class WeaponPickup : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
+            AudioManager.Instance.PlayClip(pickupSFX, 1, false);
             WeaponManager.Instance.TakeWeapon(weaponPrefab.GetComponent<Weapon>());
             Destroy(gameObject);
         }

@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a91ba2928c36a64a85bfdd5db3b9ac4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupSFX: {fileID: 8300000, guid: a0a06bbfe3f49cd4c8997e31a8cff8b3, type: 3}
 --- !u!212 &2539502908945056126
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -70,6 +71,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -81,7 +83,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 21300282, guid: 88a557ca20e31d4479b3ac30233eca87, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

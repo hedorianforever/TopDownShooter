@@ -40,13 +40,16 @@ public class WeaponManager : Singleton<WeaponManager>
         //Debug.Log("Level Loaded");
         //Debug.Log(scene.name);
 
-        //if this weapon manager comes from the tutorial, destroy it to not keep the tutorial weapons   
-        if (SceneManager.GetActiveScene().name == "Main Menu")
+        //if this weapon manager comes from the tutorial or reset scenes, destroy it to not keep the weapons   
+        if (SceneManager.GetActiveScene().name == "Main Menu" || SceneManager.GetActiveScene().name == "Win Scene" || SceneManager.GetActiveScene().name == "Lose Scene")
         {
             Destroy(gameObject);
         }
 
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        if (GameObject.FindGameObjectWithTag("Player") != null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        }
         if (player != null)
         {
             player.ChangeWeapon(ownedWeapons[equippedWeaponIndex]);

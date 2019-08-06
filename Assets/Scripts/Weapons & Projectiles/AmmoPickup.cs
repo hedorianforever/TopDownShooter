@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer), typeof(BoxCollider2D))]
 public class AmmoPickup : MonoBehaviour
 {
+    [SerializeField] private AudioClip pickupSFX = default;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -20,6 +21,7 @@ public class AmmoPickup : MonoBehaviour
             }
             else
             {
+                AudioManager.Instance.PlayClip(pickupSFX, 1, false);
                 //adds half the max ammo of the equipped weapon's type 
                 weaponManager.AddAmmo(currentWeapon, weaponManager.GetMaxAmmo(currentWeapon) / 2);
                 //show something like + 100 (currentWeapon.name) ammo

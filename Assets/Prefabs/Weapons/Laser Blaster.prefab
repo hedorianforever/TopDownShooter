@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2108575685361641434}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.682, y: 0.037, z: 0}
+  m_LocalPosition: {x: 0.682, y: 0.225, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3689867749401998555}
@@ -88,6 +88,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -130,5 +131,5 @@ MonoBehaviour:
   damage: 5
   myWeaponType: 5
   ammoPerShot: 2
-  triggerProjectilePrefab: {fileID: 4046334901211306613, guid: 339a8ea481f8ea24caf0186ab069c787,
+  triggerProjectilePrefab: {fileID: 2759873871161723083, guid: 0122541a201edc04d9a9b305ceef952b,
     type: 3}

@@ -57,8 +57,11 @@ public class Projectile : MonoBehaviour
     {
         if (collision.tag == "Enemy")
         {
-            collision.GetComponent<Enemy>().TakeDamage(damage);
-            AudioManager.Instance.PlayClip(impactSFX, impactSFXVolume);
+            if (collision.GetComponent<Enemy>() != null)
+            {
+                collision.GetComponent<Enemy>().TakeDamage(damage);
+                AudioManager.Instance.PlayClip(impactSFX, impactSFXVolume);
+            }
             DestroyProjectile();
         }
         else if (collision.tag == "Obstacle")

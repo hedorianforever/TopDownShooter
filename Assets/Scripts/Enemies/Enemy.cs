@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected int attackDamage;
     [SerializeField] protected float noticePlayerRadius = 15f;
     [SerializeField] protected GameObject deathVFX;
+    [SerializeField] protected GameObject deathRemains = default;
 
 
     [HideInInspector] public Transform playerTransform;
@@ -85,6 +86,11 @@ public class Enemy : MonoBehaviour
         {
             Instantiate(deathVFX, transform.position, Quaternion.identity);
         }
+        if (deathRemains != null)
+        {
+            Instantiate(deathRemains, transform.position, Quaternion.identity);
+        }
+
         Destroy(gameObject);
     }
 

@@ -269,15 +269,14 @@ public class ShooterBoss : Enemy
         Destroy(gameObject, 3f);
         GameManager.Instance.DecreaseEnemyCount(transform.position);
         Destroy(machineGunTransform.gameObject);
-        Destroy(shotgunTransform.gameObject);  
+        Destroy(shotgunTransform.gameObject);
+        WinGame();
         Destroy(this);
-           //StartCoroutine(DieRoutine());
     }
 
-    IEnumerator DieRoutine()
+    void WinGame()
     {
-
-        yield return new WaitForSeconds(3f);
+        GameObject.FindGameObjectWithTag("SceneTransitions").GetComponent<SceneTransitions>().LoadWinScene();
     }
 
     //returns a random point from which the player is in the line of sight of the boss

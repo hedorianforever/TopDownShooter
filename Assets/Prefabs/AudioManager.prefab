@@ -242,6 +242,6 @@ MonoBehaviour:
   MusicSource: {fileID: 1086400582081929249}
   musicClip: {fileID: 8300000, guid: 17e2bbb231e42bb4bb72200710616cbd, type: 3}
   musicVolume: 0.15
-  fxVolume: 1
+  fxVolume: 0.55
   lowPitchRange: 0.85
   highPitchRange: 1.15
