@@ -3,87 +3,54 @@ using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
 
-public class ShamanEnemy : Enemy
+public class ShamanEnemy : WandererEnemy
 {
+    [Header("Shaman related variables")]
     [SerializeField] float timeToSummon = 2f;
     [SerializeField] GameObject minionPrefab = default;
-    [SerializeField] Transform[] destinations = default;
+    [SerializeField] float timeBetweenSummons = 2.5f;
+    [SerializeField] GameObject enemyPortal = default;
 
-    private AIPath aiPath;
-    private AIDestinationSetter aiDestSetter;
-
+    private bool isOnSummonCooldown = false;
     private bool isSummoning = false;
 
     public override void Start()
     {
         base.Start();
-        aiPath = GetComponent<AIPath>();
-        aiDestSetter = GetComponent<AIDestinationSetter>();
+        //aiPath = GetComponent<AIPath>();
+        //aiDestSetter = GetComponent<AIDestinationSetter>();
 
-        aiDestSetter.target = GetRandomDestination();
-        anim.SetBool("isMoving", true);
+        //aiDestSetter.target = GetRandomDestination();
+        //anim.SetBool("isMoving", true);
 
-        aiPath.maxSpeed = moveSpeed;
+        //aiPath.maxSpeed = moveSpeed;
     }
 
-    private void Update()
+    public override void Update()
     {
-        if (playerTransform == null) { return; }
+        base.Update();
 
-        if (aiPath.velocity.x > 1f || aiPath.velocity.y > 1f)
+        if ((ai.reachedEndOfPath || !ai.hasPath) && !ai.pathPending && !isSummoning && !anim.GetBool("isMoving") && !isOnSummonCooldown)
         {
-            anim.SetBool("isMoving", true);
-        }
-
-        if (Vector2.Distance(transform.position, (Vector2)aiDestSetter.target.position) < aiPath.endReachedDistance)
-        {
+            FacePlayer();
             anim.SetBool("isMoving", false);
-            CheckForPlayer();
-            if (hasNoticedPlayer && !isSummoning)
-            {
-                FacePlayer();
-                isSummoning = true;
-                StartCoroutine(SummonRoutine());
-            }
+            isSummoning = true;
+            isOnSummonCooldown = true;
+            StartCoroutine(SummonRoutine());
         }
-    }
 
-    private Transform GetRandomDestination()
-    {
-        return destinations[Random.Range(0, destinations.Length)];
-    }
-
-    /// <summary>
-    /// Returns true if player is near the destination
-    /// </summary>
-    private bool IsPlayerNear(Transform destination)
-    {
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(destination.position, noticePlayerRadius);
-        for (int i = 0; i < hitColliders.Length; i++)
-        {
-            if (hitColliders[i].tag == "Player")
-            {
-                return true;
-            }
-        }
-        return false;
     }
 
     IEnumerator SummonRoutine()
     {
         //summon enemy
         anim.SetTrigger("summonTrigger");
+
         yield return new WaitForSeconds(timeToSummon);
 
-        Transform newDestination = GetRandomDestination();
-        while (newDestination == aiDestSetter.target || IsPlayerNear(newDestination))
-        {
-            newDestination = GetRandomDestination();
-            yield return null;
-        }
-        aiDestSetter.target = newDestination;
-        hasNoticedPlayer = false;
-        isSummoning = false;
+        yield return new WaitForSeconds(timeBetweenSummons);
+
+        isOnSummonCooldown = false;
     }
 
     /// <summary>
@@ -92,6 +59,50 @@ public class ShamanEnemy : Enemy
     public void SummonMinion()
     {
         //instantiate summon effect
-        Instantiate(minionPrefab, transform.position + new Vector3(-1, 0, 0), Quaternion.identity);
+        Vector3 summonPos = GetValidSummonPosition();
+        GameObject portal = Instantiate(enemyPortal, summonPos, Quaternion.identity);
+        portal.GetComponent<SummonPortal>().SetEnemyToSummon(minionPrefab);
+        isSummoning = false;
+
+    }
+
+    //returns a position near the shaman which is not occupied by an obstacle
+    private Vector3 GetValidSummonPosition()
+    {
+        Collider2D collider;
+
+        Vector3 summonPos = transform.position + new Vector3(1, 0, 0);
+        collider = Physics2D.OverlapCircle(summonPos, .2f, 1 << LayerMask.NameToLayer("Obstacle"));
+
+        if (collider == null)
+        {
+            return summonPos;
+        }
+
+        summonPos = transform.position + new Vector3(-1, 0, 0);
+        collider = Physics2D.OverlapCircle(summonPos, .2f, 1 << LayerMask.NameToLayer("Obstacle"));
+
+        if (collider == null)
+        {
+            return summonPos;
+        }
+
+        summonPos = transform.position + new Vector3(0, 1, 0);
+        collider = Physics2D.OverlapCircle(summonPos, .2f, 1 << LayerMask.NameToLayer("Obstacle"));
+
+        if (collider == null)
+        {
+            return summonPos;
+        }
+
+        summonPos = transform.position + new Vector3(0, -1, 0);
+        collider = Physics2D.OverlapCircle(summonPos, .2f, 1 << LayerMask.NameToLayer("Obstacle"));
+
+        if (collider == null)
+        {
+            return summonPos;
+        }
+
+        return transform.position;
     }
 }

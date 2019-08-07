@@ -128,8 +128,9 @@ MonoBehaviour:
   shootingSound: {fileID: 8300000, guid: 5275797afb3af2b48bef4fb193768c52, type: 3}
   timeBetweenShots: 1
   accuracyOffset: 0
-  damage: 5
+  damage: 4
   myWeaponType: 5
   ammoPerShot: 2
+  noAmmoSFX: {fileID: 8300000, guid: 6f7016053b80c394c97e3cec4800db7e, type: 3}
   triggerProjectilePrefab: {fileID: 2759873871161723083, guid: 0122541a201edc04d9a9b305ceef952b,
     type: 3}

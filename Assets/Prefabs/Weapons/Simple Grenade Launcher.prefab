@@ -131,6 +131,7 @@ MonoBehaviour:
   damage: 4
   myWeaponType: 4
   ammoPerShot: 1
+  noAmmoSFX: {fileID: 8300000, guid: 6f7016053b80c394c97e3cec4800db7e, type: 3}
   explosivePrefab: {fileID: 2843535616973306650, guid: 3f80fa487baba444cad8522e0c388dd8,
     type: 3}
   launchSpeed: 500

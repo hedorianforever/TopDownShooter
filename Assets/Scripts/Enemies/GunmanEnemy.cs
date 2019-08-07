@@ -5,21 +5,21 @@ using UnityEngine;
 public class GunmanEnemy : WandererEnemy
 {
     //use timebetweenattacks and attack damage for shooting
-    [SerializeField] float shootingRange = 20f;
-    [SerializeField] float accuracyOffset = 5f;
-    [SerializeField] float projectileLifetime = 2f;
-    [SerializeField] float projectileSpeed = 10f;
+    [SerializeField] protected float shootingRange = 20f;
+    [SerializeField] protected float accuracyOffset = 5f;
+    [SerializeField] protected float projectileLifetime = 2f;
+    [SerializeField] protected float projectileSpeed = 10f;
     [Range(0, 1)]
     [Tooltip("Chance to shoot player while on sight")]
-    [SerializeField] float chanceToShoot = .2f;
+    [SerializeField] protected float chanceToShoot = .2f;
     //[Range(0, 100)] [SerializeField] int chanceToShootOnSight = 20;
 
-    [SerializeField] Transform gunTransform = default; //to look at player 
-    [SerializeField] Transform shotPoint = default;
-    [SerializeField] GameObject projectilePrefab = default;
+    [SerializeField] protected Transform gunTransform = default; //to look at player 
+    [SerializeField] private Transform shotPoint = default;
+    [SerializeField] protected GameObject projectilePrefab = default;
 
 
-    private bool isShooting = false;
+    protected bool isShooting = false;
 
 
     public override void Start()
@@ -69,7 +69,7 @@ public class GunmanEnemy : WandererEnemy
         gunTransform.right = lookDirection;
     }
 
-    IEnumerator ShootRoutine()
+    public virtual IEnumerator ShootRoutine()
     {
         GameObject projectile = Instantiate(projectilePrefab, shotPoint.position, gunTransform.rotation) as GameObject;
 

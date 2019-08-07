@@ -213,7 +213,7 @@ MonoBehaviour:
   healthDrop: {fileID: 100816965239690911, guid: 02ec5b0f24bb7a245b9ddb456a082707,
     type: 3}
   ammoDropChance: 0.05
-  healthDropChance: 0.2
+  healthDropChance: 0.1
   wanderRadius: 10
   timeBetweenWanderingMax: 1.2
   timeBetweenWanderingMin: 0.5

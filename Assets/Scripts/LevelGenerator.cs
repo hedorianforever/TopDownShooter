@@ -412,6 +412,19 @@ public class LevelGenerator : MonoBehaviour
 
                     //choose a random weapon
                     Weapon weaponToSpawn = possibleWeaponDrops[Random.Range(0, possibleWeaponDrops.Length)];
+                    //choose a weapon that the player doesn't have
+                    int cont = 100;
+
+                    while (WeaponManager.Instance.CheckIfWeaponIsOwned(weaponToSpawn))
+                    {
+                        cont--;
+                        weaponToSpawn = possibleWeaponDrops[Random.Range(0, possibleWeaponDrops.Length)];
+
+                        if (cont <= 0)
+                        {
+                            break;
+                        }
+                    }
                     spawnedWeaponPickup.SetWeapon(weaponToSpawn);
 
                     weaponsSpawned++;
@@ -449,35 +462,33 @@ public class LevelGenerator : MonoBehaviour
                     hasFoundNearbyEnemy = true;
                 }
             }
-            if (hasFoundNearbyEnemy)
+            if (!hasFoundNearbyEnemy)
             {
-                continue;
-            }
+                float distanceToPlayer = Vector2.Distance(randomValidFloorTile, playerTransform.position);
 
-            float distanceToPlayer = Vector2.Distance(randomValidFloorTile, playerTransform.position);
-
-            //test if enemy is not too close to the player
-            if (distanceToPlayer > minEnemyDistanceFromPlayer)
-            {
-                Vector3 randomFloor = new Vector3(randomValidFloorTile.x, randomValidFloorTile.y, 0);
-
-                colliders = Physics2D.OverlapCircleAll(randomFloor, .001f);
-
-                bool canSummon = true;
-
-                foreach (Collider2D col in colliders)
+                //test if enemy is not too close to the player
+                if (distanceToPlayer > minEnemyDistanceFromPlayer)
                 {
-                    if (col.tag == "Obstacle")
+                    Vector3 randomFloor = new Vector3(randomValidFloorTile.x, randomValidFloorTile.y, 0);
+
+                    colliders = Physics2D.OverlapCircleAll(randomFloor, .001f);
+
+                    bool canSummon = true;
+
+                    foreach (Collider2D col in colliders)
                     {
-                        canSummon = false;
+                        if (col.tag == "Obstacle")
+                        {
+                            canSummon = false;
+                        }
                     }
-                }
 
-                if (canSummon)
-                {
-                    Enemy spawnedEnemy = Instantiate(enemies[Random.Range(0, enemies.Length)], new Vector3(randomValidFloorTile.x, randomValidFloorTile.y, 0), Quaternion.identity);
+                    if (canSummon)
+                    {
+                        Enemy spawnedEnemy = Instantiate(enemies[Random.Range(0, enemies.Length)], new Vector3(randomValidFloorTile.x, randomValidFloorTile.y, 0), Quaternion.identity);
 
-                    enemiesSpawned++;
+                        enemiesSpawned++;
+                    }
                 }
             }
 

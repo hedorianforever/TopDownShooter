@@ -60,6 +60,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -100,7 +101,7 @@ MonoBehaviour:
   destroyByTimeVFX: {fileID: 4606249111963031051, guid: 68194b00d8d11e641bf09f75798eb789,
     type: 3}
   impactSFX: {fileID: 8300000, guid: a15ec689d9b0d8342b61b0819d526819, type: 3}
-  impactSFXVolume: 0.504
+  impactSFXVolume: 0.27
 --- !u!95 &5298632520884765945
 Animator:
   serializedVersion: 3

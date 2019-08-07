@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 6147842414277808301}
   - component: {fileID: 5342810077519678277}
   - component: {fileID: 5342810077519678278}
+  - component: {fileID: 2648922183797723105}
   m_Layer: 10
   m_Name: Shaman Minion
   m_TagString: Enemy
@@ -62,6 +63,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -117,8 +119,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0045613125, y: -0.012475967}
-  m_Size: {x: 0.21860631, y: 0.44974953}
+  m_Offset: {x: -0.00011944771, y: 0.0046854615}
+  m_Size: {x: 0.19676447, y: 0.38422406}
   m_Direction: 0
 --- !u!114 &5342810077519678276
 MonoBehaviour:
@@ -132,14 +134,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5db887f3f9097584383d61275dd54145, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
-  moveSpeed: 5
+  health: 1
+  moveSpeed: 3.5
   timeBetweenAttacks: 2
-  attackDamage: 10
-  noticePlayerRadius: 20
+  attackDamage: 2
+  noticePlayerRadius: 100
+  deathVFX: {fileID: 8681529419230061794, guid: 3b1425c8d77f99a49a46d52bee152320,
+    type: 3}
+  deathRemains: {fileID: 5302796534646978697, guid: d882c4b5007cb284d8d67f9a846a9cb4,
+    type: 3}
   playerTransform: {fileID: 0}
-  stopDistance: 2
-  leapAttackSpeed: 2
+  ammoDrop: {fileID: 0}
+  healthDrop: {fileID: 0}
+  ammoDropChance: 0
+  healthDropChance: 0
+  stopDistance: 1
+  leapAttackSpeed: 3
 --- !u!114 &6147842414277808301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,3 +228,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   target: {fileID: 0}
+--- !u!50 &2648922183797723105
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5634500464050775083}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4

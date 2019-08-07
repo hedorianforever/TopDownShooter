@@ -92,8 +92,15 @@ public class MeleeEnemy : Enemy
             if (!hasDamaged && Vector2.Distance(transform.position, playerTransform.position) < 1f)
             {
                 // TODO : slashfx
-                playerTransform.GetComponent<Player>().TakeDamage(attackDamage);
-                hasDamaged = true;
+                if (playerTransform != null)
+                {
+                    if (playerTransform.GetComponent<Player>() != null)
+                    {
+                        //Debug.Log("ATTACK DAMAGE OF " + name + ": " + attackDamage);
+                        playerTransform.GetComponent<Player>().TakeDamage(attackDamage);
+                        hasDamaged = true;
+                    }
+                }
             }
             yield return null;
         }

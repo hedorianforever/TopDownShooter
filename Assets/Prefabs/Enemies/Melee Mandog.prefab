@@ -122,7 +122,7 @@ MonoBehaviour:
   moveSpeed: 2.5
   timeBetweenAttacks: 1.5
   attackDamage: 2
-  noticePlayerRadius: 5
+  noticePlayerRadius: 7
   deathVFX: {fileID: 8681529419230061794, guid: 3b1425c8d77f99a49a46d52bee152320,
     type: 3}
   deathRemains: {fileID: 5302796534646978697, guid: d882c4b5007cb284d8d67f9a846a9cb4,

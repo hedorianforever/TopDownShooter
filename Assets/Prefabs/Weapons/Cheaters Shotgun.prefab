@@ -101,6 +101,7 @@ MonoBehaviour:
   damage: 60
   myWeaponType: 3
   ammoPerShot: 1
+  noAmmoSFX: {fileID: 8300000, guid: 6f7016053b80c394c97e3cec4800db7e, type: 3}
   projectilePrefab: {fileID: 692041066808304314, guid: b462c85449f6bf344971004397922c48,
     type: 3}
   projectileSpeed: 20

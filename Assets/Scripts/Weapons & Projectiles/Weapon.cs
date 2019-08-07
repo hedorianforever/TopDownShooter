@@ -19,6 +19,8 @@ public class Weapon : MonoBehaviour
     [SerializeField] protected WeaponType myWeaponType = WeaponType.Infinite;
     [SerializeField] protected int ammoPerShot = 1;
 
+    [SerializeField] protected AudioClip noAmmoSFX = default;
+
     public WeaponType MyWeaponType
     {
         get
@@ -63,6 +65,14 @@ public class Weapon : MonoBehaviour
         {
             shotPointIsBlocked = col.tag == "Obstacle";
         }
+
+        //no ammo
+        if ((weaponManager.GetCurrentAmmo(myWeaponType) - ammoPerShot <= 0))
+        {
+            Debug.Log("playing no ammo sound");
+            AudioManager.Instance.PlayClip(noAmmoSFX, .8f, false);
+        }
+
         return !weaponManager.IsOnCooldown() && !shotPointIsBlocked && (weaponManager.GetCurrentAmmo(myWeaponType) - ammoPerShot >= 0);
     }
 

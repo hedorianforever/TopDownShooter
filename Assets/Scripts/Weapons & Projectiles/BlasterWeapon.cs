@@ -27,6 +27,11 @@ public class BlasterWeapon : Weapon
     //doesnt care about hitting an obstacle
     protected override bool CanShoot()
     {
+        if ((weaponManager.GetCurrentAmmo(myWeaponType) - ammoPerShot <= 0))
+        {
+            Debug.Log("playing no ammo sound");
+            AudioManager.Instance.PlayClip(noAmmoSFX, .8f, false);
+        }
         return !weaponManager.IsOnCooldown() && (weaponManager.GetCurrentAmmo(myWeaponType) - ammoPerShot >= 0);
     }
 }

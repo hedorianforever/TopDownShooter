@@ -43,8 +43,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c0c0876d6d796b4d853ac03766779bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomSizeWorldUnits: {x: 45, y: 30}
-  chanceWalkerChangeDir: 0.5
+  roomSizeWorldUnits: {x: 51, y: 41}
+  chanceWalkerChangeDir: 0.55
   chanceWalkerSpawn: 0.05
   chanceWalkerDestroy: 1
   maxWalkers: 10
@@ -57,8 +57,8 @@ MonoBehaviour:
   enemies:
   - {fileID: 6214928325664000780, guid: d526a275579255e4d983a4414143e331, type: 3}
   - {fileID: 76174416, guid: d67d25d6d15acdb4f9b0b21ab178080a, type: 3}
-  - {fileID: 6214928325664000780, guid: d526a275579255e4d983a4414143e331, type: 3}
-  maxNumberEnemies: 8
+  - {fileID: 5059225910257498288, guid: 400d7698362d17b419bed340849f8818, type: 3}
+  maxNumberEnemies: 18
   minNumberEnemies: 12
   minRadialDistanceBetweenEnemies: 1
   minEnemyDistanceFromPlayer: 10
@@ -72,4 +72,4 @@ MonoBehaviour:
   weaponPickup: {fileID: 2819014337513833944, guid: a6d37dbfb4ec34047b5cc41df4483888,
     type: 3}
   numberOfWeaponDrops: 1
-  minChestDistanceFromPlayer: 12
+  minChestDistanceFromPlayer: 15

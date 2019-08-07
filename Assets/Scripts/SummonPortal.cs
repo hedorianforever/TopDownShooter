@@ -12,7 +12,7 @@ public class SummonPortal : MonoBehaviour
 
     private void Start()
     {
-        AudioManager.Instance.PlayClip(openPortalSound, 1, false);
+        AudioManager.Instance.PlayClipAtPoint(openPortalSound, transform.position, .8f);
     }
 
 
@@ -21,15 +21,24 @@ public class SummonPortal : MonoBehaviour
         GameObject summonedEnemy = Instantiate(enemyToSummon, summonSpot.position, Quaternion.identity);
         summonedEnemy.GetComponent<Enemy>().enabled = false;
 
-        yield return new WaitForSeconds(1.4f);
+        yield return new WaitForSeconds(1.2f);
 
-        summonedEnemy.GetComponent<Enemy>().enabled = true;
+        if (summonedEnemy != null)
+        {
+            summonedEnemy.GetComponent<Enemy>().enabled = true;
+        }
+
         Destroy(gameObject);
 
     }
 
     public void ClosePortal()
     {
-        AudioManager.Instance.PlayClip(closePortalSound, 1, false);
+        AudioManager.Instance.PlayClipAtPoint(closePortalSound, transform.position, .8f);
+    }
+
+    public void SetEnemyToSummon(GameObject enemy)
+    {
+        enemyToSummon = enemy;
     }
 }

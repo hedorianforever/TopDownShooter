@@ -72,7 +72,6 @@ public class Player : MonoBehaviour
         ChangeDirectionFaced();
         SetPlayerAnimation();
 
-        Debug.Log("CAN DASH? " + canDash);
         Dash();
 
         if (Input.GetAxis("Mouse ScrollWheel") != 0 && !isChangingWeapon)
@@ -198,6 +197,11 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damageAmount)
     {
+        if (isInvulnerable)
+        {
+            return;
+        }
+
         currentHealth -= damageAmount;
 
         UIManager.Instance.UpdatePlayerHealthUI(currentHealth, maxHealth);
@@ -233,9 +237,9 @@ public class Player : MonoBehaviour
         animator.SetTrigger("dieTrigger");
         isDead = true;
         Destroy(weaponSlot.gameObject);
-        Destroy(rb, .1f);
-        Destroy(gameObject, 1f);
+        rb.velocity = Vector3.zero;
         GameObject.FindGameObjectWithTag("SceneTransitions").GetComponent<SceneTransitions>().LoadLoseScene();
+        //Destroy this script to prevent walking or dashing after death bugs
         Destroy(this);
     }
 
@@ -248,7 +252,6 @@ public class Player : MonoBehaviour
 
     public void Heal(int healAmount)
     {
-        Debug.Log("HEALING!");
         currentHealth += healAmount;
         currentHealth = Mathf.Clamp(currentHealth, healAmount, maxHealth);
 

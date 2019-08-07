@@ -37,6 +37,8 @@ public class Enemy : MonoBehaviour
         health -= damageAmount;
         hasNoticedPlayer = true;
 
+        StartCoroutine(TakeDamageRoutine());
+
         //isAlive bool is needed or else Die() is called multiple times if the enemy is hit (and killed) by more than 1 bullet
         if (health <= 0 && isAlive)
         {
@@ -92,6 +94,13 @@ public class Enemy : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+
+    IEnumerator TakeDamageRoutine()
+    {
+        GetComponent<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(.1f);
+        GetComponent<SpriteRenderer>().color = Color.white;
     }
 
     private void OnDrawGizmos()

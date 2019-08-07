@@ -56,6 +56,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -142,6 +143,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -290,23 +292,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f19403daf34515847b34e6f987090b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 20
-  moveSpeed: 10
+  health: 3
+  moveSpeed: 3
   timeBetweenAttacks: 0
   attackDamage: 0
   noticePlayerRadius: 8
+  deathVFX: {fileID: 8681529419230061794, guid: 3b1425c8d77f99a49a46d52bee152320,
+    type: 3}
+  deathRemains: {fileID: 5302796534646978697, guid: d882c4b5007cb284d8d67f9a846a9cb4,
+    type: 3}
   playerTransform: {fileID: 0}
+  ammoDrop: {fileID: 2539502908945056113, guid: 3dcad4d9f8cbd194fbfd22df11b29761,
+    type: 3}
+  healthDrop: {fileID: 100816965239690911, guid: 02ec5b0f24bb7a245b9ddb456a082707,
+    type: 3}
+  ammoDropChance: 0.1
+  healthDropChance: 0.12
+  wanderRadius: 12
+  timeBetweenWanderingMax: 5.2
+  timeBetweenWanderingMin: 5
+  minWanderDistance: 5
+  maxTimeWalking: 3
   timeToSummon: 2.5
   minionPrefab: {fileID: 5634500464050775083, guid: c54396a2d86e0e349b13a7298e0e0e88,
     type: 3}
-  destinations:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  timeBetweenSummons: 5.5
+  enemyPortal: {fileID: 2012146135996499663, guid: b05f06982e11af34d90cc6d38bcdbffb,
+    type: 3}

@@ -14,8 +14,8 @@ public class WandererEnemy : Enemy
     [Tooltip("Maximum time the enemy should move. Used so that if he picks a near position that's a LONG walk away (as in there are a lot of obstacles in the way) he will stop moving.")]
     [SerializeField] float maxTimeWalking = 3f;
 
-    private AIPath aiPath;
-    private IAstarAI ai;
+    protected AIPath aiPath;
+    protected IAstarAI ai;
 
     private bool isOnWanderingCooldown = false;
     private float timeWalking = 0;

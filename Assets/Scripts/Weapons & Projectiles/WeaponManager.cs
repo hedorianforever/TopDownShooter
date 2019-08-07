@@ -237,4 +237,10 @@ public class WeaponManager : Singleton<WeaponManager>
         uiManager.UpdateEquippedWeaponUI(equippedWeapon, GetCurrentAmmo(equippedWeapon.MyWeaponType), GetMaxAmmo(equippedWeapon.MyWeaponType));
     }
 
+    public bool CheckIfWeaponIsOwned(Weapon weapon) {
+        Debug.Log("DOES PLAYER ALREADY CONTAIN " + weapon.name + " ? ");
+        Debug.Log(ownedWeapons.Contains(weapon));
+        return ownedWeapons.Contains(weapon);
+    }
+
 }

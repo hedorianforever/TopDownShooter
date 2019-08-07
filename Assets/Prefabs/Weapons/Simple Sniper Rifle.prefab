@@ -88,6 +88,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -125,11 +126,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shotPoint: {fileID: 1068845873551912941}
   shootingSound: {fileID: 8300000, guid: ea067ae038cc26a41879d7996844e756, type: 3}
-  timeBetweenShots: 2
+  timeBetweenShots: 1.8
   accuracyOffset: 1
   damage: 3
   myWeaponType: 6
   ammoPerShot: 1
+  noAmmoSFX: {fileID: 8300000, guid: 6f7016053b80c394c97e3cec4800db7e, type: 3}
   projectilePrefab: {fileID: 522487137636450981, guid: f4a6fe4a3a68c5d4390ce7dd233e5d4b,
     type: 3}
   projectileSpeed: 26
